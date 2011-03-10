@@ -1,0 +1,32 @@
+% layout 'default';
+
+% my $title = 'New explain';
+% title $title;
+
+<h1><%= $title =%></h1>
+
+<form id="new-explain" method="post" action="<%= url_for( 'index' ) %>">
+
+    <div class="fe fe-odd fe-first fe_plan">
+        <div class="fe-lbl">
+            <label for="plan">Paste your explain/explain analyze here: <sup class="fe-required">*</sup></label>
+        </div>
+        <div class="fe-el">
+            <textarea id="plan" name="plan"></textarea>
+        </div>
+    </div>
+
+    <div class="fe fe-even fe_is_public">
+        <div>
+            <label for="is_public">Is public?</label>
+            <input type="checkbox" class="checkbox" id="is_public" name="is_public" value="1" checked="checked" />
+        </div>
+    </div>
+
+    <div class="fe fe-odd fe-last fe-buttons">
+        <button type="submit" name="submit_plan" id="submit_plan"><span>Submit</span></button>
+    </div>
+
+    <p class="nfo-required">All fields marked by <sup class="fe-required">*</sup> are required.</p>
+
+</form>

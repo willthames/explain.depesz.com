@@ -1,0 +1,53 @@
+% layout 'default';
+
+% my $title = 'History';
+% title $title;
+
+<h1><%= $title =%><small>(page <%= $rs->{ page } =%>)</small></h1>
+
+% my @plans = @{ $rs->{ rows } };
+
+% if ( scalar @plans ) {
+
+    <div class="history">
+
+    % my $date = '';
+    % my $open = 0;
+
+    % for my $plan ( @plans ) {
+
+    %   if ( $plan->{ date } ne $date ) {
+    %       if ( $open ) {
+                </ul>
+    %           $open = 0;
+    %       }
+            <h3><%= $plan->{ date } =%></h3>
+            <ul class="clearfix date date-<%= $plan->{ date } =%>">
+    %       $open = 1;
+    %    }
+         <li><a href="<%= url_for( 'show', plan_id => $plan->{ id } ) =%>"><%= $plan->{ id } =%></a></li>
+    %    $date = $plan->{ date };
+    % }
+
+    % if ( $open ) {
+        </ul>
+    % }
+
+    </div>
+
+    % if ( $rs->{ has_previous } || $rs->{ has_next } ) {
+        <div class="paginator">
+            % if ( $rs->{ has_previous } ) {
+                <a class="prev" href="<%= url_for 'current', p => ( $rs->{ page } - 1 ) %>" title="previous page" rel="prev">previous</a>
+            % }
+            % if ( $rs->{ has_next } ) {
+                <a class="next" href="<%= url_for 'current', p => ( $rs->{ page } + 1 ) %>" title="next page" rel="next">next</a>
+            % }
+        </div>
+    % }
+
+% } else {
+    <p class="msg msg-no-results">
+        Sorry, but no results was found in database for this page.
+    </p>
+% }

@@ -1,0 +1,264 @@
+Thu Mar 10 15:16:25 2011 debug Mojolicious::Plugin::Config:14 [9664]: Reading config file "/home/depesz/sites/new.explain.depesz.com/explain.json".
+Thu Mar 10 15:16:25 2011 debug Explain::Plugin::Database:43 [9664]: Connecting database using: [
+  'dbi:Pg:database=depesz_explain;host=127.0.0.1;port=5900',
+  'depesz_explain',
+  undef,
+  {
+    'auto_commit' => '1',
+    'pg_server_prepare' => '0'
+  }
+]
+
+Thu Mar 10 15:16:25 2011 info Mojo::Server::Daemon:316 [9664]: Server listening (http://*:12004)
+Thu Mar 10 15:16:28 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:16:28 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:16:29 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.431623s, 2.317/s).
+Thu Mar 10 15:16:44 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/9oM (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:16:44 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:16:44 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.027114s, 36.881/s).
+Thu Mar 10 15:20:32 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:32 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:20:32 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.013203s, 75.740/s).
+Thu Mar 10 15:20:33 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:33 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:20:33 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.036023s, 27.760/s).
+Thu Mar 10 15:20:35 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:35 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:20:35 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003762s, 265.816/s).
+Thu Mar 10 15:20:36 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:36 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:20:36 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.021045s, 47.517/s).
+Thu Mar 10 15:20:36 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:36 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:20:36 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.009784s, 102.208/s).
+Thu Mar 10 15:20:37 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /contact (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:37 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->contact.
+Thu Mar 10 15:20:37 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.009371s, 106.712/s).
+Thu Mar 10 15:20:38 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:38 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:20:38 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003708s, 269.687/s).
+Thu Mar 10 15:20:41 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:41 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:20:41 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003719s, 268.889/s).
+Thu Mar 10 15:20:51 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /contact (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:51 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->contact.
+Thu Mar 10 15:20:51 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.005642s, 177.242/s).
+Thu Mar 10 15:20:56 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:56 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:20:56 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002477s, 403.714/s).
+Thu Mar 10 15:20:57 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:20:57 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:20:57 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.035246s, 28.372/s).
+Thu Mar 10 15:21:01 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/2 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:21:01 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:21:01 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.021629s, 46.234/s).
+Thu Mar 10 15:21:04 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/3 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:21:04 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:21:04 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.021902s, 45.658/s).
+Thu Mar 10 15:21:06 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/2 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:21:06 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:21:06 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.022094s, 45.261/s).
+Thu Mar 10 15:21:07 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:21:07 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:21:07 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.020859s, 47.941/s).
+Thu Mar 10 15:21:28 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/9oM (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:21:28 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:21:28 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.015096s, 66.243/s).
+Thu Mar 10 15:21:54 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/9oM (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:21:54 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:21:54 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.013835s, 72.280/s).
+Thu Mar 10 15:28:57 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /contact (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:28:57 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->contact.
+Thu Mar 10 15:28:57 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002570s, 389.105/s).
+Thu Mar 10 15:28:59 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:28:59 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:28:59 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003739s, 267.451/s).
+Thu Mar 10 15:30:14 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:30:14 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:30:14 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.035565s, 28.118/s).
+Thu Mar 10 15:30:15 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/jGO (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:30:15 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:30:15 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.006779s, 147.514/s).
+Thu Mar 10 15:34:07 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:34:07 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:34:07 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.004771s, 209.600/s).
+Thu Mar 10 15:34:08 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /contact (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:34:08 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->contact.
+Thu Mar 10 15:34:08 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003607s, 277.239/s).
+Thu Mar 10 15:34:09 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:34:09 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:34:09 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002421s, 413.052/s).
+Thu Mar 10 15:34:10 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /contact (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:34:10 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->contact.
+Thu Mar 10 15:34:10 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.004118s, 242.836/s).
+Thu Mar 10 15:35:03 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:35:03 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:35:03 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003736s, 267.666/s).
+Thu Mar 10 15:35:06 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:35:06 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:35:06 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.030598s, 32.682/s).
+Thu Mar 10 15:35:07 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:35:07 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:35:07 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003948s, 253.293/s).
+Thu Mar 10 15:35:08 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:35:08 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:35:08 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002309s, 433.088/s).
+Thu Mar 10 15:35:20 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /contact (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:35:20 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->contact.
+Thu Mar 10 15:35:20 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002565s, 389.864/s).
+Thu Mar 10 15:36:48 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:36:48 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:36:48 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003919s, 255.167/s).
+Thu Mar 10 15:37:07 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:07 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:37:07 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002324s, 430.293/s).
+Thu Mar 10 15:37:08 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:08 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:08 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.025715s, 38.888/s).
+Thu Mar 10 15:37:09 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:09 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:37:09 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003927s, 254.647/s).
+Thu Mar 10 15:37:11 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:11 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:11 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.030802s, 32.465/s).
+Thu Mar 10 15:37:13 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/2 (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:13 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:13 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.035544s, 28.134/s).
+Thu Mar 10 15:37:16 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/3 (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:16 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:16 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.022099s, 45.251/s).
+Thu Mar 10 15:37:18 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/4 (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:18 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:18 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.031042s, 32.214/s).
+Thu Mar 10 15:37:20 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/5 (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:20 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:20 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.022167s, 45.112/s).
+Thu Mar 10 15:37:21 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history/6 (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:21 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:21 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.036872s, 27.121/s).
+Thu Mar 10 15:37:22 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/dDq (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:22 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:37:22 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.008671s, 115.327/s).
+Thu Mar 10 15:37:28 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:37:28 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:37:28 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.004132s, 242.014/s).
+Thu Mar 10 15:37:45 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:45 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:37:45 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003975s, 251.572/s).
+Thu Mar 10 15:37:48 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:37:48 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:37:48 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.024544s, 40.743/s).
+Thu Mar 10 15:38:28 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:38:28 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:38:28 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002357s, 424.268/s).
+Thu Mar 10 15:38:36 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:38:36 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:38:36 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.023635s, 42.310/s).
+Thu Mar 10 15:38:37 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:38:37 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:38:37 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002346s, 426.257/s).
+Thu Mar 10 15:38:45 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:38:45 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:38:45 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.035901s, 27.854/s).
+Thu Mar 10 15:38:46 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /help (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:38:46 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->help.
+Thu Mar 10 15:38:46 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.004020s, 248.756/s).
+Thu Mar 10 15:38:47 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:38:47 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:38:47 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002754s, 363.108/s).
+Thu Mar 10 15:39:03 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:39:03 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:39:03 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003463s, 288.767/s).
+Thu Mar 10 15:39:06 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:39:06 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:39:06 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003730s, 268.097/s).
+Thu Mar 10 15:39:08 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:39:08 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:39:08 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.004498s, 222.321/s).
+Thu Mar 10 15:39:29 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:39:29 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:39:29 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.002321s, 430.849/s).
+Thu Mar 10 15:39:42 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; pl-PL; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.04 (lucid) Firefox/3.6.13).
+Thu Mar 10 15:39:42 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:39:42 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.021935s, 45.589/s).
+Thu Mar 10 15:39:46 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: POST / (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:39:46 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:39:46 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 302 Found (0.080912s, 12.359/s).
+Thu Mar 10 15:39:46 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:39:46 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:39:46 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.020144s, 49.643/s).
+Thu Mar 10 15:40:02 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: POST / (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:40:02 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:40:02 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 302 Found (0.234377s, 4.267/s).
+Thu Mar 10 15:40:02 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/dgm (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:40:02 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:40:02 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.060037s, 16.656/s).
+Thu Mar 10 15:40:47 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:40:47 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:40:47 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.021085s, 47.427/s).
+Thu Mar 10 15:40:50 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BUJ (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:40:50 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:40:50 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.011628s, 85.999/s).
+Thu Mar 10 15:40:54 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: POST / (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:40:54 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:40:55 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 302 Found (0.237831s, 4.205/s).
+Thu Mar 10 15:40:55 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/hGZ (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:40:55 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:40:55 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.065205s, 15.336/s).
+Thu Mar 10 15:41:19 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/hGZ (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:41:19 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:41:19 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.060119s, 16.634/s).
+Thu Mar 10 15:41:19 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.10 (maverick) Firefox/3.6.13).
+Thu Mar 10 15:41:19 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:41:19 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003791s, 263.783/s).
+Thu Mar 10 15:41:21 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/hGZ (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:41:21 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:41:21 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.058923s, 16.971/s).
+Thu Mar 10 15:42:19 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12).
+Thu Mar 10 15:42:19 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:42:19 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.003980s, 251.256/s).
+Thu Mar 10 15:43:50 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.14) Gecko/20110221 Ubuntu/10.10 (maverick) Firefox/3.6.14).
+Thu Mar 10 15:43:50 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:43:50 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.013713s, 72.924/s).
+Thu Mar 10 15:43:58 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Opera/9.80 (X11; Linux x86_64; U; en) Presto/2.8.104 Version/11.10).
+Thu Mar 10 15:43:58 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:43:58 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.019401s, 51.544/s).
+Thu Mar 10 15:47:01 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.107 Safari/534.13).
+Thu Mar 10 15:47:01 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:47:01 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.012172s, 82.156/s).
+Thu Mar 10 15:47:22 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /history (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.107 Safari/534.13).
+Thu Mar 10 15:47:22 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->history.
+Thu Mar 10 15:47:22 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.121990s, 8.197/s).
+Thu Mar 10 15:47:24 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/vZ9 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.107 Safari/534.13).
+Thu Mar 10 15:47:24 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:47:24 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.012062s, 82.905/s).
+Thu Mar 10 15:47:53 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/xLR (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.107 Safari/534.13).
+Thu Mar 10 15:47:53 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:47:53 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.008966s, 111.532/s).
+Thu Mar 10 15:48:50 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:48:50 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:48:50 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.018939s, 52.801/s).
+Thu Mar 10 15:50:02 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15) Gecko/20110303 Ubuntu/10.10 (maverick) Firefox/3.6.15).
+Thu Mar 10 15:50:02 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:50:02 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.018144s, 55.115/s).
+Thu Mar 10 15:51:30 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET / (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:51:30 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->index.
+Thu Mar 10 15:51:30 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.004340s, 230.415/s).
+Thu Mar 10 15:52:05 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:52:05 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:52:06 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.043761s, 22.851/s).
+Thu Mar 10 15:53:31 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:53:31 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:53:31 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.011976s, 83.500/s).
+Thu Mar 10 15:54:42 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:54:42 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:54:42 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.012104s, 82.617/s).
+Thu Mar 10 15:55:26 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:55:26 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:55:26 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.020273s, 49.327/s).
+Thu Mar 10 15:55:29 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:55:29 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:55:29 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.017675s, 56.577/s).
+Thu Mar 10 15:57:21 2011 debug Mojolicious::Plugin::RequestTimer:24 [9664]: GET /s/BNw (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5).
+Thu Mar 10 15:57:21 2011 debug Mojolicious::Routes:458 [9664]: Dispatching Explain::Controller->show.
+Thu Mar 10 15:57:21 2011 debug Mojolicious::Plugin::RequestTimer:48 [9664]: 200 OK (0.017894s, 55.885/s).
