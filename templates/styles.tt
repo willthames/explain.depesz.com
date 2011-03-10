@@ -1,0 +1,96 @@
+<style type="text/css">
+    html {font-size:100%}
+    body,h1,h2,h3,h4,h5,h6,div,p,ul,ol,dl,li,dt,dd,form,input,select,label,legend,fieldset,img,hr {margin:0;padding:0;font-size:1em;text-align:left;font-style:normal}
+    body {font-size:62.5%;font-family:Arial,Tahoma,Verdana,sans-serif}
+    a {text-decoration:underline}
+    a:hover {text-decoration:none}
+    p {padding-bottom:0.7em}
+    hr {display:none}
+    img {border:0}
+
+    /* */
+    * html .clear {position:/**/relative}
+    .clear {display:inline-block}
+    /* */
+    .clear:after {content:'.';display:block;height:0;line-height:0;visibility:hidden;clear:both}
+    .clear {display:inline-block}
+    /*\*/
+    * html .clear {float:left;float:/**/none}
+    .clear {display:block}
+    /* */
+
+    body {padding:10px 0}
+    h1 {font-size:3em;margin:10px;font-family:'dejavu sans mono;courier;monospace'}
+    h2 {font-size:1.5em;margin:10px}
+    h1 a {color:#000; text-decoration: none}
+    .explain {margin:0 10px;padding-bottom:50px;border:1px solid #384959;background:#ddd}
+    ul.tabs {display:block;list-style:none;background:#73859d;border-top:1px solid #cbd8e9;border-bottom:1px solid #384959}
+    ul.tabs li {display:inline;line-height:3em}
+    ul.tabs li a {margin:0 2px;font-size:1.2em;padding:5px;color:#485969;text-decoration:none;border:1px solid #384959;background:#fff}
+    .container {position:relative;top:20px;padding:5px 0;background:#fff}
+    .container pre, .container table {margin:0 10px}
+    .container pre {font-size:1.6em}
+
+    .explain table {border-collapse:collapse;border:none}
+    .explain th, .explain td {padding:0.2em 0.1em;font-size:1.4em;white-space:nowrap}
+    .explain th, .explain td {border-right:1px dotted #ccc;padding-left:8px;padding-right:8px}
+    .explain td.content {border-right:none;padding-left:0px;padding-right:0px}
+    .explain td {border-top:1px dotted #ccc;text-align:right}
+    .explain td.content {text-align:left}
+    .explain td.content div {position:relative}
+    .explain td.content span {position:absolute;top:0;left:-1.2em}
+    .explain td.content ul {list-style:none}
+    .explain td li {display:block}
+    .explain tr {background:#fff}
+    .explain tr:hover {background:#ccc}
+
+    tr.ex-1 {background:#fff}
+    tr.ex-2 {background:#FFFF66}
+    tr.ex-3 {background:#FF8033}
+    tr.ex-4 {background:#FF0000}
+
+    tr.in-1 {background:#fff}
+    tr.in-2 {background:#FFFF66}
+    tr.in-3 {background:#FF8033}
+    tr.in-4 {background:#FF0000}
+
+    tr.rx-1 {background:#fff}
+    tr.rx-2 {background:#FFFF66}
+    tr.rx-3 {background:#FF8033}
+    tr.rx-4 {background:#FF0000}
+
+    li.example1 {margin-left: 2em; background:#fff}
+    li.example2 {margin-left: 2em; background:#FFFF66}
+    li.example3 {margin-left: 2em; background:#FF8033}
+    li.example4 {margin-left: 2em; background:#FF0000}
+
+    a.new {margin-left:10px;font-size:1.4em;line-height:2.2em;color:#8090a0;text-decoration:none}
+    a.new b {margin-left:6px;font-weight:normal;padding:0.1em 0;border-bottom:1px dotted #8090a0}
+    a.new:hover {color:#154565}
+    a.new:hover b {border-bottom:1px solid #154565}
+    input { font-size: 1.5em }
+    textarea { font-size: 1.5em }
+    form {padding-left: 1em }
+
+    #history h2 {font-size:1.4em;font-style:italic;font-weight:normal;color:#555}
+    #history p {margin-left:3em}
+    #history p a {font-size:1.4em;font-weight:bold;color:#73859d;text-decoration:none}
+
+    #help h2 {font-size:1.4em;font-style:italic;font-weight:normal;color:#555}
+    #help p {margin-left:1em; font-size: 1.4em}
+    #help p a {font-weight:bold;color:#73859d;text-decoration:none}
+    #help ul li {font-size:1.4em}
+
+    #help dl {padding-left: 1em; font-size: 1.4em}
+    #help dl dt {font-weight: bold; font-size: 1.2em}
+    #help dl dd p {0.7em}
+
+    #contact table th { text-align: right }
+    #contact table td { text-align: left }
+    #contact table th.error { text-align: center; font-size: 2em; background: #f88}
+    #contact table th.confirmation { text-align: center; font-size: 2em; background: #8f8}
+    #contact p {margin-left:1em; font-size: 1.4em}
+
+    .explain tr.highlight td.content { background:url( '/static/images/asterisk_orange.png' ) no-repeat 2px 2px }
+    .explain tr.collapsed td.content { background:url( '/static/images/arrow_out.png' ) no-repeat 2px 2px }
+</style>

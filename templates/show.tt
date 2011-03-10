@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+[% row_class = 'odd' %]
+[% prefix = "&nbsp;&nbsp;&nbsp;&nbsp;" %]
+[% PROCESS show_macro.tt %]
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+        	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <title>explain.depesz.com</title>
+                [% PROCESS scripts.tt %]
+                [% PROCESS styles.tt %]
+        </head>
+        <body onload="Explain.init();">
+            <h1>=#&nbsp;<a href="http://explain.depesz.com" title="http://explain.depesz.com">explain</a>&nbsp;<a href="http://www.depesz.com" title="http://www.depesz.com">depesz.com</a>;</h1>
+                <div class="explain">
+[% WRAPPER tabs.tt %]
+                            <li><a href="#" onclick="Explain.mode('text'); return false;">text</a></li>
+                            <li><a href="#" onclick="Explain.mode('html'); return false;">html</a></li>
+[% END %]
+                        <div id="text" class="container" style="display:none">
+                                <pre>[% explain.source | html %]</pre>
+                        </div>
+                        <div id="html" class="container">
+                                <table id="explain" cellspacing="0" cellpadding="0">
+                                        <thead>
+                                                <tr>
+                                                    <th><a href="#" onclick="Explain.mark('ex'); return false;">Exclusive</a></th>
+                                                    <th><a href="#" onclick="Explain.mark('in'); return false;">Inclusive</a></th>
+                                                    <th><a href="#" onclick="Explain.mark('rx'); return false;">Rows x</a></th>
+                                                    <th>Node</th>
+                                                </tr>
+                                                <tr>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            [% print_row( explain.top_node, 0 ) %]
+                                        </tbody>
+                                </table>
+                        </div>
+                </div>
+        </body>
+</html>

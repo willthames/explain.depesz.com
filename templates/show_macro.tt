@@ -1,0 +1,108 @@
+[% MACRO print_row(node, level) BLOCK %]
+
+[% exclusive_point = 1 %]
+[% inclusive_point = 1 %]
+
+[% IF explain.top_node.total_inclusive_time != '' AND explain.top_node.total_inclusive_time > 0 AND node.total_exclusive_time != '' AND node.total_inclusive_time != '' %]
+        [% exclusive_point = node.total_exclusive_time / explain.top_node.total_inclusive_time %]
+        [% IF exclusive_point > 0.9 %]
+                [% exclusive_point = 4 %]
+        [% ELSIF exclusive_point > 0.5 %]
+                [% exclusive_point = 3 %]
+        [% ELSIF exclusive_point > 0.1 %]
+                [% exclusive_point = 2 %]
+        [% ELSE %]
+                [% exclusive_point = 1 %]
+        [% END %]
+
+        [% inclusive_point = node.total_inclusive_time / explain.top_node.total_inclusive_time %]
+        [% IF inclusive_point > 0.9 %]
+                [% inclusive_point = 4 %]
+        [% ELSIF inclusive_point > 0.5 %]
+                [% inclusive_point = 3 %]
+        [% ELSIF inclusive_point > 0.1 %]
+                [% inclusive_point = 2 %]
+        [% ELSE %]
+                [% inclusive_point = 1 %]
+        [% END %]
+[% END %]
+
+[% rows_x = 0 %]
+[% rows_x_mark = '' %]
+[% rows_point = 1 %]
+[% IF node.estimated_rows != '' && node.actual_rows != '' && node.estimated_rows > 0 && node.actual_rows > 0 %]
+        [% IF node.actual_rows > node.estimated_rows %]
+                [% rows_x = node.actual_rows / node.estimated_rows %]
+                [% rows_x_mark = '&darr;' %]
+        [% ELSE %]
+                [% rows_x = node.estimated_rows / node.actual_rows %]
+                [% rows_x_mark = '&uarr;' %]
+        [% END %]
+        [% IF rows_x > 1000 %]
+                [% rows_point = 4 %]
+        [% ELSIF rows_x > 100 %]
+                [% rows_point = 3 %]
+        [% ELSIF rows_x > 10 %]
+                [% rows_point = 2 %]
+        [% ELSE %]
+                [% rows_point = 1 %]
+        [% END %]
+[% END %]
+
+<tr class="[% row_class %]"  rel="[% exclusive_point %];[% inclusive_point %];[% rows_point %];[% level %]" onmouseover="Explain.highlight( this, 1 );" onmouseout="Explain.highlight( this, 0 );" onclick="Explain.collapse( this );">
+    [% row_class = ( row_class == 'odd' ? 'even' : 'odd' ) %]
+    <td>[% node.total_exclusive_time | format("%.3f") %]</td>
+    <td>[% node.total_inclusive_time | format("%.3f") %]</td>
+    <td>[% rows_x_mark %] [% rows_x | format("%.1f") %]</td>
+    <td class="content">
+        <div style="margin-left:[% IF (level > 0) %][% (level + 2) %][% ELSE %]2[% END %]em">
+                [% IF (level > 0) %]
+                        <span>-&gt;</span>
+                [% END %]
+                [% node.type %]
+                [% IF node.type == "Bitmap Heap Scan" %] on [% node.scan_on.table_name %]&nbsp;[% node.scan_on.table_alias %][% END %]
+                [% IF node.type == "Bitmap Index Scan" %] on [% node.scan_on.index_name %][% END %]
+                [% IF node.type == "Index Scan" %] using [% node.scan_on.index_name %] on [% node.scan_on.table_name %]&nbsp;[% node.scan_on.table_alias %][% END %]
+                [% IF node.type == "Seq Scan" %] on [% node.scan_on.table_name %]&nbsp;[% node.scan_on.table_alias %][% END %]
+                (cost=[% node.estimated_startup_cost %]..[% node.estimated_total_cost %] rows=[% node.estimated_rows %] width=[% node.estimated_row_width %])
+                (actual time=[% node.actual_time_first %]..[% node.actual_time_last %] rows=[% node.actual_rows %] loops=[% node.actual_loops %])
+                [% IF node.extra_info %]
+                        <ul>
+                                [% FOREACH line IN node.extra_info %]<li>[% line | html %]</li>[% END %]
+                        <ul>
+                [% END %]
+        </div>
+    </td>
+</tr>
+[% IF node.initplans %]
+<tr class="[% row_class %]">
+    <td colspan="3">
+    </td>
+    <td class="content">
+        <div style="margin-left:[% IF (level > 0) %][% (level + 2) %][% ELSE %]2[% END %]em">
+            InitPlan ( for [% node.type %] )
+        </div>
+    </td>
+</tr>
+[% FOREACH subnode IN node.initplans %]
+[% print_row(subnode, level + 1) %]
+[% END %]
+[% END %]
+[% FOREACH subnode IN node.sub_nodes %]
+[% print_row(subnode, level + 1) %]
+[% END %]
+[% IF node.subplans %]
+<tr>
+    <td colspan="3">
+    </td>
+    <td class="content">
+        <div style="margin-left:[% IF (level > 0) %][% (level + 2) %][% ELSE %]2[% END %]em">
+            SubPlan ( for [% node.type %] )
+        </div>
+    </td>
+</tr>
+[% FOREACH subnode IN node.subplans %]
+[% print_row(subnode, level + 1) %]
+[% END %]
+[% END %]
+[% END %]

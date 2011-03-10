@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="pl,en" />
+        <title>explain.depesz.com</title>
+        [% PROCESS scripts.tt %]
+        [% PROCESS styles.tt %]
+    </head>
+    <body>
+        <h1>=#&nbsp;<a href="http://explain.depesz.com" title="http://explain.depesz.com">explain</a>&nbsp;<a href="http://www.depesz.com" title="http://www.depesz.com">depesz.com</a>;</h1>
+        <div class="explain">
+            [% WRAPPER tabs.tt %][% END %]
+            <div id="help" class="container">
+                <p>explain.depesz.com is tool for finding real cause for slow queries.</p>
+
+                <p>Generally, one would use EXPLAIN ANALYZE query; and read the output. The problem is that not all
+                parts of the output are easily understandable by anybody, and it's not always obvious whether node
+                that executes in 17.3ms is faster or slower than the one that runs in 100ms - given the fact that
+                the first one is executed 7 times.</p>
+
+<p>To use the site, simply go to its <a href="/">first page</a> and paste there explain analyze output from your psql.</p>
+
+<p>This output could look like <a href="/s/ME#text">this</a>.</p>
+
+<p>After uploading you will be directed to page which shows parsed, and nicely (well, at least nice for me :) colorized to put emphasis on important parts. This could look like <a href="/s/lB">this</a>.</p>
+
+<p>Side note: the url for colorized output is persistent, so you can simply use it to show it to
+others - for example - for those nice guys on irc channel #postgresql on freenode.</p>
+
+<p>This graph uses 4 colours to mark important things:</p>
+<ul>
+    <li class="example1">white background - everything is fine</li>
+    <li class="example2">yellow background - given node is worrying</li>
+    <li class="example3">brown background - given node is more worrying</li>
+    <li class="example4">red background - given node is very worrying</li>
+</ul>
+
+<p>Which color is used, is choosen based on which mode you will use: "Exclusive", "Inclusive" or "Rows X".</p>
+
+<p>Their meaning:</p>
+
+    <h2>Exclusive</h2>
+<p>This is total amount of time PostgreSQL spent evaluating this node, without time spent in its subnodes. If the node has been executed many times (for example because of Nested Loop plan), this time will be correctly multiplied.</p>
+<p>Colors:</p>
+<ul>
+    <li class="example1">white background - is choosen if exclusive time &lt;= 10% of total query time</li>
+    <li class="example2">yellow background - is choosen if exclusive time &isin; (10%, 50%&gt; of total query time</li>
+    <li class="example3">brown background - is choosen if exclusive time &isin; (50%, 90%&gt; of total query time</li>
+    <li class="example4">red background - is choosen if exclusive time &gt; 90% of total query time</li>
+</ul>
+    <h2>Inclusive</h2>
+<p>This is just like Exclusive, but it doesn't exclude time of subnodes. So, by definition - top node will have Inclusive time equal to total time of query.</p>
+<p>Colors:</p>
+<ul>
+    <li class="example1">white background - is choosen if inclusive time &lt;= 10% of total query time</li>
+    <li class="example2">yellow background - is choosen if inclusive time &isin; (10%, 50%&gt; of total query time</li>
+    <li class="example3">brown background - is choosen if inclusive time &isin; (50%, 90%&gt; of total query time</li>
+    <li class="example4">red background - is choosen if inclusive time &gt; 90% of total query time</li>
+</ul>
+    <h2>Rows X</h2>
+<p>This value stores information about how big was planner mistake when it estimated return row count.</p>
+<p>For example - if planner estimated that given node will return 230 rows, but it returned 14118 rows, the error is 14118/230 == 61.4.</p>
+<p>It has to be noted that if the numbers were the other way around (estimated 14118, but really only 230), the Rows X would be the same. To show whether planner underestimated or overestimated - there is an arrow showing either &darr; - if planner underestimated rowcount, or &uarr; if it overestimated.</p>
+<p>Colors:</p>
+<ul>
+    <li class="example1">white background - is choosen if rows-x &lt;= 10</li>
+    <li class="example2">yellow background - is choosen if rows-x &isin; (10, 100&gt;</li>
+    <li class="example3">brown background - is choosen if rows-x &isin; (100, 1000&gt;</li>
+    <li class="example4">red background - is choosen if rows-x &gt; 1000</li>
+</ul>
+
+            </div>
+        </div>
+    </body>
+</html>
