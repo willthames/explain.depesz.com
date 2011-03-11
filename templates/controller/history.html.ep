@@ -3,7 +3,7 @@
 % my $title = 'History';
 % title $title;
 
-<h1><%= $title =%><small>(page <%= $rs->{ page } =%>)</small></h1>
+<h1><%= $title %> <small>(<%= $rs->{ since } %> - <%= $rs->{ to } %>)</small></h1>
 
 % my @plans = @{ $rs->{ rows } };
 
@@ -35,16 +35,10 @@
 
     </div>
 
-    % if ( $rs->{ has_previous } || $rs->{ has_next } ) {
-        <div class="paginator">
-            % if ( $rs->{ has_previous } ) {
-                <a class="prev" href="<%= url_for 'current', p => ( $rs->{ page } - 1 ) %>" title="previous page" rel="prev">previous</a>
-            % }
-            % if ( $rs->{ has_next } ) {
-                <a class="next" href="<%= url_for 'current', p => ( $rs->{ page } + 1 ) %>" title="next page" rel="next">next</a>
-            % }
-        </div>
-    % }
+    <div class="paginator">
+        <a class="newer" href="<%= url_for 'current', date => $rs->{ next_date } %>" title="newer" rel="next">newer</a>
+        <a class="older" href="<%= url_for 'current', date => $rs->{ prev_date } %>" title="older" rel="prev">older</a>
+    </div>
 
 % } else {
     <p class="msg msg-no-results">

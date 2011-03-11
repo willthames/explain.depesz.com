@@ -33,27 +33,27 @@ sub index {
     my $is_public = $self->req->param( 'is_public' ) ? 1 : 0;
 
     # save to database
-    my $plan_id = $self->database->save_with_random_name( $plan, $is_public );
+    my $id = $self->database->save_with_random_name( $plan, $is_public );
 
-    # redirect to /show/:plan_id
-    return $self->redirect_to( 'show', 'plan_id' => $plan_id );
+    # redirect to /show/:id
+    return $self->redirect_to( 'show', id => $id );
 }
 
 sub show {
     my $self = shift;
 
-    # value of "/:plan_id" param
-    my $plan_id = defined $self->stash->{ plan_id }
-                        ? $self->stash->{ plan_id } : '';
+    # value of "/:id" param
+    my $id = defined $self->stash->{ id }
+                   ? $self->stash->{ id } : '';
 
     # missing or invalid
-    return $self->redirect_to( 'index' ) unless $plan_id =~ m{\A[a-zA-Z0-9]+\z};
+    return $self->redirect_to( 'new-explain' ) unless $id =~ m{\A[a-zA-Z0-9]+\z};
 
     # get plan source from database
-    my $plan = $self->database->get_plan( $plan_id );
+    my $plan = $self->database->get_plan( $id );
 
     # not found in database
-    return $self->redirect_to( 'index', status => 404 ) unless $plan;
+    return $self->redirect_to( 'new-explain', status => 404 ) unless $plan;
 
     # make explanation
     my $explain = eval { Pg::Explain->new( source => $plan ); };
@@ -61,7 +61,7 @@ sub show {
     # plans are validated before save, so this should never happen
     if ( $EVAL_ERROR ) {
         $self->app->log->error( $EVAL_ERROR );
-        return $self->redirect_to( 'index' );
+        return $self->redirect_to( 'new-explain' );
     }
 
     # validate explain
@@ -70,7 +70,7 @@ sub show {
     # as above, should never happen
     if ( $EVAL_ERROR ) {
         $self->app->log->error( $EVAL_ERROR );
-        return $self->redirect_to( 'index' );
+        return $self->redirect_to( 'new-explain' );
     }
 
     # put explain to stash
@@ -83,11 +83,11 @@ sub show {
 sub history {
     my $self = shift;
 
-    # p
-    my $p = $self->param( 'p' );
+    # date
+    my $date = $self->param( 'date' );
 
     # get result set from database
-    my $rs = $self->database->get_public_list_paged( $p );
+    my $rs = $self->database->get_public_list_paged( $date );
 
     # put result set to stash
     $self->stash( rs => $rs );

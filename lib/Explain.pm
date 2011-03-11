@@ -27,13 +27,13 @@ sub startup {
     my $routes = $self->routes;
 
     # route: 'index'
-    $routes->route( '/' )->to( 'controller#index' )->name( 'index' );
+    $routes->route( '/' )->to( 'controller#index' )->name( 'new-explain' );
 
     # route: 'show'
-    $routes->route( '/s/:plan_id' )->to( 'controller#show' )->name( 'show' );
+    $routes->route( '/s/:id' )->to( 'controller#show', id => '' )->name( 'show' );
 
     # route: 'history'
-    $routes->route( '/history/:p' )->to( 'controller#history', p => 1 )->name( 'history' );
+    $routes->route( '/history/:date' )->to( 'controller#history', date => '' )->name( 'history' );
 
     # route: 'contact'
     $routes->route( '/contact' )->to( 'controller#contact' )->name( 'contact' );

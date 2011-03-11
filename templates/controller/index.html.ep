@@ -5,25 +5,19 @@
 
 <h1><%= $title =%></h1>
 
-<form id="new-explain" method="post" action="<%= url_for( 'index' ) %>">
+<form id="new-explain" method="post" action="<%= url_for 'current' %>">
 
-    <div class="fe fe-odd fe-first fe_plan">
-        <div class="fe-lbl">
-            <label for="plan">Paste your explain/explain analyze here: <sup class="fe-required">*</sup></label>
-        </div>
-        <div class="fe-el">
-            <textarea id="plan" name="plan"></textarea>
-        </div>
+    <div class="fe fe-first fe_plan">
+        <label for="plan">Paste your explain/explain analyze here: <sup class="fe-required">*</sup></label>
+        <textarea id="plan" name="plan"></textarea>
     </div>
 
-    <div class="fe fe-even fe_is_public">
-        <div>
-            <label for="is_public">Is public?</label>
-            <input type="checkbox" class="checkbox" id="is_public" name="is_public" value="1" checked="checked" />
-        </div>
+    <div class="fe fe_is_public">
+        <label for="is_public">I want this plan to be visible on <a href="<%= url_for 'history' %>" title="link to: history">history</a> page.</label>
+        <input type="checkbox" class="checkbox" id="is_public" name="is_public" value="1" checked="checked" />
     </div>
 
-    <div class="fe fe-odd fe-last fe-buttons">
+    <div class="fe fe-last fe-buttons">
         <button type="submit" name="submit_plan" id="submit_plan"><span>Submit</span></button>
     </div>
 

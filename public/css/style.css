@@ -256,10 +256,7 @@ form#contact            {max-width:500px}
 
 form .fe                {margin:0;padding:10px 0;background:#fff;border-bottom:1px solid #d0d8d9}
 form .fe-first          {padding-top:0}
-form .fe-even           {background:#e5ecf9}
-form .fe-last           {border:0;background:none}
-
-form .fe div            {margin:0 10px}
+form .fe-last           {border:0}
 
 label, input,       textarea       {display:block;width:99%;margin:0;padding:0;font-size:1.1em;color:#123}
 label                              {padding-bottom:0.35em}
@@ -268,11 +265,13 @@ label                              {padding-bottom:0.35em}
        input:focus, textarea:focus {border-color:#666}
                     textarea       {height:300px}
 
-.fe_is_public div {position:relative}
-.fe_is_public input {position:absolute;top:2px;left:2px;width:auto}
+.fe_is_public       {position:relative}
+.fe_is_public input {position:absolute;top:12px;left:5px;width:auto}
 .fe_is_public label {width:auto;margin-left:30px}
 
-*:first-child+html .fe_is_public input {border:0;top:0;left:0}
+*:first-child+html .fe_is_public input {border:0}
+
+form label a {color:#222}
 
 form .fe-buttons                    {padding:5px 0 0 0}
 form .fe-buttons button             {display:block;float:right;margin-left:5px;border:1px solid #d0d8d8;background:#e5ecf9}
@@ -296,8 +295,8 @@ div.history li a:hover  {border:1px solid #a60;background:#e80;color:#fff}
 
 div.paginator           {position:relative;height:3em}
 div.paginator a         {position:absolute;top:0;font-size:1.1em;color:#234}
-div.paginator a.next    {right:0}
-div.paginator a.prev    {left:0}
+div.paginator a.older   {right:0}
+div.paginator a.newer   {left:0}
 
 footer                  {padding-top:15px;background:url('../img/sprite.png') repeat-x 0 -155px}
 footer div              {padding-top:10px;background:#16212c}

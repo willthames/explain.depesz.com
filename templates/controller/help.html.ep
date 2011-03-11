@@ -12,7 +12,7 @@ that not all parts of the output are easily understandable by anybody, and it's 
 whether node that executes in 17.3ms is faster or slower than the one that runs in 100ms - given the
 fact that the first one is executed 7 times.</p>
 
-<p>To use the site, simply go to <a href="<%= url_for 'index' %>" title="link to: index">first page</a>
+<p>To use the site, simply go to <a href="<%= url_for 'new-explain' %>" title="link to: new explain">first page</a>
 and paste there explain analyze output from your psql.</p>
 
 <p>After uploading you will be directed to page which shows parsed, and nicely (well, at least

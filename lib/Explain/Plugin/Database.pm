@@ -2,6 +2,8 @@ package Explain::Plugin::Database;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
+use Date::Simple;
+
 use Carp;
 use DBI;
 
@@ -104,52 +106,45 @@ sub get_public_list {
         { Slice => { } },
         'YYYY-MM-DD'
     );
-}
+} 
 
 sub get_public_list_paged {
     my $self = shift;
 
-    my $p     = ( shift || '' ) =~ /\A(\d+)\z/ ? $1 : 1;
-    my $limit = ( shift || '' ) =~ /\A(\d+)\z/ ? $1 : 30;
+    # "date" to Date::Simple
+    my $to = eval { Date::Simple->new( shift || 0 ) };
 
-    # result, response...
+    # use "now" if "date" not given/valid
+    $to ||= Date::Simple->new( );
+
+    my $since = $to - 7;
+
     my $rs = {
-        page          => $p,
-        rows_per_page => $limit,
-        has_previous  => ( $p > 1 ? 1 : 0 ),
-        has_next      => 0,
-        rows          => []
+        since   => $since,
+        to      => $to,
+        rows    => [],
     };
-
-    # OFFSET
-    my $offset = ( $p - 1 ) * $limit;
-
-    # LIMIT = $limit + 1, to see do we have "next"
-    $limit++;
 
     # select
     my $rows = $self->dbh->selectall_arrayref(
-        'SELECT id, to_char( entered_on, ? ) as date FROM plans WHERE is_public ORDER BY entered_on DESC LIMIT ? OFFSET ?',
+        'SELECT id, to_char( entered_on, ? ) as date
+           FROM plans
+          WHERE is_public
+            AND entered_on::date >  ?::date
+            AND entered_on::date <= ?::date
+       ORDER BY entered_on
+           DESC',
         { Slice => { } },
-        'YYYY-MM-DD', $limit, $offset
+        'YYYY-MM-DD',
+        $since->as_str( '%Y-%m-%d' ),
+           $to->as_str( '%Y-%m-%d' )
     );
 
-    # got results
-    if ( my $count = scalar @{ $rows || [] } ) {
+    $rs->{ next_date } = ( $to + 7 )->as_str( '%Y-%m-%d' );
+    $rs->{ prev_date } = ( $since  )->as_str( '%Y-%m-%d' );
 
-        # there is more (at least 1 more)
-        if ( $count == $limit ) {
-
-            # set "has_next"
-            $rs->{ has_next } = 1;
-
-            # remove "test" row
-            pop @{ $rows };
-        }
-
-        # set "rows"
-        $rs->{ rows } = $rows;
-    }
+    # set "rows"
+    $rs->{ rows } = $rows;
 
     return $rs;
 }
