@@ -2,35 +2,75 @@
 
     var Explain = {
 
-        init : function( ) {
+        _form  : null,
+        _table : null,
 
-            return this.each( function( ) {
 
-                $( this ).find( 'tbody tr' ).each( function( ) {
+        init : function( form, table ) {
 
-                    var row = $( this );
+            this._setForm( form );
 
-                    $.map( [ 'mouseover', 'mouseout', 'click' ], function( event, i ) {
-                        row.bind( event, function( e ) {
-                            Explain[ '_' + event ].apply( row, [ e ] );
-                        } );
-                    } );
+            this._setTable( table );
+        },
 
-                } );
+        _setForm : function( form ) {
 
-            } );
+            form = $( form );
+
+            form.bind( 'submit', $.proxy( this, '_formSubmit' ) );
+
+            form.find( 'input:checkbox' ).each( $.proxy( function( i, input ) {
+
+                input = $( input );
+
+                if ( !input.attr( 'name' ).match( /^(ce|ci|cx|ve|vi|vx|vr|vl)$/ ) ) return true;
+
+                input.bind( 'change', $.proxy( function( e ) {
+
+                    this._inputChange( e, input );
+
+                }, this ) );
+
+            }, this ) );
+
+            this._form = form;
+        },
+
+        _setTable : function( table ) {
+
+            table = $( table );
+
+            this._table = table;
+
+            this._table.find( 'tbody tr' ).each( $.proxy( function( i, row ) {
+
+                var row = $( row );
+
+                row.bind( 'mouseover', $.proxy( function( e ) {
+                    this._mouseover( e, row );
+                }, this ) );
+
+                row.bind( 'mouseout', $.proxy( function( e ) {
+                    this._mouseout( e, row );
+                }, this ) );
+
+                row.bind( 'click', $.proxy( function( e ) {
+                    this._click( e, row );
+                }, this ) );
+
+            }, this ) );
 
         },
 
-        _mouseover : function( e ) {
+        _mouseover : function( e, row ) {
 
-            this.addClass( 'hover' );
+            row.addClass( 'hover' );
 
-            var level = parseInt( this.attr( 'data-level' ) );
+            var level = parseInt( row.attr( 'data-level' ) );
 
-            this.nextAll( ).each( function( i, row ) {
+            row.nextAll( ).each( function( i, r ) {
 
-                var r = $( row );
+                var r = $( r );
 
                 var l = r.attr( 'data-level' )
 
@@ -41,24 +81,24 @@
             } );
         },
 
-        _mouseout : function( e ) {
+        _mouseout : function( e, row ) {
 
-            this.removeClass( 'hover' );
+            row.removeClass( 'hover' );
 
-            this.parent( ).find( '.sub-n' ).removeClass( 'sub-n' );
+            row.parent( ).find( '.sub-n' ).removeClass( 'sub-n' );
         },
 
-        _click : function( e ) {
+        _click : function( e, row ) {
 
-            var isCollapsed = this.hasClass( 'collapsed' ) ? true : false;
+            var isCollapsed = row.hasClass( 'collapsed' ) ? true : false;
 
-            var level = parseInt( this.attr( 'data-level' ) );
+            var level = parseInt( row.attr( 'data-level' ) );
 
             var affected = 0;
 
-            this.nextAll( ).each( function( i, row ) {
+            row.nextAll( ).each( function( i, r ) {
 
-                var r = $( row );
+                var r = $( r );
 
                 var l = r.attr( 'data-level' );
 
@@ -81,21 +121,7 @@
 
             if ( ! affected ) return;
 
-            this.toggleClass( 'collapsed' );
-        },
-
-        toggleColumn : function( column, a ) {
-
-            var a = $( a );
-
-            var table = a.parents( 'table' ).get( 0 );
-
-            if ( !table ) return;
-
-            table = $( table );
-
-            table.find( 'td.' + column ).toggleClass( 'tight' );
-            table.find( 'th.' + column ).toggleClass( 'tight' );
+            row.toggleClass( 'collapsed' );
         },
 
         colorize : function( column, a ) {
@@ -122,9 +148,9 @@
 
         },
 
-        toggleView : function( view ) {
+        toggleView : function( view, link ) {
 
-            var link = $( this );
+            var link = $( link );
 
             if ( link.hasClass( 'current' ) ) return;
 
@@ -142,6 +168,54 @@
 
             result.find( 'div.result-html' ).show( );
             result.find( 'div.result-text' ).hide( );
+        },
+
+        _formSubmit : function( ) {
+
+            var cfg = [];
+
+            this._form.find( 'input:checkbox' ).each( function( i, input ) {
+
+                input = $( input );
+
+                // skip
+                if ( !input.attr( 'name' ).match( /^(ce|ci|cx|ve|vi|vx|vr|vl)$/ ) ) return true;
+
+                cfg.push( input.attr( 'name' ) + '=' + ( input.is( ':checked' ) ? 1 : 0 ) );
+
+            } );
+
+            // set cookie
+            $.cookie( 'explain', cfg.join( '|' ) );
+
+            // cancel form submit
+            return false;
+        },
+
+        _inputChange : function( e, input ) {
+
+            var name = input.attr( 'name' );
+
+            // column visibility
+            if ( input.attr( /^(ve|vi|vx|vr|vl)$/ ) ) {
+
+                // column
+                var c = input.attr( 'name' ).substr( 1, 1 );
+
+                // selector
+                var s = '#explain th.' + c + ', #explain td.' + c;
+
+                if ( input.is( ':checked' ) ) {
+
+                    $( s ).removeClass( 'tight' );
+
+                } else {
+
+                    $( s ).addClass( 'tight' );
+
+                }
+            }
+
         }
     };
 
@@ -160,13 +234,13 @@
         if ( Explain[ method ] ) {
 
             // "proxy" to: Explain[ 'method' ]( ... )
-            return Explain[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+            return Explain[method].apply( Explain, Array.prototype.slice.call( arguments, 1 ));
 
         // usage: $( 'table#id' ).explain( );
         } else if ( typeof method === 'object' || ! method ) {
 
             // "proxy" to: Explain.init( ... )
-            return Explain.init.apply( this, arguments );
+            return Explain.init.apply( Explain, arguments );
 
         // ...what can I do?
         } else {
