@@ -36,10 +36,10 @@
             <header>
                 <hgroup>
                     <h1>
-                    % if ( 'new-explain' eq stash->{ action } ) {
-                    <span><strong>explain</strong>.depesz.com</span>
+                    % if ( $self->match->endpoint->name eq 'new-explain' ) {
+                        <span><strong>explain</strong>.depesz.com</span>
                     % } else {
-                    <a href="<%= url_for 'new-explain' %>" title="link to: new explain" rel="permalink"><strong>explain</strong>.depesz.com</a>
+                        <a href="<%= url_for 'new-explain' %>" title="link to: new explain" rel="permalink"><strong>explain</strong>.depesz.com</a>
                     % }
                     </h1>
                     <h2><span>A tool for finding a real cause for slow queries.</span></h2>
@@ -52,7 +52,7 @@
                     <li class="item item-<%= $item %>">
                     % my $name = $item;
                     %    $name =~ s/\-/ /;
-                    % if ( stash( 'action' ) eq $item ) {
+                    % if ( $self->match->endpoint->name eq $item ) {
                         <span><%= $name =%></span>
                     % } else {
                         <a href="<%= url_for $item %>" title="link to: <%= $name %>" rel="permalink"><%= $name =%></a>

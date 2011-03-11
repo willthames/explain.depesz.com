@@ -2,10 +2,11 @@ package Explain::Plugin::Database;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
-use Date::Simple;
+use Mojo::Util 'trim';
 
 use Carp;
 use DBI;
+use Date::Simple;
 
 __PACKAGE__->attr( dbh => undef );
 
@@ -111,42 +112,65 @@ sub get_public_list {
 sub get_public_list_paged {
     my $self = shift;
 
-    # "date" to Date::Simple
-    my $to = eval { Date::Simple->new( shift || 0 ) };
+    # param "date"
+    my $date = defined( $_[0] ) ? $_[0] : '';
 
-    # use "now" if "date" not given/valid
-    $to ||= Date::Simple->new( );
+    # trim
+    trim $date;
 
-    my $since = $to - 7;
+    # today
+    my $today = Date::Simple->new;
 
-    my $rs = {
-        since   => $since,
-        to      => $to,
-        rows    => [],
-    };
+    # scalar $date to Date::Simple
+    my $to = eval { Date::Simple->new( $date ) };
+
+    # error
+    unless ( $to ) {
+
+        # invalid date, like: 2010-02-31
+        return { error => qq|Invalid date "$date" given.| }
+            if $date =~ /\A\d\d\d\d\-\d\d\-\d\d\z/;
+
+        # invalid format
+        return { error => qq|Invalid value "$date" given.| }
+            if length $date;
+
+        # fallback
+        $to = $today;
+    }
+
+    # time travel exception
+    return { error => qq|Date "$date" is in future!| } if $to > $today;
+
+    # since SCALAR value
+    my $since = ( $to - 7 )->as_str( '%Y-%m-%d' );
 
     # select
     my $rows = $self->dbh->selectall_arrayref(
         'SELECT id, to_char( entered_on, ? ) as date
            FROM plans
           WHERE is_public
-            AND entered_on::date >  ?::date
-            AND entered_on::date <= ?::date
+            AND entered_on > ?::date
+            AND entered_on < ?::date
        ORDER BY entered_on
            DESC',
         { Slice => { } },
         'YYYY-MM-DD',
-        $since->as_str( '%Y-%m-%d' ),
-           $to->as_str( '%Y-%m-%d' )
+        $since,
+        ( $to + 1 )->as_str( '%Y-%m-%d' )
     );
 
-    $rs->{ next_date } = ( $to + 7 )->as_str( '%Y-%m-%d' );
-    $rs->{ prev_date } = ( $since  )->as_str( '%Y-%m-%d' );
+    # next week
+    my $next = $to + 7;
+       $next = ( $next > $today ) ? undef : $next->as_str( '%Y-%m-%d' );
 
-    # set "rows"
-    $rs->{ rows } = $rows;
-
-    return $rs;
+    return {
+        since     => $since,
+        to        => $to->as_str( '%Y-%m-%d' ),
+        rows      => $rows || [],
+        next_date => $next,
+        prev_date => $since
+    };
 }
 
 sub DESTROY {
