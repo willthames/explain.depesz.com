@@ -4,15 +4,27 @@
 % title $title;
 
 
+%# c = e|i|x|m (colorize = exclusive|inclusive|rows-x|mixed)
+%# ve   - visibility of "exclusive" column
+%# vi   - visibility of "inclusive" column
+%# ...
+
 % my @cookie = grep { $_->name eq 'explain' } @{ $self->req->cookies };
 % my $cookie = scalar @cookie ? b( $cookie[0]->value )->url_unescape : '';
-%
-% my @cfg = split /\|/, $cookie || 'ce=1|ci=1|cx=1|ve=1|vi=1|vx=1|vr=1|vl=1';
+
+% my @cfg = split /\|/, $cookie || '';
 % my $cfg = {};
 %
 % for ( @cfg ) {
-%   next unless $_ =~ /\A(ce|ci|cx|ve|vi|vx|vr|vl)\=(0|1)\z/;
+%   next unless $_ =~ /\A(c|ve|vi|vx|vr|vl)\=([eixm01]{1})\z/;
 %   $cfg->{ $1 } = $2;
+% }
+%
+% $cfg->{ c } = 'm' unless $cfg->{ c } && $cfg->{ c } =~ /\A(e|i|x|m)\z/;
+%
+% for ( qw( ve vi vx vr vl ) ) {
+%   next if exists $cfg->{ $_ } && $cfg->{ $_ } =~ /\A(0|1)\z/;
+%   $cfg->{ $_ } = 1;
 % }
 
 
@@ -92,14 +104,20 @@
 
 % my $margin = ( $level + 1 ) * 22;
 
-    <tr class="<%= $row_class->( 'n c-mix' ) =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
-        <td class="e c-<%= $exclusive_point =%>">
+% my $row_color = $cfg->{ c };
+
+%    if ( $row_color eq 'e' ) { $row_color = $exclusive_point; }
+% elsif ( $row_color eq 'i' ) { $row_color = $inclusive_point; }
+% elsif ( $row_color eq 'x' ) { $row_color = $rows_x_point;    }
+
+    <tr class="<%= $row_class->( 'n c-' . $row_color ) =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
+        <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
             <span><%= sprintf '%.3f', $node->total_exclusive_time =%></span>
         </td>
-        <td class="i c-<%= $inclusive_point =%>">
+        <td class="i c-<%= $inclusive_point =%><%= $cfg->{ vi } ? '' : ' tight' %>">
             <span><%= sprintf '%.3f', $node->total_inclusive_time =%></span>
         </td>
-        <td class="x c-<%= $rows_x_point =%>">
+        <td class="x c-<%= $rows_x_point =%><%= $cfg->{ vx } ? '' : ' tight' %>">
             <span>
                 <%== $rows_x_mark eq 'up' ? '&uarr;' : '&darr;' %>
                 <%= sprintf '%.1f', $rows_x %>
@@ -161,11 +179,11 @@
     % if ( $node->initplans ) {
 
         <tr class="<%= $row_class->( 'ip' ) %>" data-level="<%= $level =%>">
-            <td class="e"><span>&nbsp;</span></td>
-            <td class="i"><span>&nbsp;</span></td>
-            <td class="x"><span>&nbsp;</span></td>
-            <td class="r"><span>&nbsp;</span></td>
-            <td class="l"><span>&nbsp;</span></td>
+            <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="n">
                 <div class="n" style="margin-left:<%= $margin =%>px">
                     <p><span>Initplan (for <%= $node->type =%>)</span></p>
@@ -187,11 +205,11 @@
     % if ( $node->subplans ) {
 
         <tr class="<%= $row_class->( 'sp' ) %>" data-level="<%= $level =%>">
-            <td class="e"><span>&nbsp;</span></td>
-            <td class="i"><span>&nbsp;</span></td>
-            <td class="x"><span>&nbsp;</span></td>
-            <td class="r"><span>&nbsp;</span></td>
-            <td class="l"><span>&nbsp;</span></td>
+            <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="n">
                 <div class="n" style="margin-left:<%= $margin =%>px">
                     <p><span>SubPlan (for <%= $node->type =%>)</span></p>
@@ -206,26 +224,30 @@
 
 % end;
 
-
 <h1>Results <small>(<%= $title =%>)</small></h1>
 
+<form id="explain-form" method="get" action="<%= url_for 'current' %>" autocomplete="off">
 
-<form id="explain-form" method="get" action="<%= url_for 'current' %>">
     <h3>Colorize</h3>
     <ul>
         <li>
-            <input type="checkbox" name="ce" id="ce" value="1"<%= $cfg->{ ce } ? ' checked="checked"' : '' %> />
+            <input type="radio" name="c" id="ce" value="e"<%= $cfg->{ c } eq 'e' ? ' checked="checked"' : '' %> />
             <label for="ce">exclusive</label>
         </li>
         <li>
-            <input type="checkbox" name="ci" id="ci" value="1"<%= $cfg->{ ci } ? ' checked="checked"' : '' %> />
+            <input type="radio" name="c" id="ci" value="i"<%= $cfg->{ c } eq 'i' ? ' checked="checked"' : '' %> />
             <label for="ci">inclusive</label>
         </li>
         <li>
-            <input type="checkbox" name="cx" id="cx" value="1"<%= $cfg->{ cx } ? ' checked="checked"' : '' %> />
+            <input type="radio" name="c" id="cx" value="x"<%= $cfg->{ c } eq 'x' ? ' checked="checked"' : '' %> />
             <label for="cx">rows x</label>
         </li>
+        <li>
+            <input type="radio" name="c" id="cm" value="m"<%= $cfg->{ c } eq 'm' ? ' checked="checked"' : '' %> />
+            <label for="cm">mixed</label>
+        </li>
     </ul>
+
     <h3>Columns visibility</h3>
     <ul>
         <li>
@@ -249,14 +271,11 @@
             <label for="vl">loops</label>
         </li>
     </ul>
-    <button type="submit" name="save-settings" id="save-settings">Save settings</button>
+
+    <button type="submit" name="save-settings" id="save-settings"><span>Save settings</span></button>
+
 </form>
 
-
-<!--
-    result
-    important! class "result" is also used in explain.js
--->
 <div class="result">
 
     <div class="tabs">
@@ -277,30 +296,26 @@
         </ul>
     </div>
 
-    <!--
-        HTML view
-        important! class "result-html" is also used in explain.js
-    -->
     <div class="result-html">
         <table id="explain">
             <thead>
                 <tr>
-                    <th class="e">
+                    <th class="e<%= $cfg->{ ve } ? '' : ' tight' %>">
                         <a href="#colorize-exclusive"
                             title="colorize rows based on &quot;exclusive&quot;"
-                            onclick="$( this ).explain( 'colorize', 'e' ); return false"
+                            onclick="$.fn.explain( 'colorize', 'e', this ); return false"
                             onkeypress="return this.onclick( );">exclusive</a>
                     </th>
-                    <th class="i">
+                    <th class="i<%= $cfg->{ vi } ? '' : ' tight' %>">
                         <a href="#colorize-inclusive"
                             title="colorize rows based on &quot;inclusive&quot;"
-                            onclick="$( this ).explain( 'colorize', 'i' ); return false"
+                            onclick="$.fn.explain( 'colorize', 'i', this ); return false"
                             onkeypress="return this.onclick( );">inclusive</a>
                     </th>
-                    <th class="x">
+                    <th class="x<%= $cfg->{ vx } ? '' : ' tight' %>">
                         <a href="#colorize-rows-x"
                             title="colorize rows based on &quot;rows x&quot;"
-                            onclick="$( this ).explain( 'colorize', 'x' ); return false"
+                            onclick="$.fn.explain( 'colorize', 'x', this ); return false"
                             onkeypress="return this.onclick( );">rows x</a>
                     </th>
                     <th class="r<%= $cfg->{ vr } ? '' : ' tight' %>">
@@ -320,10 +335,6 @@
         </table>
     </div>
 
-    <!--
-        TEXT view
-        important! class "result-text" is also used in explain.js
-    -->
     <div class="result-text hidden">
         <pre id="source"><%= $explain->source =%></pre>
     </div>

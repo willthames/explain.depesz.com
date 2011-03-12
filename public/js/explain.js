@@ -19,11 +19,11 @@
 
             form.bind( 'submit', $.proxy( this, '_formSubmit' ) );
 
-            form.find( 'input:checkbox' ).each( $.proxy( function( i, input ) {
+            form.find( 'input:radio, input:checkbox' ).each( $.proxy( function( i, input ) {
 
                 input = $( input );
 
-                if ( !input.attr( 'name' ).match( /^(ce|ci|cx|ve|vi|vx|vr|vl)$/ ) ) return true;
+                if ( !input.attr( 'name' ).match( /^(c|ve|vi|vx|vr|vl)$/ ) ) return true;
 
                 input.bind( 'change', $.proxy( function( e ) {
 
@@ -126,26 +126,22 @@
 
         colorize : function( column, a ) {
 
-            var a = $( a );
-
-            var table = $( a ).parents( 'table' ).get( 0 );
-
-            table = $( table );
-
-            table.find( 'tbody tr.n' ).map( function( i, row ) {
+            this._table.find( 'tbody tr.n' ).map( function( i, row ) {
 
                 row = $( row );
 
-                row.removeClass( 'c-1 c-2 c-3 c-4 c-mix' );
+                row.removeClass( 'c-1 c-2 c-3 c-4 c-m' );
 
-                value = 'mix';
+                var value = row.attr( 'data-' + column );
 
-                if ( column ) value = row.attr( 'data-' + column );
+                // for "mixed"
+                if ( !value ) value = column;
 
                 row.addClass( 'c-' + value );
 
             } );
 
+            this._form.find( 'input#c' + column ).attr( 'checked', 'checked' );
         },
 
         toggleView : function( view, link ) {
@@ -174,13 +170,24 @@
 
             var cfg = [];
 
-            this._form.find( 'input:checkbox' ).each( function( i, input ) {
+            this._form.find( 'input:radio, input:checkbox' ).each( function( i, input ) {
 
                 input = $( input );
 
-                // skip
-                if ( !input.attr( 'name' ).match( /^(ce|ci|cx|ve|vi|vx|vr|vl)$/ ) ) return true;
+                // colorize
+                if ( input.attr( 'name' ) == 'c' ) {
 
+                    if ( input.is( ':checked' ) && input.attr( 'value' ).match( /^(e|i|x|m)$/ ) )
+                        cfg.push( input.attr( 'name' ) + '=' + input.val( ) );
+                       
+                    // next 
+                    return true;
+                }
+
+                // skip
+                if ( !input.attr( 'name' ).match( /^(ve|vi|vx|vr|vl)$/ ) ) return true;
+
+                // visibility
                 cfg.push( input.attr( 'name' ) + '=' + ( input.is( ':checked' ) ? 1 : 0 ) );
 
             } );
@@ -197,7 +204,7 @@
             var name = input.attr( 'name' );
 
             // column visibility
-            if ( input.attr( /^(ve|vi|vx|vr|vl)$/ ) ) {
+            if ( input.attr( 'name' ).match( /^(ve|vi|vx|vr|vl)$/ ) ) {
 
                 // column
                 var c = input.attr( 'name' ).substr( 1, 1 );
@@ -214,6 +221,14 @@
                     $( s ).addClass( 'tight' );
 
                 }
+            }
+
+            // colorize
+            if ( input.attr( 'name' ) == 'c' ) {
+
+                if ( !input.is( ':checked' ) ) return;
+
+                this.colorize( input.val( ) );
             }
 
         }

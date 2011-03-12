@@ -141,114 +141,6 @@ section p a,
 section p a:visited {padding:2px 4px;color:#234;border:1px dotted #e0e0e0}
 section p a:hover   {background:#234;color:#fff;border:1px solid #123}
 
-.result                         {margin:0;padding:0}
- .result-text, .result-html     {margin:0;padding:0;border:1px solid #ccc;overflow:auto}
- .result-text                   {background:#222 url('../img/code-bg.gif');color:#fff}
- .result-text pre               {margin:0;padding:1em}
-
-.result .tabs ul                {margin:0;padding:0;list-style:none}
-.result .tabs li                {display:block;float:left;margin-right:1px}
-.result .tabs a                 {display:block;padding:4px 12px;background:#cfcfcf;color:#fff;text-decoration:none;font-weight:bold}
-.result .tabs a:hover           {color:#234}
-.result .tabs a.current,
-.result .tabs a.current:hover   {background:#234;color:#fff}
-
-.result .tabs .html a {
-    -moz-border-radius:4px 0px 0px 0px;
-         border-radius:4px 0px 0px 0px
-}
-
-.result .tabs .text a {
-    -moz-border-radius:0px 4px 0px 0px;
-         border-radius:0px 4px 0px 0px
-}
-
-.result-html table {margin:5px;border-collapse:collapse}
-
-.result-html table th,
-.result-html table td {padding:4px 8px;border:1px solid #ccc;background:#fff;text-align:left;vertical-align:top}
-.result-html table th {padding:1px;background:#234}
-
-.result-html table th   a {display:block;margin:0;padding:4px 8px;font-size:1.2em;color:#fff;text-align:center;white-space:nowrap}
-.result-html table th.n a {text-align:left}
-
-.result-html table tbody tr {cursor:pointer}
-
-.result-html table td   {text-align:right}
-.result-html table td.n {text-align:left}
-
-.result-html table td.e,
-.result-html table td.i,
-.result-html table td.x {white-space:nowrap}
-
-/* currently not used */
-.result-html table        td.c-1,
-.result-html table tr.c-1 td        {background:#fff}
-
-.result-html table tr.even td {background:#e5ecf9}
-
-/* !important overrides tr.even */
-.result-html table tr.c-2   td,
-.result-html table tr.c-mix td.c-2 {background:#fe8 !important}
-.result-html table tr.c-3   td,
-.result-html table tr.c-mix td.c-3 {background:#e80 !important;color:#fff}
-.result-html table tr.c-4   td,
-.result-html table tr.c-mix td.c-4 {background:#800 !important;color:#fff}
-
-/* tr hover */
-.result-html table tr.hover      td,
-.result-html table tr.hover.even td {background:#d0d8d8 !important}
-
-/* !important overrides tr.c-[1..4] */
-.result-html table tr.hover.c-2   td,
-.result-html table tr.hover.c-mix td.c-2 {background:#ec5 !important}
-.result-html table tr.hover.c-3   td,
-.result-html table tr.hover.c-mix td.c-3 {background:#c60 !important}
-.result-html table tr.hover.c-4   td,
-.result-html table tr.hover.c-mix td.c-4 {background:#600 !important}
-
-/* tr collapsed */ 
-.result-html table tr.collapsed td {border-bottom:3px dashed #888}
-
-.result-html table tr.collapsed.c-2   td,
-.result-html table tr.collapsed.c-mix td.c-2 {border-bottom-color:#ec5}
-.result-html table tr.collapsed.c-3   td,
-.result-html table tr.collapsed.c-mix td.c-3 {border-bottom-color:#c60}
-.result-html table tr.collapsed.c-4   td,
-.result-html table tr.collapsed.c-mix td.c-4 {border-bottom-color:#600}
-
-.result-html table td.n div   {position:relative;min-height:22px;height:auto !important;height:22px}
-.result-html table td.n p,
-.result-html table td.n ul    {margin:0;padding:0}
-.result-html table td.n ul    {list-style:none}
-.result-html table td.n li    {padding-top:0.5em}
-
-/* all ico(ns) */
-.result-html table td.n div.ico {position:absolute;top:-4px;left:-22px;width:22px;height:22px;background:url('../img/sprite.png') no-repeat 0px -180px;text-indent:-1000px;overflow:hidden}
-
-/* white arrow */
-.result-html table tr.c-3   td.n div.ico,
-.result-html table tr.c-4   td.n div.ico {background-position:0px -224px}
-
-/* for td.r(ows), td.l(oops) */
-.result-html table .tight span {display:none}
-.result-html table .tight,
-.result-html table .tight a    {padding-left:0 !important;padding-right:0 !important;width:10px !important;overflow:hidden;text-align:left;text-indent:-10000px}
-.result-html table .tight a    {margin:0 1px;background:url('../img/sprite.png') top left}
-
-.result-html table p {color:inherit}
-
-/* for "help" */
-p.slogan         {font-style:italic}
-p strong         {color:#234}
-
-ul.colors        {list-style:none;width:60%}
-ul.colors li     {padding:4px 6px;border-bottom:1px solid #fff}
-ul.colors li.c-1 {background:#fff}
-ul.colors li.c-2 {background:#fe8}
-ul.colors li.c-3 {background:#e80;color:#fff}
-ul.colors li.c-4 {background:#800;color:#fff}
-
 /* forms */
 form                    {display:block;margin:0 auto}
 
@@ -282,6 +174,123 @@ form .fe-buttons button:hover span  {color:#fff}
 form p.nfo-required {font-size:0.8em;color:#888}
 
 form sup.fe-required {font-size:1.2em;color:#800}
+
+#explain-form                                               {margin:0 0 10px 0;padding:15px;background:#e5ecf9;border:1px solid #ccc}
+#explain-form h3                                            {font-size:1.1em;margin-bottom:0.35em;color:#234}
+#explain-form ul                                            {list-style:none;margin:0 0 15px 0}
+#explain-form li, #explain-form input, #explain-form label  {display:inline}
+#explain-form li                                            {margin:0 15px 0 0}
+                  #explain-form input                       {position:relative;top:1px}
+
+.result                         {margin:0;padding:0}
+ .result-text, .result-html     {margin:0;padding:0;border:1px solid #ccc;overflow:auto}
+ .result-text                   {background:#222 url('../img/code-bg.gif');color:#fff}
+ .result-text pre               {margin:0;padding:1em}
+
+.result .tabs ul                {margin:0;padding:0;list-style:none}
+.result .tabs li                {display:block;float:left;margin-right:1px}
+.result .tabs a                 {display:block;padding:4px 12px;background:#cfcfcf;color:#fff;text-decoration:none;font-weight:bold}
+.result .tabs a:hover           {color:#234}
+.result .tabs a.current,
+.result .tabs a.current:hover   {background:#234;color:#fff}
+
+.result .tabs .html a {
+    -moz-border-radius:4px 0px 0px 0px;
+         border-radius:4px 0px 0px 0px
+}
+
+.result .tabs .text a {
+    -moz-border-radius:0px 4px 0px 0px;
+         border-radius:0px 4px 0px 0px
+}
+
+.result-html table {margin:5px;border-collapse:collapse}
+
+.result-html table th,
+.result-html table td {padding:4px 8px;border:1px solid #ccc;background:#fff;text-align:left;vertical-align:top}
+
+.result-html table th   {background:#234;text-align:center}
+.result-html table th.n {text-align:left}
+
+.result-html table th a,
+.result-html table th span {font-size:1.2em;color:#fff;white-space:nowrap}
+
+.result-html table tbody tr {cursor:pointer}
+
+.result-html table td   {text-align:right}
+.result-html table td.n {text-align:left}
+
+.result-html table td.e,
+.result-html table td.i,
+.result-html table td.x {white-space:nowrap}
+
+/* currently not used */
+.result-html table        td.c-1,
+.result-html table tr.c-1 td        {background:#fff}
+
+.result-html table tr.even td {background:#e5ecf9}
+
+/* !important overrides tr.even */
+.result-html table tr.c-2 td,
+.result-html table tr.c-m td.c-2 {background:#fe8 !important}
+.result-html table tr.c-3 td,
+.result-html table tr.c-m td.c-3 {background:#e80 !important;color:#fff}
+.result-html table tr.c-4 td,
+.result-html table tr.c-m td.c-4 {background:#800 !important;color:#fff}
+
+/* tr hover */
+.result-html table tr.hover      td,
+.result-html table tr.hover.even td {background:#d0d8d8 !important}
+
+/* !important overrides tr.c-[1..4] */
+.result-html table tr.hover.c-2 td,
+.result-html table tr.hover.c-m td.c-2 {background:#ec5 !important}
+.result-html table tr.hover.c-3 td,
+.result-html table tr.hover.c-m td.c-3 {background:#c60 !important}
+.result-html table tr.hover.c-4 td,
+.result-html table tr.hover.c-m td.c-4 {background:#600 !important}
+
+/* tr collapsed */ 
+.result-html table tr.collapsed td {border-bottom:3px dashed #888}
+
+.result-html table tr.collapsed.c-2 td,
+.result-html table tr.collapsed.c-m td.c-2 {border-bottom-color:#ec5}
+.result-html table tr.collapsed.c-3 td,
+.result-html table tr.collapsed.c-m td.c-3 {border-bottom-color:#c60}
+.result-html table tr.collapsed.c-4 td,
+.result-html table tr.collapsed.c-m td.c-4 {border-bottom-color:#600}
+
+.result-html table td.n div   {position:relative;min-height:22px;height:auto !important;height:22px}
+.result-html table td.n p,
+.result-html table td.n ul    {margin:0;padding:0}
+.result-html table td.n ul    {list-style:none}
+.result-html table td.n li    {padding-top:0.5em}
+
+/* all ico(ns) */
+.result-html table td.n div.ico {position:absolute;top:-4px;left:-22px;width:22px;height:22px;background:url('../img/sprite.png') no-repeat 0px -180px;text-indent:-1000px;overflow:hidden}
+
+/* white arrow */
+.result-html table tr.c-3   td.n div.ico,
+.result-html table tr.c-4   td.n div.ico {background-position:0px -224px}
+
+/* for td.r(ows), td.l(oops) */
+.result-html table .tight span {display:none}
+.result-html table .tight,
+.result-html table .tight a    {padding-left:0 !important;padding-right:0 !important;width:10px !important;overflow:hidden;text-align:left;text-indent:-10000px}
+.result-html table .tight a    {margin:0 1px;background:url('../img/sprite.png') top left}
+
+.result-html table p {color:inherit}
+
+/* for "help" */
+p.slogan         {font-style:italic}
+p strong         {color:#234}
+
+ul.colors        {list-style:none;width:60%}
+ul.colors li     {padding:4px 6px;border-bottom:1px solid #fff}
+ul.colors li.c-1 {background:#fff}
+ul.colors li.c-2 {background:#fe8}
+ul.colors li.c-3 {background:#e80;color:#fff}
+ul.colors li.c-4 {background:#800;color:#fff}
 
 /* history */
 p.msg                   {padding:1em;border:1px dotted #e0e0e0}
