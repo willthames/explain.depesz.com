@@ -161,7 +161,8 @@ label                              {padding-bottom:0.35em}
 .fe_is_public input {position:absolute;top:12px;left:5px;width:auto}
 .fe_is_public label {width:auto;margin-left:30px;padding-bottom:0}
 
-*:first-child+html .fe_is_public input {border:0}
+* html             .fe_is_public input {top:10px;border:0}
+*:first-child+html .fe_is_public input {top:10px;border:0}
 
 form label a {color:#222}
 
@@ -185,6 +186,9 @@ form sup.fe-required {font-size:1.2em;color:#800}
 #explain-form input         {position:relative;top:2px}
 #explain-form .fe-buttons   {padding:0;background:none;border:none}
 #explain-form button        {float:none;margin:0}
+
+* html             #explain-form input {border:0}
+*:first-child+html #explain-form input {border:0}
 
 .result                         {margin:0;padding:0}
  .result-text, .result-html     {margin:0;padding:0;border:1px solid #ccc;overflow:auto}
