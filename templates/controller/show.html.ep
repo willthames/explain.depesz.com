@@ -339,6 +339,8 @@
             /* startup */
             $.fn.explain( 'init', $( '#explain-form' ), $( '#explain' ) );
 
+            window.scrollTo( 0, $( '#explain' ).offset( ).top );
+
         } );
     </script>
 <% end %>
