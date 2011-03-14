@@ -169,7 +169,7 @@ sub get_public_list_paged {
         to        => $to->as_str( '%Y-%m-%d' ),
         rows      => $rows || [],
         next_date => $next,
-        prev_date => $since
+        prev_date => ( $to - 8 )->as_str( '%Y-%m-%d' )
     };
 }
 
