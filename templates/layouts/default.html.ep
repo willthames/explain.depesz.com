@@ -51,7 +51,21 @@
 
             <nav>
                 <ul>
-                % for my $item ( qw( new-explain history help contact ) ) {
+                % for my $item ( qw( new-explain history help ) ) {
+                    <li class="item item-<%= $item %>">
+                    % my $name = $item;
+                    %    $name =~ s/\-/ /;
+                    % if ( $self->match->endpoint->name eq $item ) {
+                        <span><%= $name =%></span>
+                    % } else {
+                        <a href="<%= url_for $item %>" title="link to: <%= $name %>" rel="permalink"><%= $name =%></a>
+                    % }
+                    </li>
+                % }
+                    <li class="item item-about">
+                        <a href="http://www.depesz.com/index.php/tag/explaindepeszcom/" title="about explain.depesz.com" rel="permalink">about</a>
+                    </li>
+                % for my $item ( qw( contact ) ) {
                     <li class="item item-<%= $item %>">
                     % my $name = $item;
                     %    $name =~ s/\-/ /;
