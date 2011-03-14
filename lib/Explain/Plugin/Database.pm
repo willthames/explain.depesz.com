@@ -8,8 +8,7 @@ use Carp;
 use DBI;
 use Date::Simple;
 
-__PACKAGE__->attr( dbh => undef );
-
+has dbh             => undef;
 has connection_args => sub { [] };
 
 sub register {
@@ -43,17 +42,24 @@ sub register {
     ] );
 
     # log debug message
-    $app->log->debug( 'Connecting database using: ' . $app->dumper( $self->connection_args ) );
-
-    # connect
-    $self->dbh( DBI->connect( @{ $self->connection_args } ) );
-
-    # raise error (for case, when "RaiseError" option is not set)
-    confess qq|Can't connect database| unless $self->dbh;
+    $app->log->debug( 'Database connection args: ' . $app->dumper( $self->connection_args ) );
 
     # register helper
     $app->helper(
-        database => sub { $self }
+        database => sub {
+
+            # not conected yet
+            unless ( $self->dbh ) {
+
+                # connect
+                $self->dbh( DBI->connect( @{ $self->connection_args } ) );
+
+                # raise error (for case, when "RaiseError" option is not set)
+                confess qq|Can't connect database| unless $self->dbh;
+            }
+
+            return $self;
+        }
     );
 
     return;
