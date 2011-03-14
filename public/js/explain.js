@@ -179,7 +179,7 @@
 
                     if ( input.is( ':checked' ) && input.attr( 'value' ).match( /^(e|i|x|m)$/ ) )
                         cfg.push( input.attr( 'name' ) + '=' + input.val( ) );
-                       
+
                     // next 
                     return true;
                 }

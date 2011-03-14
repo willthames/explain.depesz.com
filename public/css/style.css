@@ -240,23 +240,23 @@ form sup.fe-required {font-size:1.2em;color:#800}
 
 /* !important overrides tr.even */
 .result-html table tr.c-2 td,
-.result-html table tr.c-m td.c-2 {background:#fe8 !important}
+.result-html table tr.c-m td.c-2 {background-color:#fe8 !important}
 .result-html table tr.c-3 td,
-.result-html table tr.c-m td.c-3 {background:#e80 !important;color:#fff}
+.result-html table tr.c-m td.c-3 {background-color:#e80 !important;color:#fff}
 .result-html table tr.c-4 td,
-.result-html table tr.c-m td.c-4 {background:#800 !important;color:#fff}
+.result-html table tr.c-m td.c-4 {background-color:#800 !important;color:#fff}
 
 /* tr hover */
 .result-html table tr.hover      td,
-.result-html table tr.hover.even td {background:#d0d8d8 !important}
+.result-html table tr.hover.even td {background-color:#d0d8d8 !important}
 
 /* !important overrides tr.c-[1..4] */
 .result-html table tr.hover.c-2 td,
-.result-html table tr.hover.c-m td.c-2 {background:#ec5 !important}
+.result-html table tr.hover.c-m td.c-2 {background-color:#ec5 !important}
 .result-html table tr.hover.c-3 td,
-.result-html table tr.hover.c-m td.c-3 {background:#c60 !important}
+.result-html table tr.hover.c-m td.c-3 {background-color:#c60 !important}
 .result-html table tr.hover.c-4 td,
-.result-html table tr.hover.c-m td.c-4 {background:#600 !important}
+.result-html table tr.hover.c-m td.c-4 {background-color:#600 !important}
 
 /* tr collapsed */ 
 .result-html table tr.collapsed td {border-bottom:3px dashed #888}
@@ -298,6 +298,11 @@ form sup.fe-required {font-size:1.2em;color:#800}
 *:first-child+html .result-html table tr.c-m td.c-3 p,
 *:first-child+html .result-html table tr.c-4 td     p,
 *:first-child+html .result-html table tr.c-m td.c-4 p {color:#fff !important}
+
+.result-html table tbody tr.sub-n td.n {background-image:url('../img/star.png');background-position:top left;background-repeat:no-repeat}
+
+.result-html table tbody tr.sp td.n,
+.result-html table tbody tr.ip td.n {background-image:none}
 
 /* for "help" */
 p.slogan         {font-style:italic}
