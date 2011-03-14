@@ -284,7 +284,7 @@ form sup.fe-required {font-size:1.2em;color:#800}
 /* for td.r(ows), td.l(oops) */
 .result-html table .tight span {display:none}
 .result-html table .tight,
-.result-html table .tight a    {padding-left:0 !important;padding-right:0 !important;width:10px !important;overflow:hidden;text-align:left;text-indent:-10000px}
+.result-html table .tight a    {padding-left:0 !important;padding-right:0 !important;width:1px !important;overflow:hidden;text-align:left;text-indent:-10000px}
 .result-html table .tight a    {margin:0 1px;background:url('../img/sprite.png') top left}
 
 .result-html table p {color:inherit}
