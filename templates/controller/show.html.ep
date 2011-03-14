@@ -16,7 +16,7 @@
 % my $cfg = {};
 %
 % for ( @cfg ) {
-%   next unless $_ =~ /\A(c|ve|vi|vx|vr|vl)\=([eixm01]{1})\z/;
+%   next unless $_ =~ /\A(c|ve|vi|vx|vr|vl)\=([exim01]{1})\z/;
 %   $cfg->{ $1 } = $2;
 % }
 %
@@ -26,19 +26,6 @@
 %   next if exists $cfg->{ $_ } && $cfg->{ $_ } =~ /\A(0|1)\z/;
 %   $cfg->{ $_ } = 1;
 % }
-
-
-% my $row = 0;
-%
-% my $row_class = begin
-%   my $class = shift;
-%
-%   my $next  = scalar( @_ ) ? shift : 1;
-%
-%   ++$row if $next;
-%
-%   return sprintf '%s %s', $class, $row % 2 ? 'odd' : 'even';
-% end;
 
 
 % my $block = undef;
@@ -110,7 +97,9 @@
 % elsif ( $row_color eq 'i' ) { $row_color = $inclusive_point; }
 % elsif ( $row_color eq 'x' ) { $row_color = $rows_x_point;    }
 
-    <tr class="<%= $row_class->( 'n c-' . $row_color ) =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
+% my $row_class = ( $level % 2 ? 'even' : 'odd' ) . " c-$row_color";
+
+    <tr class="n <%= $row_class %>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
         <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
             <span><%= sprintf '%.3f', $node->total_exclusive_time =%></span>
         </td>
@@ -178,7 +167,7 @@
 
     % if ( $node->initplans ) {
 
-        <tr class="<%= $row_class->( 'ip' ) %>" data-level="<%= $level =%>">
+        <tr class="ip" data-level="<%= $level =%>">
             <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
@@ -204,7 +193,7 @@
 
     % if ( $node->subplans ) {
 
-        <tr class="<%= $row_class->( 'sp' ) %>" data-level="<%= $level =%>">
+        <tr class="sp" data-level="<%= $level =%>">
             <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
@@ -224,11 +213,11 @@
 
 % end;
 
-<h1>Results <small>(<%= $title =%>)</small></h1>
+<h1>Result: <%= $title %></h1>
 
 <form id="explain-form" method="get" action="<%= url_for 'current' %>" autocomplete="off">
 
-    <h3>Colorize</h3>
+    <h3>Colorize:</h3>
     <ul>
         <li>
             <input type="radio" name="c" id="ce" value="e"<%= $cfg->{ c } eq 'e' ? ' checked="checked"' : '' %> />
@@ -248,7 +237,7 @@
         </li>
     </ul>
 
-    <h3>Columns visibility</h3>
+    <h3>Columns visibility:</h3>
     <ul>
         <li>
             <input type="checkbox" name="ve" id="ve" value="1"<%= $cfg->{ ve } ? ' checked="checked"' : '' %> />
@@ -272,7 +261,9 @@
         </li>
     </ul>
 
-    <button type="submit" name="save-settings" id="save-settings"><span>Save settings</span></button>
+    <div class="fe fe-buttons">
+        <button type="submit" name="save-settings" id="save-settings"><span>Save settings</span></button>
+    </div>
 
 </form>
 

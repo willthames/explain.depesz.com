@@ -1,5 +1,5 @@
 ( function( $ ) {
-
+    
     var Explain = {
 
         _form  : null,

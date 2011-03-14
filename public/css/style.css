@@ -169,18 +169,22 @@ form .fe-buttons                    {padding:5px 0 0 0}
 form .fe-buttons button             {display:block;float:right;margin-left:5px;border:1px solid #d0d8d8;background:#e5ecf9}
 form .fe-buttons button span        {display:block;padding:5px 25px;color:#123}
 form .fe-buttons button:hover       {background:#234;border-color:123}
-form .fe-buttons button:hover span  {color:#fff}
+form .fe-buttons button:hover span  {color:#fff;cursor:pointer}
 
 form p.nfo-required {font-size:0.8em;color:#888}
 
 form sup.fe-required {font-size:1.2em;color:#800}
 
-#explain-form                                               {margin:0 0 10px 0;padding:15px;background:#e5ecf9;border:1px solid #ccc}
-#explain-form h3                                            {font-size:1.1em;margin-bottom:0.35em;color:#234}
-#explain-form ul                                            {list-style:none;margin:0 0 15px 0}
-#explain-form li, #explain-form input, #explain-form label  {display:inline}
-#explain-form li                                            {margin:0 15px 0 0}
-                  #explain-form input                       {position:relative;top:1px}
+#explain-form               {margin:0 0 25px 0;padding:10px;background:#e5ecf9;border:1px solid #ccc}
+#explain-form h3            {font-size:1em;margin-bottom:0.35em;color:#234}
+#explain-form ul            {list-style:none;margin:0 0 15px 10px}
+#explain-form li,
+#explain-form input,
+#explain-form label         {display:inline;width:auto;font-size:0.95em}
+#explain-form li            {margin:0 15px 0 0}
+#explain-form input         {position:relative;top:2px}
+#explain-form .fe-buttons   {padding:0;background:none;border:none}
+#explain-form button        {float:none;margin:0}
 
 .result                         {margin:0;padding:0}
  .result-text, .result-html     {margin:0;padding:0;border:1px solid #ccc;overflow:auto}
