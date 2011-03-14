@@ -278,8 +278,8 @@ form sup.fe-required {font-size:1.2em;color:#800}
 .result-html table td.n div.ico {position:absolute;top:-4px;left:-22px;width:22px;height:22px;background:url('../img/sprite.png') no-repeat 0px -180px;text-indent:-1000px;overflow:hidden}
 
 /* white arrow */
-.result-html table tr.c-3   td.n div.ico,
-.result-html table tr.c-4   td.n div.ico {background-position:0px -224px}
+.result-html table tr.c-3 td.n div.ico,
+.result-html table tr.c-4 td.n div.ico {background-position:0px -224px}
 
 /* for td.r(ows), td.l(oops) */
 .result-html table .tight span {display:none}
@@ -288,6 +288,16 @@ form sup.fe-required {font-size:1.2em;color:#800}
 .result-html table .tight a    {margin:0 1px;background:url('../img/sprite.png') top left}
 
 .result-html table p {color:inherit}
+
+* html .result-html table tr.c-3 td     p,
+* html .result-html table tr.c-m td.c-3 p,
+* html .result-html table tr.c-4 td     p,
+* html .result-html table tr.c-m td.c-4 p {color:#fff !important}
+
+*:first-child+html .result-html table tr.c-3 td     p,
+*:first-child+html .result-html table tr.c-m td.c-3 p,
+*:first-child+html .result-html table tr.c-4 td     p,
+*:first-child+html .result-html table tr.c-m td.c-4 p {color:#fff !important}
 
 /* for "help" */
 p.slogan         {font-style:italic}
