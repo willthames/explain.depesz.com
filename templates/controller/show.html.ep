@@ -101,7 +101,7 @@
 % elsif ( $row_color eq 'i' ) { $row_color = $inclusive_point; }
 % elsif ( $row_color eq 'x' ) { $row_color = $rows_x_point;    }
 
-% my $row_class = $prev_row_class;
+% my $row_class = $prev_row_class . ' c-' . $row_color;
 %
 % if ( $level != $prev_row_level ) {
 %
