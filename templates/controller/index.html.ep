@@ -8,7 +8,7 @@
 <form id="new-explain" method="post" action="<%= url_for 'current' %>">
 
     <div class="fe fe-first fe_plan">
-        <label for="plan">Paste your explain/explain analyze here: <sup class="fe-required">*</sup></label>
+        <label for="plan">Paste your explain/explain analyze here:</label>
         <textarea id="plan" name="plan"></textarea>
     </div>
 
@@ -20,7 +20,5 @@
     <div class="fe fe-last fe-buttons">
         <button type="submit" name="submit_plan" id="submit_plan"><span>Submit</span></button>
     </div>
-
-    <p class="nfo-required">All fields marked by <sup class="fe-required">*</sup> are required.</p>
 
 </form>

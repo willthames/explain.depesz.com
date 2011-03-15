@@ -215,57 +215,63 @@
 
 <h1>Result: <%= $title %></h1>
 
-<form id="explain-form" method="get" action="<%= url_for 'current' %>" autocomplete="off">
+<div class="explain-form">
 
-    <h3>Colorize:</h3>
-    <ul>
-        <li>
-            <input type="radio" name="c" id="ce" value="e"<%= $cfg->{ c } eq 'e' ? ' checked="checked"' : '' %> />
-            <label for="ce">exclusive</label>
-        </li>
-        <li>
-            <input type="radio" name="c" id="ci" value="i"<%= $cfg->{ c } eq 'i' ? ' checked="checked"' : '' %> />
-            <label for="ci">inclusive</label>
-        </li>
-        <li>
-            <input type="radio" name="c" id="cx" value="x"<%= $cfg->{ c } eq 'x' ? ' checked="checked"' : '' %> />
-            <label for="cx">rows x</label>
-        </li>
-        <li>
-            <input type="radio" name="c" id="cm" value="m"<%= $cfg->{ c } eq 'm' ? ' checked="checked"' : '' %> />
-            <label for="cm">mixed</label>
-        </li>
-    </ul>
+    <form id="explain-form" class="hidden" method="get" action="<%= url_for 'current' %>" autocomplete="off">
 
-    <h3>Columns visibility:</h3>
-    <ul>
-        <li>
-            <input type="checkbox" name="ve" id="ve" value="1"<%= $cfg->{ ve } ? ' checked="checked"' : '' %> />
-            <label for="ve">exclusive</label>
-        </li>
-        <li>
-            <input type="checkbox" name="vi" id="vi" value="1"<%= $cfg->{ vi } ? ' checked="checked"' : '' %> />
-            <label for="vi">inclusive</label>
-        </li>
-        <li>
-            <input type="checkbox" name="vx" id="vx" value="1"<%= $cfg->{ vx } ? ' checked="checked"' : '' %> />
-            <label for="vx">rows x</label>
-        </li>
-        <li>
-            <input type="checkbox" name="vr" id="vr" value="1"<%= $cfg->{ vr } ? ' checked="checked"' : '' %> />
-            <label for="vr">rows</label>
-        </li>
-        <li>
-            <input type="checkbox" name="vl" id="vl" value="1"<%= $cfg->{ vl } ? ' checked="checked"' : '' %> />
-            <label for="vl">loops</label>
-        </li>
-    </ul>
+        <h3>Colorize:</h3>
+        <ul>
+            <li>
+                <input type="radio" name="c" id="ce" value="e"<%= $cfg->{ c } eq 'e' ? ' checked="checked"' : '' %> />
+                <label for="ce">exclusive</label>
+            </li>
+            <li>
+                <input type="radio" name="c" id="ci" value="i"<%= $cfg->{ c } eq 'i' ? ' checked="checked"' : '' %> />
+                <label for="ci">inclusive</label>
+            </li>
+            <li>
+                <input type="radio" name="c" id="cx" value="x"<%= $cfg->{ c } eq 'x' ? ' checked="checked"' : '' %> />
+                <label for="cx">rows x</label>
+            </li>
+            <li>
+                <input type="radio" name="c" id="cm" value="m"<%= $cfg->{ c } eq 'm' ? ' checked="checked"' : '' %> />
+                <label for="cm">mixed</label>
+            </li>
+        </ul>
 
-    <div class="fe fe-buttons">
-        <button type="submit" name="save-settings" id="save-settings"><span>Save settings</span></button>
-    </div>
+        <h3>Columns visibility:</h3>
+        <ul>
+            <li>
+                <input type="checkbox" name="ve" id="ve" value="1"<%= $cfg->{ ve } ? ' checked="checked"' : '' %> />
+                <label for="ve">exclusive</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vi" id="vi" value="1"<%= $cfg->{ vi } ? ' checked="checked"' : '' %> />
+                <label for="vi">inclusive</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vx" id="vx" value="1"<%= $cfg->{ vx } ? ' checked="checked"' : '' %> />
+                <label for="vx">rows x</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vr" id="vr" value="1"<%= $cfg->{ vr } ? ' checked="checked"' : '' %> />
+                <label for="vr">rows</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vl" id="vl" value="1"<%= $cfg->{ vl } ? ' checked="checked"' : '' %> />
+                <label for="vl">loops</label>
+            </li>
+        </ul>
 
-</form>
+        <div class="fe fe-buttons">
+            <button type="submit" name="save-settings" id="save-settings"><span>Save settings</span></button>
+        </div>
+
+    </form>
+
+    <a href="#" onclick="$.fn.explain( 'toggleCfgForm', this ); return false;" onkeypress="return this.onclick( );"><span>options</span></a>
+
+</div>
 
 <div class="result">
 
@@ -338,8 +344,6 @@
 
             /* startup */
             $.fn.explain( 'init', $( '#explain-form' ), $( '#explain' ) );
-
-            window.scrollTo( 0, $( '#explain' ).offset( ).top );
 
         } );
     </script>

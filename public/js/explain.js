@@ -166,6 +166,16 @@
             result.find( 'div.result-text' ).hide( );
         },
 
+        toggleCfgForm : function( link ) {
+
+            link = $( link );
+
+            link.parent( ).find( 'form' ).slideToggle( );
+
+            link.toggleClass( 'collapsed' );
+
+        },
+
         _formSubmit : function( ) {
 
             var cfg = [];

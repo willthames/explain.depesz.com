@@ -125,7 +125,7 @@ nav span                                {margin-left:1px;margin-right:1px;backgr
 
 section {
          margin-bottom:20px;
-               padding:20px;
+               padding:20px 20px 35px 20px;
             background:#fff;
     -moz-border-radius:8px/8px;
          border-radius:8px/8px;
@@ -134,7 +134,10 @@ section {
             box-shadow:0px 8px 10px #16212c;
 }
 
-section h1          {padding-bottom:0.2em;margin-bottom:1.2em;color:#aaa;font-size:1.6em;border-bottom:1px solid #ccc}
+section h1              {padding-bottom:0.2em;margin-bottom:1.2em;color:#aaa;font-size:1.6em;border-bottom:1px solid #ccc}
+
+body.show section h1    {margin-bottom:0}
+
 section h2,
 section h3          {color:#234}
 section p a,
@@ -176,7 +179,12 @@ form p.nfo-required {font-size:0.8em;color:#888}
 
 form sup.fe-required {font-size:1.2em;color:#800}
 
-#explain-form               {margin:0 0 25px 0;padding:10px;background:#e5ecf9;border:1px solid #ccc}
+div.explain-form            {margin-bottom:5px;text-align:center}
+div.explain-form a          {padding:0 1em 0.5em 1em;border:1px solid #ccc;background:#f8f8f8;color:#666;text-decoration:none;-moz-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px}
+div.explain-form a span     {font-size:0.9em;position:relative;top:0.2em}
+div.explain-form a:hover    {background:#e5ecf9}
+
+#explain-form               {margin:0;padding:10px;background:#e5ecf9;border:1px solid #ccc;border-top:0;text-align:left}
 #explain-form h3            {font-size:1em;margin-bottom:0.35em;color:#234}
 #explain-form ul            {list-style:none;margin:0 0 15px 10px}
 #explain-form li,
