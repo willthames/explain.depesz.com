@@ -101,7 +101,7 @@
 % elsif ( $row_color eq 'i' ) { $row_color = $inclusive_point; }
 % elsif ( $row_color eq 'x' ) { $row_color = $rows_x_point;    }
 
-% my $row_class = $prev_row_class . ' c-' . $row_color;
+% my $row_class = $prev_row_class;
 %
 % if ( $level != $prev_row_level ) {
 %
@@ -110,6 +110,8 @@
 %    $prev_row_level = $level;
 %    $prev_row_class = $row_class;
 % }
+%
+% $row_class .= ' c-' . $row_color;
 
     <tr class="n <%= $row_class %>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
         <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
