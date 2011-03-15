@@ -1,0 +1,83 @@
+% layout 'default';
+
+% my $title = 'Help';
+% title $title;
+
+<h1><%= $title =%></h1>
+
+<p class="slogan"><strong>explain.depesz.com</strong> is tool for finding real cause for slow queries.</p>
+
+<p>Generally, one would use <code>EXPLAIN ANALYZE</code> query; and read the output. The problem is
+that not all parts of the output are easily understandable by anybody, and it's not always obvious
+whether node that executes in 17.3ms is faster or slower than the one that runs in 100ms - given the
+fact that the first one is executed 7 times.</p>
+
+<p>To use the site, simply go to <a href="<%= url_for 'new-explain' %>" title="link to: new explain">first page</a>
+and paste there explain analyze output from your psql.</p>
+
+<p>After uploading you will be directed to page which shows parsed, and nicely (well, at least
+nice for me :) colorized to put emphasis on important parts.</p>
+
+<p>The url for colorized output is persistent, so you can simply use it to show it to
+others - for example - for those nice guys on irc channel <em>#postgresql</em> on freenode.</p>
+
+<p>This graph uses 4 colours to mark important things:</p>
+
+<ul class="colors">
+    <li class="c-1">white background - everything is fine</li>
+    <li class="c-2">yellow background - given node is worrying</li>
+    <li class="c-3">brown background - given node is more worrying</li>
+    <li class="c-4">red background - given node is very worrying</li>
+</ul>
+
+<p>Which color is used, is choosen based on which mode you will use: "<strong>Exclusive</strong>",
+"<strong>Inclusive</strong>" or "<strong>Rows X</strong>".</p>
+
+<h2>Exclusive</h2>
+
+<p>This is total amount of time <a href="http://www.postgresql.org" title="link to PostgreSQL site">PostgreSQL</a> spent
+evaluating this node, without time spent in its subnodes. If the node has been executed many times (for example because
+of <code>Nested Loop</code> plan), this time will be correctly multiplied.</p>
+
+<h3>Colors:</h3>
+
+<ul class="colors">
+    <li class="c-1">white background - is choosen if exclusive time &lt;= 10% of total query time</li>
+    <li class="c-2">yellow background - is choosen if exclusive time &isin; (10%, 50%&gt; of total query time</li>
+    <li class="c-3">brown background - is choosen if exclusive time &isin; (50%, 90%&gt; of total query time</li>
+    <li class="c-4">red background - is choosen if exclusive time &gt; 90% of total query time</li>
+</ul>
+
+<h2>Inclusive</h2>
+
+<p>This is just like <strong>Exclusive</strong>, but it doesn't exclude time of subnodes. So, by definition - top node will
+have <strong>Inclusive</strong> time equal to total time of query.</p>
+
+<h3>Colors:</h3>
+
+<ul class="colors">
+    <li class="c-1">white background - is choosen if inclusive time &lt;= 10% of total query time</li>
+    <li class="c-2">yellow background - is choosen if inclusive time &isin; (10%, 50%&gt; of total query time</li>
+    <li class="c-3">brown background - is choosen if inclusive time &isin; (50%, 90%&gt; of total query time</li>
+    <li class="c-4">red background - is choosen if inclusive time &gt; 90% of total query time</li>
+</ul>
+
+<h2>Rows X</h2>
+
+<p>This value stores information about how big was planner mistake when it estimated return row count.</p>
+
+<p>For example - if planner estimated that given node will return 230 rows, but it returned 14118 rows, the
+error is 14118/230 == 61.4.</p>
+
+<p>It has to be noted that if the numbers were the other way around (estimated 14118, but really only 230), the
+<strong>Rows X</strong> would be the same. To show whether planner underestimated or overestimated - there is
+an arrow showing either &darr; - if planner underestimated rowcount, or &uarr; if it overestimated.</p>
+
+<h3>Colors:</h3>
+
+<ul class="colors">
+    <li class="c-1">white background - is choosen if rows-x &lt;= 10</li>
+    <li class="c-2">yellow background - is choosen if rows-x &isin; (10, 100&gt;</li>
+    <li class="c-3">brown background - is choosen if rows-x &isin; (100, 1000&gt;</li>
+    <li class="c-4">red background - is choosen if rows-x &gt; 1000</li>
+</ul>

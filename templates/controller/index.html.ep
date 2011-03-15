@@ -1,0 +1,24 @@
+% layout 'default';
+
+% my $title = 'New explain';
+% title $title;
+
+<h1><%= $title =%></h1>
+
+<form id="new-explain" method="post" action="<%= url_for 'current' %>">
+
+    <div class="fe fe-first fe_plan">
+        <label for="plan">Paste your explain/explain analyze here:</label>
+        <textarea id="plan" name="plan"></textarea>
+    </div>
+
+    <div class="fe fe_is_public">
+        <label for="is_public">I want this plan to be visible on <a href="<%= url_for 'history' %>" title="link to: history">history</a> page.</label>
+        <input type="checkbox" class="checkbox" id="is_public" name="is_public" value="1" checked="checked" />
+    </div>
+
+    <div class="fe fe-last fe-buttons">
+        <button type="submit" name="submit_plan" id="submit_plan"><span>Submit</span></button>
+    </div>
+
+</form>

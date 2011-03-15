@@ -1,0 +1,45 @@
+% layout 'default';
+
+% my $title = 'Contact';
+% title $title;
+
+<h1><%= $title =%></h1>
+
+% if ( stash 'message' ) {
+<div class="message">
+    <p><%= stash 'message' =%></p>
+</div>
+% }
+
+% if ( stash 'error' ) {
+<div class="message">
+    <p class="error"><%= stash 'error' =%></p>
+</div>
+% }
+
+<form id="contact" method="post" action="<%= url_for 'current' %>">
+
+    <div class="fe fe-first fe_name">
+        <label for="name">Your name</label>
+        <input type="text" class="text" id="name" name="name" value="<%= param 'name' =%>" />
+    </div>
+
+    <div class="fe fe_email">
+        <label for="email">Your email <sup class="fe-required">*</sup></label></dt>
+        <input type="text" class="text" id="email" name="email" value="<%= param 'email' =%>" />
+    </div>
+
+    <div class="fe fe_message">
+        <label for="message">Message <sup class="fe-required">*</sup></label>
+        <textarea id="message" name="message"><%= param 'message' =%></textarea>
+    </div>
+
+    <div class="fe fe-last fe-buttons">
+        <button type="submit" id="send_email" name="send_email"><span>Send</span></button>
+    </div>
+
+    <p>Or you can simply mail me at <a href="mailto:depesz@depesz.com">depesz@depesz.com</a></p>
+
+    <p class="nfo-required">All fields marked by <sup class="fe-required">*</sup> are required.</p>
+
+</form>

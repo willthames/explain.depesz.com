@@ -1,7 +1,0 @@
-<ul class="tabs">
-    <li><a href="/">new explain</a></li>
-    [% content %]
-    <li><a href="/history">previous explains</a></li>
-    <li><a href="/contact">contact</a></li>
-    <li><a href="/help">help</a></li>
-</ul>

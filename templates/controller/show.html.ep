@@ -1,0 +1,364 @@
+% layout 'default';
+
+% my $title = stash( 'id' );
+% title $title;
+
+
+%# c = e|i|x|m (colorize = exclusive|inclusive|rows-x|mixed)
+%# ve   - visibility of "exclusive" column
+%# vi   - visibility of "inclusive" column
+%# ...
+
+% my @cookie = grep { $_->name eq 'explain' } @{ $self->req->cookies };
+% my $cookie = scalar @cookie ? b( $cookie[0]->value )->url_unescape : '';
+
+% my @cfg = split /\|/, $cookie || '';
+% my $cfg = {};
+%
+% for ( @cfg ) {
+%   next unless $_ =~ /\A(c|ve|vi|vx|vr|vl)\=([exim01]{1})\z/;
+%   $cfg->{ $1 } = $2;
+% }
+%
+% $cfg->{ c } = 'm' unless $cfg->{ c } && $cfg->{ c } =~ /\A(e|i|x|m)\z/;
+%
+% for ( qw( ve vi vx vr vl ) ) {
+%   next if exists $cfg->{ $_ } && $cfg->{ $_ } =~ /\A(0|1)\z/;
+%   $cfg->{ $_ } = 1;
+% }
+
+
+
+% my $prev_row_level = 0;
+% my $prev_row_class = 'odd';
+
+% my $block = undef;
+%
+% $block = begin
+%
+%   my ( $node, $level ) = @_;
+%
+%   $level ||= 0;
+%
+%   my $exclusive_point = 1;
+%   my $inclusive_point = 1;
+%
+%   if ( $explain->top_node->total_inclusive_time && $node->total_exclusive_time ne '' && $node->total_inclusive_time ne '' ) {
+%
+%       $exclusive_point = $node->total_exclusive_time / $explain->top_node->total_inclusive_time;
+%
+%          if ( $exclusive_point > 0.9 ) { $exclusive_point = 4; }
+%       elsif ( $exclusive_point > 0.5 ) { $exclusive_point = 3; }
+%       elsif ( $exclusive_point > 0.1 ) { $exclusive_point = 2; }
+%       else                             { $exclusive_point = 1; }
+%
+%       $inclusive_point = $node->total_inclusive_time / $explain->top_node->total_inclusive_time;
+%
+%          if ( $inclusive_point > 0.9 ) { $inclusive_point = 4; }
+%       elsif ( $inclusive_point > 0.5 ) { $inclusive_point = 3; }
+%       elsif ( $inclusive_point > 0.1 ) { $inclusive_point = 2; }
+%       else                             { $inclusive_point = 1; }
+%   }
+%
+%   my $rows_x       = 0;
+%   my $rows_x_mark  = '';
+%   my $rows_x_point = 1;
+%
+%   if ( $node->estimated_rows && $node->actual_rows ) {
+%
+%       if ( $node->actual_rows > $node->estimated_rows ) {
+%           $rows_x      = $node->actual_rows / $node->estimated_rows;
+%           $rows_x_mark = 'down';
+%       } else {
+%           $rows_x      = $node->estimated_rows / $node->actual_rows;
+%           $rows_x_mark = 'up';
+%       }
+%
+%          if ( $rows_x > 1000 ) { $rows_x_point = 4; }
+%       elsif ( $rows_x > 100  ) { $rows_x_point = 3; }
+%       elsif ( $rows_x > 10   ) { $rows_x_point = 2; }
+%       else                     { $rows_x_point = 1; }
+%   }
+
+%#  tr class="(n|ip|sp) (even|odd) c-(mix|1|2|3|4)"
+%#  means:
+%#      n(ode)/i(nit)p(lan)/s(ub)p(lan)
+%#      c(olor)-mix(ed)|1|2|3|4
+%#
+%#  td class="(e|i|x|r|l|n) (c-(1|2|3|4))?"
+%#  means:
+%#      e(xclusive time)/i(nclusive time)/(rows-)x/r(ows)/l(oops)/n(ode)
+%#      c(olor)-1|2|3|4
+%#
+%#  important!
+%#  content of td.r(ows)/td.l(oops) must be wrapped in "span" element (because Opera...)
+
+% my $margin = ( $level + 1 ) * 22;
+
+% my $row_color = $cfg->{ c };
+
+%    if ( $row_color eq 'e' ) { $row_color = $exclusive_point; }
+% elsif ( $row_color eq 'i' ) { $row_color = $inclusive_point; }
+% elsif ( $row_color eq 'x' ) { $row_color = $rows_x_point;    }
+
+% my $row_class = $prev_row_class;
+%
+% if ( $level != $prev_row_level ) {
+%
+%    $row_class      = $prev_row_class eq 'even' ? 'odd' : 'even';
+%
+%    $prev_row_level = $level;
+%    $prev_row_class = $row_class;
+% }
+%
+% $row_class .= ' c-' . $row_color;
+
+    <tr class="n <%= $row_class %>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
+        <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
+            <span><%= sprintf '%.3f', $node->total_exclusive_time =%></span>
+        </td>
+        <td class="i c-<%= $inclusive_point =%><%= $cfg->{ vi } ? '' : ' tight' %>">
+            <span><%= sprintf '%.3f', $node->total_inclusive_time =%></span>
+        </td>
+        <td class="x c-<%= $rows_x_point =%><%= $cfg->{ vx } ? '' : ' tight' %>">
+            <span>
+                <%== $rows_x_mark eq 'up' ? '&uarr;' : '&darr;' %>
+                <%= sprintf '%.1f', $rows_x %>
+            </span>
+        </td>
+        <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span><%= $node->actual_rows  =%></span></td>
+        <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span><%= $node->actual_loops =%></span></td>
+        <td class="n">
+            <div class="n" style="margin-left:<%= $margin =%>px">
+
+                <div class="ico">&rarr;</div>
+
+                <p>
+                    <span class="node">
+
+                        <%= $node->type %>
+
+                        % if ( 'Bitmap Heap Scan' eq $node->type ) {
+                            on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+                        % elsif ( 'Bitmap Index Scan' eq $node->type ) {
+                            on <%= $node->scan_on->{ index_name } %>
+                        % }
+                        % elsif ( 'Index Scan' eq $node->type ) {
+                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+                        % elsif ( 'Seq Scan' eq $node->type ) {
+                            on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+
+                    </span>
+
+                    <span class="est">
+                        (cost=<%= $node->estimated_startup_cost =%>..<%= $node->estimated_total_cost %>
+                        rows=<%= $node->estimated_rows %>
+                        width=<%= $node->estimated_row_width =%>)
+                    </span>
+
+                    <span class="act">
+                        (actual
+                        time=<%= $node->actual_time_first =%>..<%= $node->actual_time_last %>
+                        rows=<%= $node->actual_rows %>
+                        loops=<%= $node->actual_loops =%>)
+                    </span>
+                </p>
+
+                % if ( $node->extra_info ) {
+                    <ul class="ex-nfo">
+                        % for my $line ( @{ $node->extra_info } ) {
+                            <li><%= $line =%></li>
+                        % }
+                    </ul>
+                % }
+
+            </div>
+        </td>
+    </tr>
+
+    % if ( $node->initplans ) {
+
+        <tr class="ip" data-level="<%= $level =%>">
+            <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="n">
+                <div class="n" style="margin-left:<%= $margin =%>px">
+                    <p><span>Initplan (for <%= $node->type =%>)</span></p>
+                </div>
+            </td>
+        </tr>
+
+        % for ( @{ $node->initplans } ) {
+            %== $block->( $_, $level + 1 );
+        % }
+    % }
+
+    % if ( $node->sub_nodes ) {
+        % for ( @{ $node->sub_nodes } ) {
+            %== $block->( $_, $level + 1 );
+        % }
+    % }
+
+    % if ( $node->subplans ) {
+
+        <tr class="sp" data-level="<%= $level =%>">
+            <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+            <td class="n">
+                <div class="n" style="margin-left:<%= $margin =%>px">
+                    <p><span>SubPlan (for <%= $node->type =%>)</span></p>
+                </div>
+            </td>
+        </tr>
+
+        % for ( @{ $node->subplans } ) {
+            %== $block->( $_, $level + 1 );
+        % }
+    % }
+
+% end;
+
+<h1>Result: <%= $title %></h1>
+
+<div class="explain-form">
+
+    <form id="explain-form" class="hidden" method="get" action="<%= url_for 'current' %>" autocomplete="off">
+
+        <h3>Colorize:</h3>
+        <ul>
+            <li>
+                <input type="radio" name="c" id="ce" value="e"<%= $cfg->{ c } eq 'e' ? ' checked="checked"' : '' %> />
+                <label for="ce">exclusive</label>
+            </li>
+            <li>
+                <input type="radio" name="c" id="ci" value="i"<%= $cfg->{ c } eq 'i' ? ' checked="checked"' : '' %> />
+                <label for="ci">inclusive</label>
+            </li>
+            <li>
+                <input type="radio" name="c" id="cx" value="x"<%= $cfg->{ c } eq 'x' ? ' checked="checked"' : '' %> />
+                <label for="cx">rows x</label>
+            </li>
+            <li>
+                <input type="radio" name="c" id="cm" value="m"<%= $cfg->{ c } eq 'm' ? ' checked="checked"' : '' %> />
+                <label for="cm">mixed</label>
+            </li>
+        </ul>
+
+        <h3>Columns visibility:</h3>
+        <ul>
+            <li>
+                <input type="checkbox" name="ve" id="ve" value="1"<%= $cfg->{ ve } ? ' checked="checked"' : '' %> />
+                <label for="ve">exclusive</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vi" id="vi" value="1"<%= $cfg->{ vi } ? ' checked="checked"' : '' %> />
+                <label for="vi">inclusive</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vx" id="vx" value="1"<%= $cfg->{ vx } ? ' checked="checked"' : '' %> />
+                <label for="vx">rows x</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vr" id="vr" value="1"<%= $cfg->{ vr } ? ' checked="checked"' : '' %> />
+                <label for="vr">rows</label>
+            </li>
+            <li>
+                <input type="checkbox" name="vl" id="vl" value="1"<%= $cfg->{ vl } ? ' checked="checked"' : '' %> />
+                <label for="vl">loops</label>
+            </li>
+        </ul>
+
+        <div class="fe fe-buttons">
+            <button type="submit" name="save-settings" id="save-settings"><span>Save settings</span></button>
+        </div>
+
+    </form>
+
+    <a href="#" onclick="$.fn.explain( 'toggleCfgForm', this ); return false;" onkeypress="return this.onclick( );"><span>options</span></a>
+
+</div>
+
+<div class="result">
+
+    <div class="tabs">
+        <ul class="clearfix">
+            <li class="html">
+                <a href="#html"
+                   title="view HTML"
+                   class="current"
+                   onclick="$( this ).explain( 'toggleView', 'html', this ); return false;"
+                   onkeypress="return this.onclick( );">HTML</a>
+            </li>
+            <li class="text">
+                <a href="#text"
+                   title="view plain text"
+                   onclick="$( this ).explain( 'toggleView', 'text', this ); return false;"
+                   onkeypress="return this.onclick( );">TEXT</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="result-html">
+        <table id="explain">
+            <thead>
+                <tr>
+                    <th class="e<%= $cfg->{ ve } ? '' : ' tight' %>">
+                        <a href="#colorize-exclusive"
+                            title="colorize rows based on &quot;exclusive&quot;"
+                            onclick="$.fn.explain( 'colorize', 'e', this ); return false"
+                            onkeypress="return this.onclick( );">exclusive</a>
+                    </th>
+                    <th class="i<%= $cfg->{ vi } ? '' : ' tight' %>">
+                        <a href="#colorize-inclusive"
+                            title="colorize rows based on &quot;inclusive&quot;"
+                            onclick="$.fn.explain( 'colorize', 'i', this ); return false"
+                            onkeypress="return this.onclick( );">inclusive</a>
+                    </th>
+                    <th class="x<%= $cfg->{ vx } ? '' : ' tight' %>">
+                        <a href="#colorize-rows-x"
+                            title="colorize rows based on &quot;rows x&quot;"
+                            onclick="$.fn.explain( 'colorize', 'x', this ); return false"
+                            onkeypress="return this.onclick( );">rows x</a>
+                    </th>
+                    <th class="r<%= $cfg->{ vr } ? '' : ' tight' %>">
+                        <span>rows</span>
+                    </th>
+                    <th class="l<%= $cfg->{ vl } ? '' : ' tight' %>">
+                        <span>loops</span>
+                    </th>
+                    <th class="n">
+                        <span>node</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                %== $block->( $explain->top_node );
+            </tbody>
+        </table>
+    </div>
+
+    <div class="result-text hidden">
+        <pre id="source"><%= $explain->source =%></pre>
+    </div>
+
+</div>
+
+<% content_for 'head' => begin %>
+    <script>
+        $( document ).ready( function( ) {
+
+            /* startup */
+            $.fn.explain( 'init', $( '#explain-form' ), $( '#explain' ) );
+
+        } );
+    </script>
+<% end %>

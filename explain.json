@@ -1,0 +1,20 @@
+{
+    "title" : "explain.depesz.com",
+
+    "secret" : "|Erp--Wjgb)+eiB/|H=|V7!#+M|L{a8=J2|pd+N1=M|&pJWq|M&,f3q^XS",
+
+    "database" : {
+        "dsn"      : "dbi:Pg:database=explain;host=127.0.0.1;port=5432",
+        "username" : "explain",
+        "password" : "explain",
+        "options"  : {
+            "auto_commit" : 1
+        }
+    },
+
+    "mail_sender" : {
+        "from"    : "explain.depesz.com <depesz@depesz.com>",
+        "to"      : "metys <lukasz.metys.lewandowski@gmail.com>",
+        "subject" : "Message from: explain.depesz.com/contact"
+    }
+}
