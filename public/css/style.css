@@ -282,6 +282,9 @@ div.explain-form a:hover    {background:#e5ecf9}
 .result-html table td.n ul    {list-style:none}
 .result-html table td.n li    {padding-top:0.5em}
 
+.result-html table td.n p span.est,
+.result-html table td.n p span.act {white-space:nowrap}
+
 /* all ico(ns) */
 .result-html table td.n div.ico {position:absolute;top:-4px;left:-22px;width:22px;height:22px;background:url('../img/sprite.png') no-repeat 0px -180px;text-indent:-1000px;overflow:hidden}
 
