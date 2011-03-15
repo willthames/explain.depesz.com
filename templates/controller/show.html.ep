@@ -28,6 +28,10 @@
 % }
 
 
+
+% my $prev_row_level = 0;
+% my $prev_row_class = 'odd';
+
 % my $block = undef;
 %
 % $block = begin
@@ -97,7 +101,15 @@
 % elsif ( $row_color eq 'i' ) { $row_color = $inclusive_point; }
 % elsif ( $row_color eq 'x' ) { $row_color = $rows_x_point;    }
 
-% my $row_class = ( $level % 2 ? 'even' : 'odd' ) . " c-$row_color";
+% my $row_class = $prev_row_class;
+%
+% if ( $level != $prev_row_level ) {
+%
+%    $row_class      = $prev_row_class eq 'even' ? 'odd' : 'even';
+%
+%    $prev_row_level = $level;
+%    $prev_row_class = $row_class;
+% }
 
     <tr class="n <%= $row_class %>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
         <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
