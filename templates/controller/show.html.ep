@@ -179,6 +179,35 @@
         </td>
     </tr>
 
+    % if ( $node->can( 'ctes' ) ) {
+
+        % if ( $node->ctes ) {
+
+            % for my $cte ( @{ $node->ctes } ) {
+
+                <tr class="cte" data-level="<%= $level =%>">
+                    <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+                    <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+                    <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+                    <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+                    <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span>&nbsp;</span></td>
+                    <td class="n">
+                        <div class="n" style="margin-left:<%= $margin =%>px">
+                            <p><span>CTE <%= $cte %></span></p>
+                        </div>
+                    </td>
+                </tr>
+
+                % for ( @{ $node->cte( $cte ) } ) {
+                    %== $block->( $_, $level + 1 );
+                % }
+
+            % }
+
+        % }
+
+    % }
+
     % if ( $node->initplans ) {
 
         <tr class="ip" data-level="<%= $level =%>">
