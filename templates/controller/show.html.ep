@@ -183,7 +183,7 @@
 
         % if ( $node->ctes ) {
 
-            % for my $cte ( @{ $node->ctes } ) {
+            % for my $cte ( @{ $node->cte_order } ) {
 
                 <tr class="cte" data-level="<%= $level =%>">
                     <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
