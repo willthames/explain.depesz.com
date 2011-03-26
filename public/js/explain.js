@@ -68,16 +68,28 @@
 
             var level = parseInt( row.attr( 'data-level' ) );
 
+            var nodeId = row.attr( 'data-node_id' );
+
             row.nextAll( ).each( function( i, r ) {
 
                 var r = $( r );
 
                 var l = r.attr( 'data-level' )
 
-                if ( l == level ) return false;
+                if ( l == level ) {
 
-                if ( l == level + 1 )
+                    if ( r.hasClass( 'sp' ) || r.hasClass( 'ip' ) || r.hasClass( 'cte' ) ) return true;
+
+                    return false;
+                }
+
+                if ( l == level + 1 ) {
+
+                    if ( r.attr( 'data-node_parent' ) != nodeId ) return true;
+
                     r.addClass( 'sub-n' );
+                }
+
             } );
         },
 
@@ -96,13 +108,40 @@
 
             var affected = 0;
 
+            var nodeId = row.attr( 'data-node_id' );
+
             row.nextAll( ).each( function( i, r ) {
 
                 var r = $( r );
 
                 var l = r.attr( 'data-level' );
 
-                if ( l <= level ) return false;
+                if ( l < level )
+                    return false;
+
+                if ( l == level ) {
+
+                    if ( row.hasClass( 'n' ) ) {
+
+                        if ( r.hasClass( 'n' ) ) return false;
+
+                    } else {
+
+                        return false;
+
+                    }
+                }
+
+                if ( l == level + 1 ) {
+
+                    if ( !row.hasClass( 'n' ) ) {
+
+                        if ( r.attr( 'data-node_parent' ) != nodeId )
+                            return false;
+
+                    }
+
+                }
 
                 affected++;
 
