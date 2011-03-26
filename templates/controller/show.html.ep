@@ -198,9 +198,7 @@
                     </td>
                 </tr>
 
-                % for ( @{ $node->cte( $cte ) } ) {
-                    %== $block->( $_, $level + 1 );
-                % }
+                %== $block->( $node->cte( $cte ), $level + 1 );
 
             % }
 
