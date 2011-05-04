@@ -20,14 +20,36 @@ sub index {
     return $self->render( message => 'Your plan is too long.', status  => 413 )
         if 10_000_000 < length $plan;
 
-    # validate plan
+    # try
     eval {
+
+        # make "explain"
         my $explain = Pg::Explain->new( source => $plan );
-        $explain->top_node;
+
+        # something goes wrong...
+        die q|Can't create explain! Explain "top_node" is undef!|
+            unless defined $explain->top_node;
     };
 
-    # something goes wrong
-    return $self->render( message => q|Failed to parse your plan.| ) if $EVAL_ERROR;
+    # catch
+    if ( $EVAL_ERROR ) {
+
+        # log message
+        $self->app->log->info( $EVAL_ERROR );
+
+        # try
+        eval {
+
+            # send mail
+            $self->send_mail( {
+                subject => q|Can't create explain from...|,
+                msg     => $plan
+            } );
+        };
+
+        # leave...
+        return $self->render( message => q|Failed to parse your plan| );
+    }
 
     # public
     my $is_public = $self->req->param( 'is_public' ) ? 1 : 0;

@@ -5,6 +5,10 @@
 
 <h1><%= $title =%></h1>
 
+% if ( stash( 'message' ) ) {
+    <p class="message"><%= stash( 'message' ) =%></p>
+% }
+
 <form id="new-explain" method="post" action="<%= url_for 'current' %>">
 
     <div class="fe fe-first fe_plan">
