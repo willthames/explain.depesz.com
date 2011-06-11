@@ -66,13 +66,13 @@ sub register {
 }
 
 sub save_with_random_name {
-    my ( $self, $content, $is_public ) = @_;
+    my ( $self, $content, $is_public, $is_anon ) = @_;
 
     # create statement handler
-    my $sth = $self->dbh->prepare( 'SELECT register_plan(?, ?)' );
+    my $sth = $self->dbh->prepare( 'SELECT register_plan(?, ?, ?)' );
 
     # execute
-    $sth->execute( $content, $is_public );
+    $sth->execute( $content, $is_public, $is_anon );
 
     # register_plan returns plan id
     my @row = $sth->fetchrow_array;

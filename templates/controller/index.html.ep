@@ -21,6 +21,11 @@
         <input type="checkbox" class="checkbox" id="is_public" name="is_public" value="1" checked="checked" />
     </div>
 
+    <div class="fe fe_is_anon">
+        <label for="is_anon">I want this plan to anonymized before saving.</label>
+        <input type="checkbox" class="checkbox" id="is_anon" name="is_anon" value="1"/>
+    </div>
+
     <div class="fe fe-last fe-buttons">
         <button type="submit" name="submit_plan" id="submit_plan"><span>Submit</span></button>
     </div>

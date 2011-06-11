@@ -20,6 +20,12 @@ sub index {
     return $self->render( message => 'Your plan is too long.', status  => 413 )
         if 10_000_000 < length $plan;
 
+    # public
+    my $is_public = $self->req->param( 'is_public' ) ? 1 : 0;
+
+    # anonymization
+    my $is_anon = $self->req->param( 'is_anon' ) ? 1 : 0;
+
     # try
     eval {
 
@@ -29,6 +35,13 @@ sub index {
         # something goes wrong...
         die q|Can't create explain! Explain "top_node" is undef!|
             unless defined $explain->top_node;
+
+        # Anonymize plan, when requested.
+        if ( $is_anon ) {
+            $explain->anonymize();
+            $plan = $explain->as_text();
+        }
+
     };
 
     # catch
@@ -51,11 +64,8 @@ sub index {
         return $self->render( message => q|Failed to parse your plan| );
     }
 
-    # public
-    my $is_public = $self->req->param( 'is_public' ) ? 1 : 0;
-
     # save to database
-    my $id = $self->database->save_with_random_name( $plan, $is_public );
+    my $id = $self->database->save_with_random_name( $plan, $is_public, $is_anon, );
 
     # redirect to /show/:id
     return $self->redirect_to( 'show', id => $id );
