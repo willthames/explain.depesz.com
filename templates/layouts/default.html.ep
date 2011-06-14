@@ -29,6 +29,33 @@
 
         <script src="<%= url_for '/' %>js/explain.js"></script>
 
+        <script type="text/javascript">
+            $( document ).ready(){ function() {
+$('INPUT.auto-hint, TEXTAREA.auto-hint').focus(function(){
+    if($(this).val() == $(this).attr('title')){
+        $(this).val('');
+        $(this).removeClass('auto-hint');
+    }
+    });
+            };
+            $( document ).ready(){ function() {
+$('INPUT.auto-hint, TEXTAREA.auto-hint').blur(function(){
+    if($(this).val() == '' && $(this).attr('title') != ''){
+       $(this).val($(this).attr('title'));
+       $(this).addClass('auto-hint');
+    }
+});
+            };
+            $( document ).ready(){ function() {
+$('INPUT.auto-hint, TEXTAREA.auto-hint').each(function(){
+    if($(this).attr('title') == ''){ return; }
+    if($(this).val() == ''){ $(this).val($(this).attr('title')); }
+    else { $(this).removeClass('auto-hint'); }
+});
+            };
+        </script>
+
+
         <%= content_for 'head' %>
     </head>
     <body class="<%= $self->match->endpoint->name %>">

@@ -354,3 +354,5 @@ footer p                {text-shadow:#101921 0px 2px 6px}
 footer p,
 footer a                {color:#2c4054}
 footer a:hover          {color:#e80}
+
+.auto-hint { color: #aaaaaa }
