@@ -356,3 +356,9 @@ footer a                {color:#2c4054}
 footer a:hover          {color:#e80}
 
 .auto-hint { color: #aaaaaa }
+
+div.message { border: 2px solid #f00; padding: 0.5em; text-align: center; background: #600; }
+div.message p.message { font-weight: bold; font-size: 2em; color: #ff0; padding: 0; margin: 0; margin-bottom: 1em; }
+div.message p.hint { color: #ff0; padding: 0; margin: 0; }
+div.message p.hint a { color: #ff0; }
+div.message p.hint a:hover { color: #ff0; }

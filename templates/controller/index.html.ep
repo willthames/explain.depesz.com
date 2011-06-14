@@ -6,7 +6,10 @@
 <h1><%= $title =%></h1>
 
 % if ( stash( 'message' ) ) {
+    <div class="message">
     <p class="message"><%= stash( 'message' ) =%></p>
+    <p class="hint">You might want to <a href="<%= url_for 'contact' %>">contact</a> me if you think that the problem is on <a href="http://explain.depesz.com/">explain.depesz.com</a> side.</p>
+    </div>
 % }
 
 <form id="new-explain" method="post" action="<%= url_for 'current' %>">
