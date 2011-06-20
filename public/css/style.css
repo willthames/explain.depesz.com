@@ -362,3 +362,4 @@ div.message p.message { font-weight: bold; font-size: 2em; color: #ff0; padding:
 div.message p.hint { color: #ff0; padding: 0; margin: 0; }
 div.message p.hint a { color: #ff0; }
 div.message p.hint a:hover { color: #ff0; }
+div.plea { text-align: center; color: #666; padding-top: 1em; }

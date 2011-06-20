@@ -393,6 +393,10 @@
         <pre id="source"><%= $explain->source =%></pre>
     </div>
 
+    <div class="plea">
+        Did it help you? Perhaps you can <a href="http://www.depesz.com/index.php/can-you-help-me/">help me</a>.
+    </div>
+
 </div>
 
 <% content_for 'head' => begin %>
