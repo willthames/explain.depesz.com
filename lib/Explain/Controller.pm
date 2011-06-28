@@ -17,7 +17,7 @@ sub index {
     return $self->render unless $plan;
 
     # request entity too large
-    return $self->render( message => 'Your plan is too long.', status  => 413 )
+    return $self->render( message => 'Your plan is too long.', status => 413 )
         if 10_000_000 < length $plan;
 
     # public
@@ -25,6 +25,11 @@ sub index {
 
     # anonymization
     my $is_anon = $self->req->param( 'is_anon' ) ? 1 : 0;
+
+    # plan title
+    my $title = $self->req->param( 'title' );
+    $title = '' unless defined $title;
+    $title = '' if 'Optional title' eq $title;
 
     # try
     eval {
@@ -54,10 +59,12 @@ sub index {
         eval {
 
             # send mail
-            $self->send_mail( {
-                subject => q|Can't create explain from...|,
-                msg     => $plan
-            } );
+            $self->send_mail(
+                {
+                    subject => q|Can't create explain from...|,
+                    msg     => $plan
+                }
+            );
         };
 
         # leave...
@@ -65,7 +72,7 @@ sub index {
     }
 
     # save to database
-    my $id = $self->database->save_with_random_name( $plan, $is_public, $is_anon, );
+    my $id = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, );
 
     # redirect to /show/:id
     return $self->redirect_to( 'show', id => $id );
@@ -75,14 +82,13 @@ sub show {
     my $self = shift;
 
     # value of "/:id" param
-    my $id = defined $self->stash->{ id }
-                   ? $self->stash->{ id } : '';
+    my $id = defined $self->stash->{ id } ? $self->stash->{ id } : '';
 
     # missing or invalid
     return $self->redirect_to( 'new-explain' ) unless $id =~ m{\A[a-zA-Z0-9]+\z};
 
     # get plan source from database
-    my $plan = $self->database->get_plan( $id );
+    my ( $plan, $title ) = $self->database->get_plan( $id );
 
     # not found in database
     return $self->redirect_to( 'new-explain', status => 404 ) unless $plan;
@@ -105,8 +111,9 @@ sub show {
         return $self->redirect_to( 'new-explain' );
     }
 
-    # put explain to stash
+    # put explain and title to stash
     $self->stash->{ explain } = $explain;
+    $self->stash->{ title } = $title;
 
     # render will be called automatically
     return;
@@ -138,19 +145,18 @@ sub contact {
         unless Email::Valid->address( $self->req->param( 'email' ) || '' );
 
     # send
-    $self->send_mail( {
-        msg => sprintf(
-            "\nMessage from: %s <%s>" .
-            "\nPosted  from: %s with %s" .
-            "\n****************************************\n\n" .
-            "%s",
-            $self->req->param( 'name' ) || '',
-            $self->req->param( 'email' ),
-            $self->tx->remote_address,
-            $self->req->headers->user_agent,
-            $self->req->param( 'message' )
-        )
-    } );
+    $self->send_mail(
+        {
+            msg => sprintf(
+                "\nMessage from: %s <%s>" . "\nPosted  from: %s with %s" . "\n****************************************\n\n" . "%s",
+                $self->req->param( 'name' ) || '',
+                $self->req->param( 'email' ),
+                $self->tx->remote_address,
+                $self->req->headers->user_agent,
+                $self->req->param( 'message' )
+            )
+        }
+    );
 
     # mail sent message
     $self->flash( message => 'Mail sent' );
@@ -160,6 +166,7 @@ sub contact {
 }
 
 sub help {
+
     # direct to template
     return ( shift )->render;
 }

@@ -1,7 +1,9 @@
 % layout 'default';
 
-% my $title = stash( 'id' );
-% title $title;
+% my $id = stash( 'id' );
+% my $title = stash( 'title' );
+% my $full_title = $title ? "$id : $title" : $id;
+% title $full_title;
 
 
 %# c = e|i|x|m (colorize = exclusive|inclusive|rows-x|mixed)
@@ -122,10 +124,10 @@
 
     <tr class="n <%= $row_class %>" data-node_id="<%= $node_id =%>" data-node_parent="<%= $parent =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
         <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
-            <span><%= sprintf '%.3f', $node->total_exclusive_time =%></span>
+            <span><%= sprintf '%.3f', defined $node->total_exclusive_time ? $node->total_exclusive_time : 0 =%></span>
         </td>
         <td class="i c-<%= $inclusive_point =%><%= $cfg->{ vi } ? '' : ' tight' %>">
-            <span><%= sprintf '%.3f', $node->total_inclusive_time =%></span>
+            <span><%= sprintf '%.3f', defined $node->total_inclusive_time ? $node->total_inclusive_time : 0 =%></span>
         </td>
         <td class="x c-<%= $rows_x_point =%><%= $cfg->{ vx } ? '' : ' tight' %>">
             <span>
@@ -270,7 +272,7 @@
 
 % end;
 
-<h1>Result: <%= $title %></h1>
+<h1>Result: <%= $full_title %></h1>
 
 <div class="explain-form">
 

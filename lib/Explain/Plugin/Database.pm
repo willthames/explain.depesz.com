@@ -66,13 +66,13 @@ sub register {
 }
 
 sub save_with_random_name {
-    my ( $self, $content, $is_public, $is_anon ) = @_;
+    my ( $self, $title, $content, $is_public, $is_anon ) = @_;
 
     # create statement handler
-    my $sth = $self->dbh->prepare( 'SELECT register_plan(?, ?, ?)' );
+    my $sth = $self->dbh->prepare( 'SELECT register_plan(?, ?, ?, ?)' );
 
     # execute
-    $sth->execute( $content, $is_public, $is_anon );
+    $sth->execute( $title, $content, $is_public, $is_anon );
 
     # register_plan returns plan id
     my @row = $sth->fetchrow_array;
@@ -90,7 +90,7 @@ sub get_plan {
     my ( $self, $plan_id ) = @_;
 
     # create statement handler
-    my $sth = $self->dbh->prepare( 'SELECT plan FROM plans WHERE id = ?' );
+    my $sth = $self->dbh->prepare( 'SELECT plan, title FROM plans WHERE id = ?' );
 
     # execute
     $sth->execute( $plan_id );
@@ -102,7 +102,7 @@ sub get_plan {
     $sth->finish;
 
     # return plan
-    return $row[ 0 ];
+    return @row;
 }
 
 sub get_public_list {

@@ -15,6 +15,8 @@
 <form id="new-explain" method="post" action="<%= url_for 'current' %>">
 
     <div class="fe fe-first fe_plan">
+        <label for="title">Optional title for plan:</label>
+        <input id="title" name="title" class="auto-hint" title="Optional title"/>
         <label for="plan">Paste your explain/explain analyze here:</label>
         <textarea id="plan" name="plan" class="auto-hint" title="For example:
                                                         QUERY PLAN
