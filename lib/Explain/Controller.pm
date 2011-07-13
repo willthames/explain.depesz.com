@@ -115,7 +115,7 @@ sub show {
     my $stats = { 'tables' => {} };
     my @elements = ( $explain->top_node );
     while ( my $e = shift @elements ) {
-        push @elements, values ${ $e->ctes } if $e->{ 'ctes' };
+        push @elements, values %{ $e->ctes } if $e->ctes;
         push @elements, @{ $e->sub_nodes }   if $e->sub_nodes;
         push @elements, @{ $e->initplans }   if $e->initplans;
         push @elements, @{ $e->subplans }    if $e->subplans;
