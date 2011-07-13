@@ -50,7 +50,7 @@
 %   my $exclusive_point = 1;
 %   my $inclusive_point = 1;
 %
-%   if ( $explain->top_node->total_inclusive_time && $node->total_exclusive_time ne '' && $node->total_inclusive_time ne '' ) {
+%   if ( $explain->top_node->total_inclusive_time && defined( $node->total_exclusive_time ) && defined( $node->total_inclusive_time ) && $node->total_exclusive_time ne '' && $node->total_inclusive_time ne '' ) {
 %
 %       $exclusive_point = $node->total_exclusive_time / $explain->top_node->total_inclusive_time;
 %
@@ -154,6 +154,9 @@
                             on <%= $node->scan_on->{ index_name } %>
                         % }
                         % elsif ( 'Index Scan' eq $node->type ) {
+                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+                        % elsif ( 'Index Scan Backward' eq $node->type ) {
                             using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
                         % elsif ( 'Seq Scan' eq $node->type ) {
@@ -349,6 +352,12 @@
                    onclick="$( this ).explain( 'toggleView', 'text', this ); return false;"
                    onkeypress="return this.onclick( );">TEXT</a>
             </li>
+            <li class="stats">
+                <a href="#stats"
+                   title="view plan stats"
+                   onclick="$( this ).explain( 'toggleView', 'stats', this ); return false;"
+                   onkeypress="return this.onclick( );">STATS</a>
+            </li>
         </ul>
     </div>
 
@@ -393,6 +402,65 @@
 
     <div class="result-text hidden">
         <pre id="source"><%= $explain->source =%></pre>
+    </div>
+
+    <div class="result-stats hidden">
+        <h1>Per node type stats</h1>
+        <table class="stats">
+            <thead>
+            <tr><th>scan type</th><th>count</th><th>sum of times</th><th>% of query</th></tr>
+            </thead>
+            <tbody>
+            % for my $node_type ( sort keys %{ $stats->{'nodes'} } ) {
+                <tr class="table-detail">
+                <td class="node-type"><%= $node_type %></td>
+                <td class="count"><%= $stats->{'nodes'}->{$node_type}->{'count'} %></td>
+                <td class="time"><%= sprintf '%.03f ms', $stats->{'nodes'}->{$node_type}->{'time'} || 0 %></td>
+                <td class="percent">
+                    <% my $total = $explain->top_node->total_inclusive_time || 0; %>
+                    <% my $current = $stats->{'nodes'}->{$node_type}->{'time'} || 0; %>
+                    <% my $percent = $total == 0 ? 0 : 100 * $current / $total; %>
+                    <%= sprintf '%.1f %%', $percent %>
+                </td>
+                </tr>
+            % }
+            </tbody>
+        </table>
+        <h1>Per table stats</h1>
+        <table class="stats">
+            <thead>
+            <tr><th>Table name</th><th>Scan count</th><th>Total time</th><th>% of query</th></tr>
+            <tr><th>scan type</th><th>count</th><th>sum of times</th><th>% of table</th></tr>
+            </thead>
+            <tbody>
+            % for my $table_name ( sort keys %{ $stats->{'tables'} } ) {
+                <tr class="table-summary">
+                <td class="table-name"><%= $table_name %></td>
+                <td class="count"><%= $stats->{'tables'}->{$table_name}->{':total'}->{'count'} %></td>
+                <td class="time"><%= sprintf '%.03f ms', $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0 %></td>
+                <td class="percent">
+                    <% my $total = $explain->top_node->total_inclusive_time || 0; %>
+                    <% my $current = $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0; %>
+                    <% my $percent = $total == 0 ? 0 : 100 * $current / $total; %>
+                    <%= sprintf '%.1f %%', $percent %>
+                </td>
+                </tr>
+                % for my $scan_type ( sort grep { ! /^:/ } keys %{ $stats->{'tables'}->{$table_name} } ) {
+                <tr class="table-detail">
+                <td class="scan-type"><%= $scan_type %></td>
+                <td class="count"><%= $stats->{'tables'}->{$table_name}->{$scan_type}->{'count'} %></td>
+                <td class="time"><%= sprintf '%.03f ms', $stats->{'tables'}->{$table_name}->{$scan_type}->{'time'} || 0 %></td>
+                <td class="percent">
+                    <% my $total = $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0; %>
+                    <% my $current = $stats->{'tables'}->{$table_name}->{$scan_type}->{'time'} || 0; %>
+                    <% my $percent = $total == 0 ? 0 : 100 * $current / $total; %>
+                    <%= sprintf '%.1f %%', $percent %>
+                </td>
+                </tr>
+                % }
+            % }
+            </tbody>
+        </table>
     </div>
 
     <div class="plea">

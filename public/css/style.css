@@ -206,7 +206,7 @@ div.explain-form a:hover    {background:#e5ecf9}
 *:first-child+html #explain-form input {border:0}
 
 .result                         {margin:0;padding:0}
- .result-text, .result-html     {margin:0;padding:0;border:1px solid #ccc;overflow:auto}
+ .result-text, .result-html, .result-stats     {margin:0;padding:0;border:1px solid #ccc;overflow:auto}
  .result-text                   {background:#222 url('../img/code-bg.gif');color:#fff}
  .result-text pre               {margin:0;padding:1em}
 
@@ -222,7 +222,7 @@ div.explain-form a:hover    {background:#e5ecf9}
          border-radius:4px 0px 0px 0px
 }
 
-.result .tabs .text a {
+.result .tabs .stats a {
     -moz-border-radius:0px 4px 0px 0px;
          border-radius:0px 4px 0px 0px
 }
@@ -363,3 +363,18 @@ div.message p.hint { color: #ff0; padding: 0; margin: 0; }
 div.message p.hint a { color: #ff0; }
 div.message p.hint a:hover { color: #ff0; }
 div.plea { text-align: center; color: #666; padding-top: 1em; }
+
+.result-stats h1 {color:#123}
+.result-stats table {margin:5px;border-collapse:collapse}
+
+.result-stats table th,
+.result-stats table td {padding:4px 8px;border:1px solid #ccc;background:#fff;text-align:left;vertical-align:top}
+
+.result-stats table th   {background:#234;text-align:center;color:#fff}
+.result-stats table td.count,
+.result-stats table td.time,
+.result-stats table td.percent { text-align: right }
+.result-stats table td.table-name { font-weight: bold; }
+.result-stats table td.scan-type { padding-left: 2em; }
+.result-stats table tr.table-summary td { background: #e5ecf9 }
+

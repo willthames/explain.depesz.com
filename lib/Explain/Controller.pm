@@ -111,9 +111,34 @@ sub show {
         return $self->redirect_to( 'new-explain' );
     }
 
+    # Get stats from plan
+    my $stats = { 'tables' => {} };
+    my @elements = ( $explain->top_node );
+    while ( my $e = shift @elements ) {
+        push @elements, values ${ $e->ctes } if $e->{ 'ctes' };
+        push @elements, @{ $e->sub_nodes }   if $e->sub_nodes;
+        push @elements, @{ $e->initplans }   if $e->initplans;
+        push @elements, @{ $e->subplans }    if $e->subplans;
+
+        $stats->{'nodes'}->{ $e->type }->{'count'}++;
+        $stats->{'nodes'}->{ $e->type }->{'time'}+=$e->total_exclusive_time if $e->total_exclusive_time;
+
+        next unless $e->scan_on;
+        next unless $e->scan_on->{ 'table_name' };
+        $stats->{ 'tables' }->{ $e->scan_on->{ 'table_name' } } ||= {};
+        my $S = $stats->{ 'tables' }->{ $e->scan_on->{ 'table_name' } };
+        $S->{ $e->{ 'type' } }->{ 'count' }++;
+        $S->{ ':total' }->{ 'count' }++;
+        if ( defined( my $t = $e->total_exclusive_time ) ) {
+            $S->{ $e->type }->{ 'time' } += $t;
+            $S->{ ':total' }->{ 'time' } += $t;
+        }
+    }
+
     # put explain and title to stash
     $self->stash->{ explain } = $explain;
-    $self->stash->{ title } = $title;
+    $self->stash->{ title }   = $title;
+    $self->stash->{ stats }   = $stats;
 
     # render will be called automatically
     return;
