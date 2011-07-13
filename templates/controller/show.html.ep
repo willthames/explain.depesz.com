@@ -408,7 +408,7 @@
         <h1>Per node type stats</h1>
         <table class="stats">
             <thead>
-            <tr><th>scan type</th><th>count</th><th>sum of times</th><th>% of query</th></tr>
+            <tr><th>node type</th><th>count</th><th>sum of times</th><th>% of query</th></tr>
             </thead>
             <tbody>
             % for my $node_type ( sort keys %{ $stats->{'nodes'} } ) {
