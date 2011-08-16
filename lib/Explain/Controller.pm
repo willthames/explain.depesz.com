@@ -55,18 +55,6 @@ sub index {
         # log message
         $self->app->log->info( $EVAL_ERROR );
 
-        # try
-        eval {
-
-            # send mail
-            $self->send_mail(
-                {
-                    subject => q|Can't create explain from...|,
-                    msg     => $plan
-                }
-            );
-        };
-
         # leave...
         return $self->render( message => q|Failed to parse your plan| );
     }
