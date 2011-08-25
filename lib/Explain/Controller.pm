@@ -5,13 +5,14 @@ use Mojo::Base 'Mojolicious::Controller';
 use English -no_match_vars;
 
 use Pg::Explain;
+use Encode;
 use Email::Valid;
 
 sub index {
     my $self = shift;
 
     # plan
-    my $plan = $self->req->param( 'plan' );
+    my $plan = encode( 'UTF-8', $self->req->param( 'plan' ) );
 
     # nothing to do...
     return $self->render unless $plan;
