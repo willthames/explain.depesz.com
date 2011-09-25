@@ -5,9 +5,9 @@
 
 <h1><%= $title =%></h1>
 
-% if ( stash 'message' ) {
+% if ( flash 'message' ) {
 <div class="message">
-    <p><%= stash 'message' =%></p>
+    <p class="message"><%= flash 'message' =%></p>
 </div>
 % }
 
