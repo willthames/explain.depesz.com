@@ -12,7 +12,7 @@ sub startup {
     $self->plugin( charset => { charset => 'utf8' } );
 
     # load configuration
-    my $config = $self->plugin( 'json_config' );
+    my $config = $self->plugin( 'JSONConfig' );
 
     # setup secret passphrase
     $self->secret( $config->{ secret } || 'Xwyfe-_d:yGDr+p][Vs7Kk+e3mmP=c_|s7hvExF=b|4r4^gO|' );
