@@ -85,7 +85,7 @@
 
             <footer>
                 <div>
-                    <p class="copyright">Copyright &copy; 2009-2011 <a href="mailto:depesz@depesz.com" title="mail me">Hubert &quot;depesz&quot; Lubaczewski</a>, <a href="http://llewandowski.pl/">Łukasz &quot;metys&quot; Lewandowski</a></p>
+                    <p class="copyright">Copyright &copy; 2009-2011 <a href="mailto:depesz@depesz.com" title="mail me">Hubert &quot;depesz&quot; Lubaczewski</a>, Łukasz &quot;metys&quot; Lewandowski</p>
                     <p class="powered-by">powered by <a href="http://www.mojolicious.org" title="mojolicious web framework">mojolicious</a></p>
                 </div>
             </footer>
