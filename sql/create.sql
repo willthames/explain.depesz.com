@@ -135,15 +135,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: another; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE another (
-    i integer
-);
-
-
---
 -- Name: plans; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -158,13 +149,11 @@ CREATE TABLE plans (
 
 
 --
--- Name: z; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Data for Name: plans; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-CREATE TABLE z (
-    i integer NOT NULL,
-    j integer NOT NULL
-);
+COPY plans (id, plan, entered_on, is_public, is_anonymized, title) FROM stdin;
+\.
 
 
 --
@@ -176,26 +165,13 @@ ALTER TABLE ONLY plans
 
 
 --
--- Name: z_i_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
-ALTER TABLE ONLY z
-    ADD CONSTRAINT z_i_key UNIQUE (i);
-
-
---
--- Name: z_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY z
-    ADD CONSTRAINT z_pkey PRIMARY KEY (j, i);
-
-
---
--- Name: r; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX r ON z USING btree (j);
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM pgdba;
+GRANT ALL ON SCHEMA public TO pgdba;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
