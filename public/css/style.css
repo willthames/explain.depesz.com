@@ -123,6 +123,9 @@ nav a, nav span                         {height:35px;padding:0 20px;font-size:1.
 nav a:hover                             {text-decoration:underline}
 nav span                                {margin-left:1px;margin-right:1px;background-position:0px -120px;color:#eee}
 
+nav .donate                             {left:auto;right:20px}
+nav .donate span input                  {position:relative;top:2px;border:none;width:74px}
+
 section {
          margin-bottom:20px;
                padding:20px 20px 35px 20px;

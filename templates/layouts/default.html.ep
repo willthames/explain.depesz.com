@@ -77,6 +77,18 @@
                     </li>
                 % }
                 </ul>
+                <ul class="donate">
+                    <li>
+                        <span>
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                <input type="hidden" name="cmd" value="_s-xclick"/>
+                                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----"/>
+                                <input type="image" width="74" height="21" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
+                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
+                            </form>
+                        </span>
+                    </li>
+                </ul>
             </nav>
 
             <section>
@@ -85,7 +97,7 @@
 
             <footer>
                 <div>
-                    <p class="copyright">Copyright &copy; 2009-2011 <a href="mailto:depesz@depesz.com" title="mail me">Hubert &quot;depesz&quot; Lubaczewski</a>, Łukasz &quot;metys&quot; Lewandowski</p>
+                    <p class="copyright">Copyright &copy; 2009-2011 <a href="mailto:depesz@depesz.com" title="mail me">Hubert &quot;depesz&quot; Lubaczewski</a>, <a href="mailto:lukasz.metys.lewandowski@gmail.com">Łukasz &quot;metys&quot; Lewandowski</a></p>
                     <p class="powered-by">powered by <a href="http://www.mojolicious.org" title="mojolicious web framework">mojolicious</a></p>
                 </div>
             </footer>
