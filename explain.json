@@ -4,7 +4,7 @@
     "secret" : "|Erp--Wjgb)+eiB/|H=|V7!#+M|L{a8=J2|pd+N1=M|&pJWq|M&,f3q^XS",
 
     "database" : {
-        "dsn"      : "dbi:Pg:database=depesz_explain;host=127.0.0.1;port=5901",
+        "dsn"      : "dbi:Pg:database=depesz_explain;host=127.0.0.1;port=5900",
         "username" : "depesz_explain",
         "options"  : {
             "auto_commit" : 1,
