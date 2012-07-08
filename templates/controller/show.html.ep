@@ -162,6 +162,9 @@
                         % elsif ( 'Seq Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
+                        % elsif ( 'Foreign Scan' eq $node->type ) {
+                            on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
                         % elsif ( 'CTE Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ cte_name } %> <%= $node->scan_on->{ cte_alias } || '' %>
                         % }
