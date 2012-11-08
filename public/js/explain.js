@@ -23,7 +23,7 @@
 
                 input = $( input );
 
-                if ( !input.attr( 'name' ).match( /^(c|ve|vi|vx|vr|vl)$/ ) ) return true;
+                if ( !input.attr( 'name' ).match( /^(c|vu|ve|vi|vx|vr|vl)$/ ) ) return true;
 
                 input.bind( 'change', $.proxy( function( e ) {
 
@@ -235,7 +235,7 @@
                 // colorize
                 if ( input.attr( 'name' ) == 'c' ) {
 
-                    if ( input.is( ':checked' ) && input.attr( 'value' ).match( /^(e|i|x|m)$/ ) )
+                    if ( input.is( ':checked' ) && input.attr( 'value' ).match( /^(u|e|i|x|m)$/ ) )
                         cfg.push( input.attr( 'name' ) + '=' + input.val( ) );
 
                     // next 
@@ -243,7 +243,7 @@
                 }
 
                 // skip
-                if ( !input.attr( 'name' ).match( /^(ve|vi|vx|vr|vl)$/ ) ) return true;
+                if ( !input.attr( 'name' ).match( /^(vu|ve|vi|vx|vr|vl)$/ ) ) return true;
 
                 // visibility
                 cfg.push( input.attr( 'name' ) + '=' + ( input.is( ':checked' ) ? 1 : 0 ) );
@@ -262,7 +262,7 @@
             var name = input.attr( 'name' );
 
             // column visibility
-            if ( input.attr( 'name' ).match( /^(ve|vi|vx|vr|vl)$/ ) ) {
+            if ( input.attr( 'name' ).match( /^(vu|ve|vi|vx|vr|vl)$/ ) ) {
 
                 // column
                 var c = input.attr( 'name' ).substr( 1, 1 );
@@ -340,6 +340,10 @@
             if($(this).attr('title') == ''){ return; }
             if($(this).val() == ''){ $(this).val($(this).attr('title')); }
             else { $(this).removeClass('auto-hint'); }
+        });
+        $( '#explain tbody tr td.u a' ).click( function(e) {
+            e.stopPropagation();
+            return true;
         });
     });
 

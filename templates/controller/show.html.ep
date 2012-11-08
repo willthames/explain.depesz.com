@@ -18,13 +18,13 @@
 % my $cfg = {};
 %
 % for ( @cfg ) {
-%   next unless $_ =~ /\A(c|ve|vi|vx|vr|vl)\=([exim01]{1})\z/;
+%   next unless $_ =~ /\A(c|vu|ve|vi|vx|vr|vl)\=([exim01]{1})\z/;
 %   $cfg->{ $1 } = $2;
 % }
 %
 % $cfg->{ c } = 'm' unless $cfg->{ c } && $cfg->{ c } =~ /\A(e|i|x|m)\z/;
 %
-% for ( qw( ve vi vx vr vl ) ) {
+% for ( qw( vu ve vi vx vr vl ) ) {
 %   next if exists $cfg->{ $_ } && $cfg->{ $_ } =~ /\A(0|1)\z/;
 %   $cfg->{ $_ } = 1;
 % }
@@ -92,9 +92,9 @@
 %#      n(ode)/i(nit)p(lan)/s(ub)p(lan)
 %#      c(olor)-mix(ed)|1|2|3|4
 %#
-%#  td class="(e|i|x|r|l|n) (c-(1|2|3|4))?"
+%#  td class="(u|e|i|x|r|l|n) (c-(1|2|3|4))?"
 %#  means:
-%#      e(xclusive time)/i(nclusive time)/(rows-)x/r(ows)/l(oops)/n(ode)
+%#      n(u)mber|e(xclusive time)/i(nclusive time)/(rows-)x/r(ows)/l(oops)/n(ode)
 %#      c(olor)-1|2|3|4
 %#
 %#  important!
@@ -122,7 +122,8 @@
 
     % my $node_id = $global_node_id++;
 
-    <tr class="n <%= $row_class %>" data-node_id="<%= $node_id =%>" data-node_parent="<%= $parent =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
+    <tr id="l<%= $global_node_id =%>" class="n <%= $row_class %>" data-node_id="<%= $node_id =%>" data-node_parent="<%= $parent =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
+        <td class="u <%= $cfg->{ vu } ? '' : ' tight' %>"><a href="#l<%= $global_node_id =%>"><%= $global_node_id =%>.</a></td>
         <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
             <span><%= sprintf '%.3f', defined $node->total_exclusive_time ? $node->total_exclusive_time : 0 =%></span>
         </td>
@@ -217,7 +218,8 @@
 
                 % my $cte_node_id = $global_node_id++;
 
-                <tr class="cte" data-node_id="<%= $cte_node_id =%>" data-node_parent="<%= $node_id =%>" data-level="<%= $level =%>">
+                <tr id="l<%= $global_node_id =%>" class="cte" data-node_id="<%= $cte_node_id =%>" data-node_parent="<%= $node_id =%>" data-level="<%= $level =%>">
+                    <td class="u<%= $cfg->{ vu } ? '' : ' tight' %>"><span><a href="#l<%= $global_node_id =%>"><%= $global_node_id =%>.</a></span></td>
                     <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
                     <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
                     <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
@@ -242,7 +244,8 @@
 
         % my $ip_node_id = $global_node_id++;
 
-        <tr class="ip" data-node_id="<%= $ip_node_id =%>" data-node_parent="<%= $node_id =%>" data-level="<%= $level =%>">
+        <tr id="l<%= $global_node_id =%>" class="ip" data-node_id="<%= $ip_node_id =%>" data-node_parent="<%= $node_id =%>" data-level="<%= $level =%>">
+            <td class="u<%= $cfg->{ vu } ? '' : ' tight' %>"><span><a href="#l<%= $global_node_id =%>"><%= $global_node_id =%>.</a></span></td>
             <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
@@ -270,7 +273,8 @@
 
         % my $sp_node_id = $global_node_id++;
 
-        <tr class="sp" data-node_id="<%= $sp_node_id =%>" data-node_parent="<%= $node_id =%>" data-level="<%= $level =%>">
+        <tr id="l<%= $global_node_id =%>" class="sp" data-node_id="<%= $sp_node_id =%>" data-node_parent="<%= $node_id =%>" data-level="<%= $level =%>">
+            <td class="u<%= $cfg->{ vu } ? '' : ' tight' %>"><span><a href="#l<%= $global_node_id =%>"><%= $global_node_id =%>.</a></span></td>
             <td class="e<%= $cfg->{ ve } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="i<%= $cfg->{ vi } ? '' : ' tight' %>"><span>&nbsp;</span></td>
             <td class="x<%= $cfg->{ vx } ? '' : ' tight' %>"><span>&nbsp;</span></td>
@@ -318,6 +322,10 @@
 
         <h3>Columns visibility:</h3>
         <ul>
+            <li>
+                <input type="checkbox" name="vu" id="vu" value="1"<%= $cfg->{ vu } ? ' checked="checked"' : '' %> />
+                <label for="vu">#</label>
+            </li>
             <li>
                 <input type="checkbox" name="ve" id="ve" value="1"<%= $cfg->{ ve } ? ' checked="checked"' : '' %> />
                 <label for="ve">exclusive</label>
@@ -380,6 +388,9 @@
         <table id="explain">
             <thead>
                 <tr>
+                    <th class="u<%= $cfg->{ vu } ? '' : ' tight' %>">
+                        <span>#</span>
+                    </th>
                     <th class="e<%= $cfg->{ ve } ? '' : ' tight' %>">
                         <a href="#colorize-exclusive"
                             title="colorize rows based on &quot;exclusive&quot;"

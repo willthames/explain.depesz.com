@@ -325,6 +325,8 @@ div.explain-form a:hover    {background:#e5ecf9}
 .result-html table tbody tr.sp td.n,
 .result-html table tbody tr.ip td.n {background-image:none}
 
+#explain tbody tr td.u a {font-size:14px;text-decoration:none;color:#16212B}
+
 /* for "help" */
 p.slogan         {font-style:italic}
 p strong         {color:#234}
