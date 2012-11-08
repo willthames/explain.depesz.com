@@ -162,6 +162,15 @@
                         % elsif ( 'Seq Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
+                        % elsif ( 'Insert' eq $node->type ) {
+                            on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+                        % elsif ( 'Update' eq $node->type ) {
+                            on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+                        % elsif ( 'Delete' eq $node->type ) {
+                            on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
                         % elsif ( 'Foreign Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
