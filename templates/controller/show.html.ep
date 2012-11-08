@@ -165,6 +165,9 @@
                         % elsif ( 'CTE Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ cte_name } %> <%= $node->scan_on->{ cte_alias } || '' %>
                         % }
+                        % elsif ( 'Function Scan' eq $node->type ) {
+                            on <%= $node->scan_on->{ function_name } %> <%= $node->scan_on->{ function_alias } || '' %>
+                        % }
 
                     </span>
 
