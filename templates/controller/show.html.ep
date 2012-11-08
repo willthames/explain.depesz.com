@@ -12,7 +12,7 @@
 %# ...
 
 % my @cookie = grep { $_->name eq 'explain' } @{ $self->req->cookies };
-% my $cookie = scalar @cookie ? b( $cookie[0]->value )->url_unescape : '';
+% my $cookie = scalar @cookie ? Mojo::ByteStream->new( $cookie[0]->value )->url_unescape : '';
 
 % my @cfg = split /\|/, $cookie || '';
 % my $cfg = {};
