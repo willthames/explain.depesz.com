@@ -346,7 +346,7 @@
             return true;
         });
         var form=$('#new-explain');
-        if ( form ) {
+        if ( form.size() ) {
             form.find('#plan').keypress( function( e ) {
                 if ( e.ctrlKey && ( e.keyCode === 10 || e.keyCode === 13 ) ) {
                     e.preventDefault();
