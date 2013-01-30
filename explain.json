@@ -16,5 +16,11 @@
         "from"    : "explain.depesz.com <depesz@depesz.com>",
         "to"      : "metys <depesz@depesz.com>",
         "subject" : "Message from: explain.depesz.com/contact"
+    },
+
+    "hypnotoad"   : {
+        "listen"  : ["http://*:12004"],
+        "workers" : 2,
+        "pid_file" : "/home/depesz/sites/explain.depesz.com.pid"
     }
 }
