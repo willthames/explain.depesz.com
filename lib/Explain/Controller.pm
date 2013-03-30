@@ -139,6 +139,10 @@ sub history {
     # date
     my $date = $self->param( 'date' );
 
+    if ( ( $date ) && ( $date < '2008-12-01' ) ) {
+        return $self->redirect_to( '/' );
+    }
+
     # get result set from database
     my $rs = $self->database->get_public_list_paged( $date );
 
