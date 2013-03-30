@@ -61,10 +61,34 @@ sub index {
     }
 
     # save to database
-    my $id = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, );
+    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, );
 
     # redirect to /show/:id
+    $self->flash( delete_key => $delete_key );
     return $self->redirect_to( 'show', id => $id );
+}
+
+sub delete {
+    my $self = shift;
+
+    # value of "/:id" param
+    my $id = defined $self->stash->{ id } ? $self->stash->{ id } : '';
+
+    # value of "/:key" param
+    my $key = defined $self->stash->{ key } ? $self->stash->{ key } : '';
+
+    # missing or invalid
+    return $self->redirect_to( 'new-explain' ) unless $id =~ m{\A[a-zA-Z0-9]+\z};
+    return $self->redirect_to( 'new-explain' ) unless $key =~ m{\A[a-zA-Z0-9]+\z};
+
+    # delete plan in database
+    my $delete_worked = $self->database->delete_plan( $id, $key );
+
+    # not found in database
+    return $self->redirect_to( 'new-explain', status => 404 ) unless $delete_worked;
+
+    $self->flash( message => sprintf( 'Plan %s deleted.', $id ) );
+    return $self->redirect_to( 'new-explain' );
 }
 
 sub show {
@@ -109,8 +133,8 @@ sub show {
         push @elements, @{ $e->initplans }   if $e->initplans;
         push @elements, @{ $e->subplans }    if $e->subplans;
 
-        $stats->{'nodes'}->{ $e->type }->{'count'}++;
-        $stats->{'nodes'}->{ $e->type }->{'time'}+=$e->total_exclusive_time if $e->total_exclusive_time;
+        $stats->{ 'nodes' }->{ $e->type }->{ 'count' }++;
+        $stats->{ 'nodes' }->{ $e->type }->{ 'time' } += $e->total_exclusive_time if $e->total_exclusive_time;
 
         next unless $e->scan_on;
         next unless $e->scan_on->{ 'table_name' };

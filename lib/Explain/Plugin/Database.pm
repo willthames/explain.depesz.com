@@ -8,7 +8,7 @@ use Carp;
 use DBI;
 use Date::Simple;
 
-has dbh             => undef;
+has dbh => undef;
 has connection_args => sub { [] };
 
 sub register {
@@ -21,7 +21,7 @@ sub register {
     unless ( $dsn ) {
 
         # driver
-        my $driver = $config->{ driver }   || 'Pg';
+        my $driver = $config->{ driver } || 'Pg';
 
         # database name
         my $database = $config->{ database } || lc( $ENV{ MOJO_APP } );
@@ -34,12 +34,14 @@ sub register {
     }
 
     # database (DBI) connection arguments
-    $self->connection_args( [
-        $config->{ dsn },
-        $config->{ username },
-        $config->{ password },
-        $config->{ options } || {}
-    ] );
+    $self->connection_args(
+        [
+            $config->{ dsn },
+            $config->{ username },
+            $config->{ password },
+            $config->{ options } || {}
+        ]
+    );
 
     # log debug message
     $app->log->debug( 'Database connection args: ' . $app->dumper( $self->connection_args ) );
@@ -66,43 +68,46 @@ sub register {
 }
 
 sub save_with_random_name {
-    my ( $self, $title, $content, $is_public, $is_anon ) = @_;
+    my $self = shift;
+    my ( $title, $content, $is_public, $is_anon ) = @_;
 
-    # create statement handler
-    my $sth = $self->dbh->prepare( 'SELECT register_plan(?, ?, ?, ?)' );
+    my @row = $self->dbh->selectrow_array(
+        'SELECT id, delete_key FROM register_plan(?, ?, ?, ?)',
+        undef,
+        $title, $content, $is_public, $is_anon,
+    );
 
-    # execute
-    $sth->execute( $title, $content, $is_public, $is_anon );
-
-    # register_plan returns plan id
-    my @row = $sth->fetchrow_array;
-
-    # finish
-    $sth->finish;
-
-    # return plan id
-    return $row[ 0 ];
+    # return id and delete_key
+    return @row;
 }
 
-# @depesz
-#  - why you don't use selectrow_array (or similar)?
 sub get_plan {
-    my ( $self, $plan_id ) = @_;
+    my $self = shift;
+    my ( $plan_id ) = @_;
 
-    # create statement handler
-    my $sth = $self->dbh->prepare( 'SELECT plan, title FROM plans WHERE id = ?' );
-
-    # execute
-    $sth->execute( $plan_id );
-
-    # fetch row
-    my @row = $sth->fetchrow_array;
-
-    # finish
-    $sth->finish;
+    my @row = $self->dbh->selectrow_array(
+        'SELECT plan, title FROM plans WHERE id = ? AND NOT is_deleted',
+        undef,
+        $plan_id,
+    );
 
     # return plan
     return @row;
+}
+
+sub delete_plan {
+    my $self = shift;
+    my ( $plan_id, $delete_key ) = @_;
+    my @row = $self->dbh->selectrow_array(
+        'UPDATE plans SET plan = ?, title = ?, is_deleted = true, delete_key = NULL WHERE id = ? and delete_key = ? RETURNING 1',
+        undef,
+        '',
+        'This plan has been deleted.',
+        $plan_id,
+        $delete_key
+    );
+    return 1 if $row[ 0 ];
+    return;
 }
 
 sub get_public_list {
@@ -110,16 +115,16 @@ sub get_public_list {
 
     return $self->dbh->selectall_arrayref(
         'SELECT id, to_char( entered_on, ? ) as date FROM plans WHERE is_public ORDER BY entered_on DESC',
-        { Slice => { } },
+        { Slice => {} },
         'YYYY-MM-DD'
     );
-} 
+}
 
 sub get_public_list_paged {
     my $self = shift;
 
     # param "date"
-    my $date = defined( $_[0] ) ? $_[0] : '';
+    my $date = defined( $_[ 0 ] ) ? $_[ 0 ] : '';
 
     # trim
     trim $date;
@@ -158,9 +163,10 @@ sub get_public_list_paged {
           WHERE is_public
             AND entered_on > ?::date
             AND entered_on < ?::date
+            AND NOT is_deleted
        ORDER BY entered_on
            DESC',
-        { Slice => { } },
+        { Slice => {} },
         'YYYY-MM-DD',
         $since,
         ( $to + 1 )->as_str( '%Y-%m-%d' )
@@ -168,7 +174,7 @@ sub get_public_list_paged {
 
     # next week
     my $next = $to + 7;
-       $next = ( $next > $today ) ? undef : $next->as_str( '%Y-%m-%d' );
+    $next = ( $next > $today ) ? undef : $next->as_str( '%Y-%m-%d' );
 
     return {
         since     => $since,

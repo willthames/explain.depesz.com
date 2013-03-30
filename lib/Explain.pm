@@ -32,6 +32,9 @@ sub startup {
     # route: 'show'
     $routes->route( '/s/:id' )->to( 'controller#show', id => '' )->name( 'show' );
 
+    # route: 'delete'
+    $routes->route( '/d/:id/:key' )->to( 'controller#delete', id => '', key => '' )->name( 'delete' );
+
     # route: 'history'
     $routes->route( '/history/:date' )->to( 'controller#history', date => '' )->name( 'history' );
 

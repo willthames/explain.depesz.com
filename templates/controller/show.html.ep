@@ -296,6 +296,13 @@
 
 <h1>Result: <%= $full_title %></h1>
 
+% if ( flash( 'delete_key' ) ) {
+    <div class="message messageNice">
+    <p class="message">To delete this plan, you can use <a href="<%= url_for( 'delete', id => $id, key => flash( 'delete_key' ) )=%>">this link</a>.</p>
+    <p class="hint">This link will not be shown any more, so you might want to bookmark it, just in case.</p>
+    </div>
+% }
+
 <div class="explain-form">
 
     <form id="explain-form" class="hidden" method="get" action="<%= url_for 'current' %>" autocomplete="off">

@@ -12,6 +12,12 @@
     </div>
 % }
 
+% if ( flash( 'message' ) ) {
+    <div class="message">
+    <p class="message"><%= flash( 'message' ) =%></p>
+    </div>
+% }
+
 <form id="new-explain" method="post" action="<%= url_for 'current' %>">
 
     <div class="fe fe-first fe_plan">
