@@ -8,6 +8,6 @@ use Test::Mojo;
 
 use_ok( 'Explain' );
 
-my $t = Test::Mojo->new( app => 'Explain' );
+my $t = Test::Mojo->new( 'Explain' );
 
 $t->get_ok( '/' )->status_is( 200 );
