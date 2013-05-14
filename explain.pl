@@ -20,4 +20,4 @@ EOF
 
 $ENV{ MOJO_APP } = 'Explain';
 
-Mojolicious::Commands->start;
+Mojolicious::Commands->start_app( 'Explain' );
