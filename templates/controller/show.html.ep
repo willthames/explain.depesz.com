@@ -160,6 +160,12 @@
                         % elsif ( 'Index Scan Backward' eq $node->type ) {
                             using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
+                        % elsif ( 'Index Only Scan' eq $node->type ) {
+                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
+                        % elsif ( 'Index Only Scan Backward' eq $node->type ) {
+                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
+                        % }
                         % elsif ( 'Seq Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
