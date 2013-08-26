@@ -163,7 +163,7 @@ sub history {
     # date
     my $date = $self->param( 'date' );
 
-    if ( ( $date ) && ( $date < '2008-12-01' ) ) {
+    if ( ( $date ) && ( $date lt '2008-12-01' ) ) {
         return $self->redirect_to( '/' );
     }
 
