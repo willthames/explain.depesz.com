@@ -123,8 +123,7 @@ nav a, nav span                         {height:35px;padding:0 20px;font-size:1.
 nav a:hover                             {text-decoration:underline}
 nav span                                {margin-left:1px;margin-right:1px;background-position:0px -120px;color:#eee}
 
-nav .donate                             {left:auto;right:20px}
-nav .donate span input                  {position:relative;top:2px;border:none;width:74px}
+nav .right                              {left:auto;right:20px}
 
 section {
          margin-bottom:20px;
@@ -185,9 +184,16 @@ form .fe-buttons button span        {display:block;padding:5px 25px;color:#123}
 form .fe-buttons button:hover       {background:#234;border-color:123}
 form .fe-buttons button:hover span  {color:#fff;cursor:pointer}
 
+form .fe-buttons-single                    {padding:5px 0 0 0}
+form .fe-buttons-single button             {display:block;float:left;margin-right:5px;border:1px solid #d0d8d8;background:#e5ecf9}
+form .fe-buttons-single button span        {display:block;padding:5px 25px;color:#123}
+form .fe-buttons-single button:hover       {background:#234;border-color:123}
+form .fe-buttons-single button:hover span  {color:#fff;cursor:pointer}
 form p.nfo-required {font-size:0.8em;color:#888}
 
 form sup.fe-required {font-size:1.2em;color:#800}
+
+.password2 {display:none;}
 
 div.explain-form            {margin-bottom:5px;text-align:center}
 div.explain-form a          {padding:0 1em 0.5em 1em;border:1px solid #ccc;background:#f8f8f8;color:#666;text-decoration:none;-moz-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px}

@@ -1,0 +1,42 @@
+% layout 'default';
+
+% my $title = 'Login / Register';
+% title $title;
+
+<h1><%= $title =%></h1>
+
+% if ( stash( 'message' ) ) {
+    <div class="message">
+    <p class="message"><%= stash( 'message' ) =%></p>
+    </div>
+% }
+
+% if ( flash( 'message' ) ) {
+    <div class="message">
+    <p class="message"><%= flash( 'message' ) =%></p>
+    </div>
+% }
+
+<form id="login" method="post" action="<%= url_for 'current' %>">
+    <div class="fe fe-first fe_login">
+        <label for="username">username:</label>
+        <input id="username" name="username" class="auto-hint" title="Enter your username"
+        <% if ( param('username') ) { %>
+        value="<%= param('username') %>"
+        <% } %>
+        />
+        <label for="password">password:</label>
+        <input id="password" type="password" name="password" title="Enter your password"/>
+        <label class="password2" for="password2">repeat password:</label>
+        <input class="password2" id="password2" type="password" name="password2" title="Enter your password"/>
+
+    </div>
+    <div class="fe fe_register">
+        <label for="is_registration">I want to register new account</label>
+        <input type="checkbox" class="checkbox" id="is_registration" name="is_registration" value="1" <% if ( param('is_registration') ) { %>checked="1"<% } %>/>
+    </div>
+
+    <div class="fe fe-last fe-buttons">
+        <button type="submit" name="login" id="login-button"><span>Login</span></button>
+    </div>
+</form>

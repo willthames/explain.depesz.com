@@ -354,6 +354,22 @@
                 }
             });
         }
+
+        // login form support
+        var pass2 = $('.password2');
+        var lr_button_text = $('#login-button span');
+        var is_reg_check = $('#is_registration');
+        is_reg_check.change(function(e) {
+            if (this.checked) {
+                pass2.show();
+                lr_button_text.text( 'Register');
+            } else {
+                pass2.hide();
+                lr_button_text.text( 'Login');
+            }
+        });
+        is_reg_check.trigger( 'change' );
+        // login form support
     });
 
 } )( jQuery );

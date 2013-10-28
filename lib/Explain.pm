@@ -5,6 +5,9 @@ use Mojo::Base 'Mojolicious';
 sub startup {
     my $self = shift;
 
+    $self->sessions->cookie_name('explain');
+    $self->sessions->default_expiration( 60 * 60 * 24 * 365 );
+
     # register Explain plugins namespace
     $self->plugins->namespaces( [ "Explain::Plugin", @{ $self->plugins->namespaces } ] );
 
@@ -28,6 +31,15 @@ sub startup {
 
     # route: 'index'
     $routes->route( '/' )->to( 'controller#index' )->name( 'new-explain' );
+
+    # route: 'login'
+    $routes->route( '/login' )->to( 'controller#login' )->name( 'login' );
+
+    # route: 'logout'
+    $routes->route( '/logout' )->to( 'controller#logout' )->name( 'logout' );
+
+    # route: 'user'
+    $routes->route( '/user' )->to( 'controller#user' )->name( 'user' );
 
     # route: 'show'
     $routes->route( '/s/:id' )->to( 'controller#show', id => '' )->name( 'show' );

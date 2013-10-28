@@ -77,17 +77,23 @@
                     </li>
                 % }
                 </ul>
-                <ul class="donate">
+                <ul class="right">
                     <li>
-                        <span>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                            </form>
-                        </span>
-                    </li>
+                    % if ( session('user') ) {
+                        % if ( $self->match->endpoint->name eq "user" ) {
+                            <span>user: <%= session('user') %></span>
+                        % } else {
+                            <a href="<%= url_for 'user' %>" title="link to: user page" rel="permalink">user: <%= session('user') %></a>
+                        % }
+                    % } else {
+                        % if ( $self->match->endpoint->name eq "login" ) {
+                            <span>login</span>
+                        % } else {
+                            <a href="<%= url_for 'login' %>" title="link to: login/register" rel="permalink">login</a>
+                        % }
+                    % }
+                    <li>
+
                 </ul>
             </nav>
 

@@ -7,9 +7,11 @@ use Mojo::Util 'trim';
 use Carp;
 use DBI;
 use Date::Simple;
+use English qw( -no_match_vars );
 
 has dbh => undef;
 has connection_args => sub { [] };
+has log => undef;
 
 sub register {
     my ( $self, $app, $config ) = @_;
@@ -45,6 +47,7 @@ sub register {
 
     # log debug message
     $app->log->debug( 'Database connection args: ' . $app->dumper( $self->connection_args ) );
+    $self->log( $app->log );
 
     # register helper
     $app->helper(
@@ -67,14 +70,74 @@ sub register {
     return;
 }
 
-sub save_with_random_name {
+sub user_login {
     my $self = shift;
-    my ( $title, $content, $is_public, $is_anon ) = @_;
+    my ( $username, $password ) = @_;
 
     my @row = $self->dbh->selectrow_array(
-        'SELECT id, delete_key FROM register_plan(?, ?, ?, ?)',
+        'SELECT password FROM users where username = ?',
         undef,
-        $title, $content, $is_public, $is_anon,
+        $username,
+    );
+    return if 0 == scalar @row;
+    my $crypted = crypt( $password, $row[0] );
+    
+    return if $crypted ne $row[0];
+    return 1;
+}
+
+sub user_change_password {
+    my $self = shift;
+    my ($username, $old, $new) = @_;
+
+    my @row = $self->dbh->selectrow_array(
+        'SELECT password FROM users where username = ?',
+        undef,
+        $username,
+    );
+    return if 0 == scalar @row;
+    my $crypted_old = crypt( $old, $row[0] );
+
+    my $crypted_new = crypt( $new, $self->get_pw_salt() );
+    
+    @row = $self->dbh->selectrow_array(
+        'UPDATE users SET password = ? WHERE ( username, password ) = ( ?, ? ) returning username',
+        undef,
+        $crypted_new, $username, $crypted_old,
+    );
+    return 1 if 1 == scalar @row;
+    return;
+}
+
+sub get_pw_salt {
+    my $self = shift;
+    my @salt_chars = ( 'a'..'z', 'A'..'Z', 0..9, '.', '/' );
+    my $salt = sprintf '$6$%s$', join( '', map { $salt_chars[ rand @salt_chars ] } 1..16 );
+    return $salt;
+}
+
+sub user_register {
+    my $self = shift;
+    my ( $username, $password ) = @_;
+
+    my $crypted = crypt( $password, $self->get_pw_salt() );
+
+    eval {
+        $self->dbh->do( 'INSERT INTO users (username, password, registered) values (?, ?, now())', undef, $username, $crypted, );
+    };
+    return 1 unless $EVAL_ERROR;
+    $self->log->error( "user_register( $username ) => " . $EVAL_ERROR );
+    return;
+}
+
+sub save_with_random_name {
+    my $self = shift;
+    my ( $title, $content, $is_public, $is_anon, $username ) = @_;
+
+    my @row = $self->dbh->selectrow_array(
+        'SELECT id, delete_key FROM register_plan(?, ?, ?, ?, ?)',
+        undef,
+        $title, $content, $is_public, $is_anon, $username,
     );
 
     # return id and delete_key

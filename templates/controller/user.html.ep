@@ -1,0 +1,40 @@
+% layout 'default';
+
+% my $title = 'User: ' . session( 'user' );
+% title $title;
+
+<h1><%= $title %></h1>
+
+<h2>Change password:</h2>
+
+% if ( stash( 'message' ) ) {
+    <div class="message">
+    <p class="message"><%= stash( 'message' ) =%></p>
+    </div>
+% }
+
+% if ( flash( 'message' ) ) {
+    <div class="message">
+    <p class="message"><%= flash( 'message' ) =%></p>
+    </div>
+% }
+
+<form id="logout" method="post" action="<%= url_for 'user' %>">
+    <div class="fe">
+        <label for="old-pw">Current password:</label>
+        <input id="old-pw" type="password" name="old-pw" title="Enter your old password"/>
+    </div>
+    <div class="fe">
+        <label for="new-pw">New password:</label>
+        <input id="new-pw" type="password" name="new-pw" title="Enter your new password"/>
+        <label for="new-pw2">Repeat new password:</label>
+        <input id="new-pw2" type="password" name="new-pw2" title="Repeat your new password"/>
+    </div>
+    <div class="fe fe-last fe-buttons">
+        <button type="submit" name="changepw" id="changepw-button"><span>Change password</span></button>
+    </div>
+</form>
+
+<div class="fe">
+<h2><a href="<%= url_for 'logout' %>">Logout user  <%= " ".session( 'user' ) =%></a></h2>
+</div>

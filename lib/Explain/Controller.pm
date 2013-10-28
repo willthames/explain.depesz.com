@@ -8,6 +8,86 @@ use Pg::Explain;
 use Encode;
 use Email::Valid;
 
+sub logout {
+    my $self = shift;
+    delete $self->session->{'user'};
+    $self->redirect_to( 'new-explain' );
+}
+
+sub user {
+    my $self = shift;
+
+    my $old = $self->req->param('old-pw');
+    my $new = $self->req->param('new-pw');
+    my $new2 = $self->req->param('new-pw2');
+
+    return $self->render unless defined $old;
+    
+    if (
+        ( !defined $new ) ||
+        ( !defined $new2) ||
+        ( $new ne $new2 )
+    ) {
+        $self->stash->{'message'} = 'You have to provide two identical copies of new password!';
+        return;
+    }
+    my $status = $self->database->user_change_password( $self->session->{'user'}, $old, $new );
+    if ( $status ) {
+        $self->flash('message' => 'Password changed.');
+        $self->redirect_to( 'new-explain' );
+    }
+    $self->stash->{'message'} = 'Changing the password failed.';
+}
+
+sub login {
+    my $self = shift;
+
+    # If there is no username - there is nothing to do
+    my $username = $self->req->param('username');
+    return $self->render unless defined $username;
+
+    if ( 30 < length( $username ) ) {
+        $self->stash->{'message'} = 'Username cannot be longer than 30 characters. Really?!';
+        return;        
+    }
+
+    my $password = $self->req->param('password');
+    my $password2 = $self->req->param('password2');
+
+    if ( ( ! defined $password ) || ( '' eq $password ) ) {
+        $self->stash->{'message'} = 'There has to be some password!';
+        return;
+    }
+
+    # Registration
+    if ( $self->req->param('is_registration') ) {
+        if (
+            ( ! defined $password2 ) ||
+            ( $password2 ne $password )
+        ) {
+            $self->stash->{'message'} = 'You have to repeat password correctly!';
+            return;
+        }
+
+        my $status = $self->database->user_register( $username, $password );
+        if ( $status ) {
+            $self->flash('message' => 'User registered.');
+            $self->session( 'user' => $username );
+            $self->redirect_to( 'new-explain' );
+        }
+        $self->stash->{'message'} = 'Registration failed.';
+        return;
+    }
+
+    if ( $self->database->user_login( $username, $password ) ) {
+        $self->flash('message' => 'User logged in.');
+        $self->session( 'user' => $username );
+        $self->redirect_to( 'new-explain' );
+    }
+    $self->stash->{'message'} = 'Bad username or password.';
+    return;
+}
+
 sub index {
     my $self = shift;
 
@@ -61,7 +141,7 @@ sub index {
     }
 
     # save to database
-    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, );
+    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, $self->session->{'user'} );
 
     # redirect to /show/:id
     $self->flash( delete_key => $delete_key );
