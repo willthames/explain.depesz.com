@@ -109,6 +109,68 @@ sub user_change_password {
     return;
 }
 
+sub get_user_history {
+    my $self = shift;
+    my ( $user, $direction, $marker ) = @_;
+
+    my $limit = 100;
+    
+    $direction = 'DESC' if ( $direction // '' ) ne 'ASC';
+    my $query = '';
+    my @args = ();
+
+    if ( defined $marker ) {
+        my $comparison = $direction eq 'DESC' ? '<' : '>';
+        $query = "
+            SELECT p.id, p.entered_on::date, p.is_public, p.is_anonymized, p.title
+            FROM plans p
+            WHERE p.added_by = ? and not p.is_deleted
+            AND ( p.entered_on, p.id ) $comparison (
+                    select x.entered_on, x.id
+                    from plans x
+                    where x.id = ?
+                )
+            ORDER BY p.entered_on $direction, p.id $direction LIMIT $limit
+            ";
+        @args = ( $user, $marker );
+
+    } else {
+        $query = "
+            SELECT p.id, p.entered_on::date, p.is_public, p.is_anonymized, p.title
+            FROM plans p
+            WHERE p.added_by = ? and not p.is_deleted
+            ORDER BY p.entered_on DESC, p.id DESC LIMIT $limit
+            ";
+        @args = ( $user );
+    }
+    my $plans = $self->dbh->selectall_arrayref( $query, { Slice => {} }, @args );
+
+    # newest plans always first
+    $plans = [ reverse @{ $plans } ] if $direction eq 'ASC';
+
+    return {
+        'list' => [],
+        'earlier' => 0,
+        'later' => 0,
+    } if 0 == scalar @{ $plans };
+    
+    my @later = $self->dbh->selectrow_array(
+        'SELECT p.id FROM plans p where p.added_by = ? and not is_deleted and ( p.entered_on, p.id ) > ( select x.entered_on, x.id from plans x where x.id = ? ) limit 1',
+        undef,
+        $user, $plans->[0]->{'id'},
+    );
+    my @earlier = $self->dbh->selectrow_array(
+        'SELECT p.id FROM plans p where p.added_by = ? and not is_deleted and ( p.entered_on, p.id ) < ( select x.entered_on, x.id from plans x where x.id = ? ) limit 1',
+        undef,
+        $user, $plans->[-1]->{'id'},
+    );
+    return {
+        'list' => $plans,
+        'later' => scalar @later,
+        'earlier' => scalar @earlier,
+    };
+}
+
 sub get_pw_salt {
     my $self = shift;
     my @salt_chars = ( 'a'..'z', 'A'..'Z', 0..9, '.', '/' );
@@ -130,6 +192,24 @@ sub user_register {
     return;
 }
 
+sub update_plan {
+    my $self = shift;
+    my ($id, $changes) = @_;
+    my @columns = keys %{ $changes };
+    my @values  = values %{ $changes };
+
+    eval {
+        $self->dbh->do(
+            'UPDATE plans SET ' . join(', ', map { "$_ = ?" } @columns) . ' WHERE id = ?',
+            undef,
+            @values, $id
+        );
+    };
+    return 1 unless $EVAL_ERROR;
+    $self->log->error( "update_plan( $id ) => " . $EVAL_ERROR );
+    return;
+}
+
 sub save_with_random_name {
     my $self = shift;
     my ( $title, $content, $is_public, $is_anon, $username ) = @_;
@@ -142,6 +222,20 @@ sub save_with_random_name {
 
     # return id and delete_key
     return @row;
+}
+
+sub get_plan_data {
+    my $self = shift;
+    my ( $plan_id ) = @_;
+
+    my $rows = $self->dbh->selectall_arrayref(
+        'SELECT * FROM plans WHERE id = ? AND NOT is_deleted',
+        { Slice => {} },
+        $plan_id,
+    );
+    return unless defined $rows;
+    return if 0 == scalar @{ $rows };
+    return $rows->[0];
 }
 
 sub get_plan {

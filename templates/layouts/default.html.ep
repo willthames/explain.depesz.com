@@ -78,22 +78,30 @@
                 % }
                 </ul>
                 <ul class="right">
-                    <li>
                     % if ( session('user') ) {
+                    <li>
                         % if ( $self->match->endpoint->name eq "user" ) {
                             <span>user: <%= session('user') %></span>
                         % } else {
                             <a href="<%= url_for 'user' %>" title="link to: user page" rel="permalink">user: <%= session('user') %></a>
                         % }
+                    </li>
+                    <li>
+                        % if ( $self->match->endpoint->name eq "user-history" ) {
+                            <span>plans</span>
+                        % } else {
+                            <a href="<%= url_for 'user-history' %>" title="link to: user plans" rel="permalink">plans</a>
+                        % }
+                    </li>
                     % } else {
+                    <li>
                         % if ( $self->match->endpoint->name eq "login" ) {
                             <span>login</span>
                         % } else {
                             <a href="<%= url_for 'login' %>" title="link to: login/register" rel="permalink">login</a>
                         % }
+                    </li>
                     % }
-                    <li>
-
                 </ul>
             </nav>
 

@@ -14,6 +14,24 @@ sub logout {
     $self->redirect_to( 'new-explain' );
 }
 
+sub user_history {
+    my $self = shift;
+    $self->redirect_to( 'history' ) unless $self->session->{'user'};
+
+    my @args = ( $self->session->{'user'} );
+    if (
+        ( $self->param('direction') ) &&
+        ( $self->param('direction') =~ m{\A(?:before|after)\z} ) &&
+        ( $self->param('key') )
+    ) {
+        push @args, $self->param('direction') eq 'before' ? 'DESC' : 'ASC';
+        push @args, $self->param('key');
+    }
+    my $data = $self->database->get_user_history( @args );
+    $self->stash->{'plans'} = $data;
+    return $self->render();
+}
+
 sub user {
     my $self = shift;
 
@@ -37,6 +55,64 @@ sub user {
         $self->redirect_to( 'new-explain' );
     }
     $self->stash->{'message'} = 'Changing the password failed.';
+}
+
+sub plan_change {
+    my $self = shift;
+    unless ( $self->session->{'user'} ) {
+        $self->app->log->error( 'User tried to access plan change without being logged!' );
+        $self->redirect_to( 'new-explain' );
+    }
+    $self->redirect_to( 'new-explain' ) unless $self->req->param('return');
+
+    my $plan = $self->database->get_plan_data( $self->param('id') );
+    if (
+        ( ! defined $plan->{'added_by'} ) ||
+        ( $plan->{'added_by'} ne $self->session->{'user'} )
+    ) {
+        $self->app->log->error( 'User tried to access plan change for plan [' . $plan->{'id'} . '] of another user: ' . $self->session->{'user'});
+        $self->redirect_to( 'logout' );
+    }
+
+    # All looks fine. Current plan data are in $plan.
+    if (
+        ( $self->req->param('delete') ) &&
+        ( $self->req->param('delete') eq 'yes' )
+    ) {
+        $self->database->delete_plan( $plan->{'id'}, $plan->{'delete_key'} );
+        return $self->redirect_to( $self->req->param('return') );
+    }
+
+    my %changes = ();
+    if ( $plan->{'title'} ne ( $self->req->param('title') // '' ) ) {
+        $changes{'title'} = ( $self->req->param('title') // '' );
+    }
+    if (
+        ( $plan->{'is_public'} ) &&
+        ( ! $self->req->param('is_public') )
+    ) {
+        $changes{ 'is_public' } = 0;
+    } elsif (
+        ( $plan->{'is_public'} ) &&
+        ( ! $self->req->param('is_public') )
+    ) {
+        $changes{ 'is_public' } = 1;
+    }
+
+    if (
+        ( ! $plan->{'is_anonymized'}) &&
+        ( $self->req->param('is_anonymized') )
+    ) {
+        my $explain = Pg::Explain->new( source => $plan->{'plan'} );
+        $explain->anonymize();
+        $changes{'plan'} = $explain->as_text();
+        $changes{ 'is_anonymized' } = 1;
+    }
+    return $self->redirect_to( $self->req->param('return') ) if 0 == scalar keys %changes;
+
+    $self->database->update_plan( $plan->{'id'}, \%changes );
+
+    return $self->redirect_to( $self->req->param('return') );
 }
 
 sub login {

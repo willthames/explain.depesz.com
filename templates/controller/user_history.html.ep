@@ -1,0 +1,64 @@
+% layout 'default';
+
+% my $title = 'User (' . session('user') . ') history';
+% title $title;
+
+<h1><%= $title %></h1>
+
+% if ( scalar @{ $plans->{'list'} } ) {
+% my $date = '';
+<table border="1">
+<thead>
+<tr>
+<th>id</th>
+<th>title</th>
+<th>public</th>
+<th>anonymized</th>
+<th>delete</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody>
+
+% for my $plan ( @{ $plans->{'list'}} ) {
+
+% if ($plan->{'entered_on'} ne $date) {
+<tr>
+<th colspan="6"><%= $plan->{'entered_on'} %></th>
+</tr>
+% $date = $plan->{'entered_on'};
+% }
+
+<form id="plan-change" method="post" action="<%= url_for 'plan-change', 'id' => $plan->{'id'} %>">
+<input type="hidden" name="return" value="<%= url_for 'current' %>"/>
+<tr>
+<td><a href="<%= url_for( 'show', id => $plan->{ id } ) %>"><%= $plan->{'id'} %></a></td>
+<td><input type="text" name="title" value="<%= $plan->{'title'} %>"/></td>
+<td><input type="checkbox" name="is_public" value="1" <% if ($plan->{'is_public'}) { %>checked="1"<% } %>></td>
+<td>
+% if ( $plan->{'is_anonymized'} ) {
+    YES
+% } else {
+    <input type="checkbox" name="is_anonymized" value="1"/>
+% }
+</td>
+<td><input type="text" name="delete" size="5"/></td>
+<td><button name="submit" type="submit" value="change">Change!</button></td>
+</tr>
+</form>
+
+% }
+
+</tbody>
+</table>    
+% }
+
+
+<div class="paginator">
+    % if ( $plans->{ later } ) {
+        <a class="newer" href="<%= url_for 'current', direction => 'after', 'key' => $plans->{'list'}->[0]->{'id'} %>" title="newer" rel="next">newer</a>
+    % }
+    % if ( $plans->{ earlier } ) {
+        <a class="older" href="<%= url_for 'current', direction => 'before', 'key' => $plans->{'list'}->[-1]->{'id'} %>" title="older" rel="prev">older</a>
+    % }
+</div>

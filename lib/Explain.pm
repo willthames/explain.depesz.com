@@ -32,6 +32,12 @@ sub startup {
     # route: 'index'
     $routes->route( '/' )->to( 'controller#index' )->name( 'new-explain' );
 
+    # route: 'user-history'
+    $routes->route( '/user-history/:direction/:key' )->to( 'controller#user_history', direction => undef, key => undef )->name( 'user-history' );
+
+    # route: 'plan-change'
+    $routes->route( '/plan-change/:id' )->to( 'controller#plan_change' )->name( 'plan-change' );
+
     # route: 'login'
     $routes->route( '/login' )->to( 'controller#login' )->name( 'login' );
 

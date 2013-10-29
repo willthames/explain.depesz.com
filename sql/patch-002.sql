@@ -6,6 +6,8 @@ CREATE TABLE users (
 
 ALTER TABLE plans add column added_by TEXT references users ( username );
 
+create unique index concurrently plan_paging on plans (added_by, entered_on, id) where is_deleted = false;
+
 DROP FUNCTION register_plan(in_title text, in_plan text, in_is_public boolean, in_is_anonymized boolean);
 CREATE FUNCTION register_plan(in_title text, in_plan text, in_is_public boolean, in_is_anonymized boolean, in_username text) RETURNS register_plan_return
     LANGUAGE plpgsql
