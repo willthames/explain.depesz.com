@@ -10,158 +10,151 @@ use Email::Valid;
 
 sub logout {
     my $self = shift;
-    delete $self->session->{'user'};
+    delete $self->session->{ 'user' };
     $self->redirect_to( 'new-explain' );
 }
 
 sub user_history {
     my $self = shift;
-    $self->redirect_to( 'history' ) unless $self->session->{'user'};
+    $self->redirect_to( 'history' ) unless $self->session->{ 'user' };
 
-    my @args = ( $self->session->{'user'} );
-    if (
-        ( $self->param('direction') ) &&
-        ( $self->param('direction') =~ m{\A(?:before|after)\z} ) &&
-        ( $self->param('key') )
-    ) {
-        push @args, $self->param('direction') eq 'before' ? 'DESC' : 'ASC';
-        push @args, $self->param('key');
+    my @args = ( $self->session->{ 'user' } );
+    if (   ( $self->param( 'direction' ) )
+        && ( $self->param( 'direction' ) =~ m{\A(?:before|after)\z} )
+        && ( $self->param( 'key' ) ) )
+    {
+        push @args, $self->param( 'direction' ) eq 'before' ? 'DESC' : 'ASC';
+        push @args, $self->param( 'key' );
     }
     my $data = $self->database->get_user_history( @args );
-    $self->stash->{'plans'} = $data;
+    $self->stash->{ 'plans' } = $data;
     return $self->render();
 }
 
 sub user {
     my $self = shift;
 
-    my $old = $self->req->param('old-pw');
-    my $new = $self->req->param('new-pw');
-    my $new2 = $self->req->param('new-pw2');
+    my $old  = $self->req->param( 'old-pw' );
+    my $new  = $self->req->param( 'new-pw' );
+    my $new2 = $self->req->param( 'new-pw2' );
 
     return $self->render unless defined $old;
-    
-    if (
-        ( !defined $new ) ||
-        ( !defined $new2) ||
-        ( $new ne $new2 )
-    ) {
-        $self->stash->{'message'} = 'You have to provide two identical copies of new password!';
+
+    if (   ( !defined $new )
+        || ( !defined $new2 )
+        || ( $new ne $new2 ) )
+    {
+        $self->stash->{ 'message' } = 'You have to provide two identical copies of new password!';
         return;
     }
-    my $status = $self->database->user_change_password( $self->session->{'user'}, $old, $new );
+    my $status = $self->database->user_change_password( $self->session->{ 'user' }, $old, $new );
     if ( $status ) {
-        $self->flash('message' => 'Password changed.');
+        $self->flash( 'message' => 'Password changed.' );
         $self->redirect_to( 'new-explain' );
     }
-    $self->stash->{'message'} = 'Changing the password failed.';
+    $self->stash->{ 'message' } = 'Changing the password failed.';
 }
 
 sub plan_change {
     my $self = shift;
-    unless ( $self->session->{'user'} ) {
+    unless ( $self->session->{ 'user' } ) {
         $self->app->log->error( 'User tried to access plan change without being logged!' );
         $self->redirect_to( 'new-explain' );
     }
-    $self->redirect_to( 'new-explain' ) unless $self->req->param('return');
+    $self->redirect_to( 'new-explain' ) unless $self->req->param( 'return' );
 
-    my $plan = $self->database->get_plan_data( $self->param('id') );
-    if (
-        ( ! defined $plan->{'added_by'} ) ||
-        ( $plan->{'added_by'} ne $self->session->{'user'} )
-    ) {
-        $self->app->log->error( 'User tried to access plan change for plan [' . $plan->{'id'} . '] of another user: ' . $self->session->{'user'});
+    my $plan = $self->database->get_plan_data( $self->param( 'id' ) );
+    if (   ( !defined $plan->{ 'added_by' } )
+        || ( $plan->{ 'added_by' } ne $self->session->{ 'user' } ) )
+    {
+        $self->app->log->error( 'User tried to access plan change for plan [' . $plan->{ 'id' } . '] of another user: ' . $self->session->{ 'user' } );
         $self->redirect_to( 'logout' );
     }
 
     # All looks fine. Current plan data are in $plan.
-    if (
-        ( $self->req->param('delete') ) &&
-        ( $self->req->param('delete') eq 'yes' )
-    ) {
-        $self->database->delete_plan( $plan->{'id'}, $plan->{'delete_key'} );
-        return $self->redirect_to( $self->req->param('return') );
+    if (   ( $self->req->param( 'delete' ) )
+        && ( $self->req->param( 'delete' ) eq 'yes' ) )
+    {
+        $self->database->delete_plan( $plan->{ 'id' }, $plan->{ 'delete_key' } );
+        return $self->redirect_to( $self->req->param( 'return' ) );
     }
 
     my %changes = ();
-    if ( $plan->{'title'} ne ( $self->req->param('title') // '' ) ) {
-        $changes{'title'} = ( $self->req->param('title') // '' );
+    if ( $plan->{ 'title' } ne ( $self->req->param( 'title' ) // '' ) ) {
+        $changes{ 'title' } = ( $self->req->param( 'title' ) // '' );
     }
-    if (
-        ( $plan->{'is_public'} ) &&
-        ( ! $self->req->param('is_public') )
-    ) {
+    if (   ( $plan->{ 'is_public' } )
+        && ( !$self->req->param( 'is_public' ) ) )
+    {
         $changes{ 'is_public' } = 0;
-    } elsif (
-        ( ! $plan->{'is_public'} ) &&
-        ( $self->req->param('is_public') )
-    ) {
+    }
+    elsif (( !$plan->{ 'is_public' } )
+        && ( $self->req->param( 'is_public' ) ) )
+    {
         $changes{ 'is_public' } = 1;
     }
 
-    if (
-        ( ! $plan->{'is_anonymized'}) &&
-        ( $self->req->param('is_anonymized') )
-    ) {
-        my $explain = Pg::Explain->new( source => $plan->{'plan'} );
+    if (   ( !$plan->{ 'is_anonymized' } )
+        && ( $self->req->param( 'is_anonymized' ) ) )
+    {
+        my $explain = Pg::Explain->new( source => $plan->{ 'plan' } );
         $explain->anonymize();
-        $changes{'plan'} = $explain->as_text();
+        $changes{ 'plan' }          = $explain->as_text();
         $changes{ 'is_anonymized' } = 1;
     }
 
-    return $self->redirect_to( $self->req->param('return') ) if 0 == scalar keys %changes;
+    return $self->redirect_to( $self->req->param( 'return' ) ) if 0 == scalar keys %changes;
 
-    $self->database->update_plan( $plan->{'id'}, \%changes );
+    $self->database->update_plan( $plan->{ 'id' }, \%changes );
 
-    return $self->redirect_to( $self->req->param('return') );
+    return $self->redirect_to( $self->req->param( 'return' ) );
 }
 
 sub login {
     my $self = shift;
 
     # If there is no username - there is nothing to do
-    my $username = $self->req->param('username');
+    my $username = $self->req->param( 'username' );
     return $self->render unless defined $username;
 
     if ( 30 < length( $username ) ) {
-        $self->stash->{'message'} = 'Username cannot be longer than 30 characters. Really?!';
-        return;        
+        $self->stash->{ 'message' } = 'Username cannot be longer than 30 characters. Really?!';
+        return;
     }
 
-    my $password = $self->req->param('password');
-    my $password2 = $self->req->param('password2');
+    my $password  = $self->req->param( 'password' );
+    my $password2 = $self->req->param( 'password2' );
 
-    if ( ( ! defined $password ) || ( '' eq $password ) ) {
-        $self->stash->{'message'} = 'There has to be some password!';
+    if ( ( !defined $password ) || ( '' eq $password ) ) {
+        $self->stash->{ 'message' } = 'There has to be some password!';
         return;
     }
 
     # Registration
-    if ( $self->req->param('is_registration') ) {
-        if (
-            ( ! defined $password2 ) ||
-            ( $password2 ne $password )
-        ) {
-            $self->stash->{'message'} = 'You have to repeat password correctly!';
+    if ( $self->req->param( 'is_registration' ) ) {
+        if (   ( !defined $password2 )
+            || ( $password2 ne $password ) )
+        {
+            $self->stash->{ 'message' } = 'You have to repeat password correctly!';
             return;
         }
 
         my $status = $self->database->user_register( $username, $password );
         if ( $status ) {
-            $self->flash('message' => 'User registered.');
+            $self->flash( 'message' => 'User registered.' );
             $self->session( 'user' => $username );
             $self->redirect_to( 'new-explain' );
         }
-        $self->stash->{'message'} = 'Registration failed.';
+        $self->stash->{ 'message' } = 'Registration failed.';
         return;
     }
 
     if ( $self->database->user_login( $username, $password ) ) {
-        $self->flash('message' => 'User logged in.');
+        $self->flash( 'message' => 'User logged in.' );
         $self->session( 'user' => $username );
         $self->redirect_to( 'new-explain' );
     }
-    $self->stash->{'message'} = 'Bad username or password.';
+    $self->stash->{ 'message' } = 'Bad username or password.';
     return;
 }
 
@@ -218,7 +211,7 @@ sub index {
     }
 
     # save to database
-    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, $self->session->{'user'} );
+    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, $self->session->{ 'user' } );
 
     # redirect to /show/:id
     $self->flash( delete_key => $delete_key );

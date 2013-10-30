@@ -32,18 +32,18 @@ sub register {
 
             # set mail charset and content type
             $mail->{ charset } = 'utf-8';
-            $mail->{ ctype   } = 'text/plain';
+            $mail->{ ctype }   = 'text/plain';
 
             # log debug message
-            $controller->app->log->debug(
-                sprintf "Sending mail:\n%s", $controller->dumper( $mail )
-            );
+            $controller->app->log->debug( sprintf "Sending mail:\n%s", $controller->dumper( $mail ) );
 
             # create Mail::Sender instance
-            my $sender = Mail::Sender->new( {
-                smtp => delete $mail->{ smtp },
-                from => delete $mail->{ from }
-            } );
+            my $sender = Mail::Sender->new(
+                {
+                    smtp => delete $mail->{ smtp },
+                    from => delete $mail->{ from }
+                }
+            );
 
             # unable to create instance
             unless ( ref $sender ) {

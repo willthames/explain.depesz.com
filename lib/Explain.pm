@@ -5,7 +5,7 @@ use Mojo::Base 'Mojolicious';
 sub startup {
     my $self = shift;
 
-    $self->sessions->cookie_name('explain');
+    $self->sessions->cookie_name( 'explain' );
     $self->sessions->default_expiration( 60 * 60 * 24 * 365 );
 
     # register Explain plugins namespace

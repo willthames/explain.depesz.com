@@ -9,9 +9,9 @@ use DBI;
 use Date::Simple;
 use English qw( -no_match_vars );
 
-has dbh => undef;
+has dbh             => undef;
 has connection_args => sub { [] };
-has log => undef;
+has log             => undef;
 
 sub register {
     my ( $self, $app, $config ) = @_;
@@ -80,15 +80,15 @@ sub user_login {
         $username,
     );
     return if 0 == scalar @row;
-    my $crypted = crypt( $password, $row[0] );
-    
-    return if $crypted ne $row[0];
+    my $crypted = crypt( $password, $row[ 0 ] );
+
+    return if $crypted ne $row[ 0 ];
     return 1;
 }
 
 sub user_change_password {
     my $self = shift;
-    my ($username, $old, $new) = @_;
+    my ( $username, $old, $new ) = @_;
 
     my @row = $self->dbh->selectrow_array(
         'SELECT password FROM users where username = ?',
@@ -96,10 +96,10 @@ sub user_change_password {
         $username,
     );
     return if 0 == scalar @row;
-    my $crypted_old = crypt( $old, $row[0] );
+    my $crypted_old = crypt( $old, $row[ 0 ] );
 
     my $crypted_new = crypt( $new, $self->get_pw_salt() );
-    
+
     @row = $self->dbh->selectrow_array(
         'UPDATE users SET password = ? WHERE ( username, password ) = ( ?, ? ) returning username',
         undef,
@@ -114,10 +114,10 @@ sub get_user_history {
     my ( $user, $direction, $marker ) = @_;
 
     my $limit = 100;
-    
+
     $direction = 'DESC' if ( $direction // '' ) ne 'ASC';
     my $query = '';
-    my @args = ();
+    my @args  = ();
 
     if ( defined $marker ) {
         my $comparison = $direction eq 'DESC' ? '<' : '>';
@@ -134,7 +134,8 @@ sub get_user_history {
             ";
         @args = ( $user, $marker );
 
-    } else {
+    }
+    else {
         $query = "
             SELECT p.id, p.entered_on::date, p.is_public, p.is_anonymized, p.title
             FROM plans p
@@ -149,32 +150,32 @@ sub get_user_history {
     $plans = [ reverse @{ $plans } ] if $direction eq 'ASC';
 
     return {
-        'list' => [],
+        'list'    => [],
         'earlier' => 0,
-        'later' => 0,
+        'later'   => 0,
     } if 0 == scalar @{ $plans };
-    
+
     my @later = $self->dbh->selectrow_array(
         'SELECT p.id FROM plans p where p.added_by = ? and not is_deleted and ( p.entered_on, p.id ) > ( select x.entered_on, x.id from plans x where x.id = ? ) limit 1',
         undef,
-        $user, $plans->[0]->{'id'},
+        $user, $plans->[ 0 ]->{ 'id' },
     );
     my @earlier = $self->dbh->selectrow_array(
         'SELECT p.id FROM plans p where p.added_by = ? and not is_deleted and ( p.entered_on, p.id ) < ( select x.entered_on, x.id from plans x where x.id = ? ) limit 1',
         undef,
-        $user, $plans->[-1]->{'id'},
+        $user, $plans->[ -1 ]->{ 'id' },
     );
     return {
-        'list' => $plans,
-        'later' => scalar @later,
+        'list'    => $plans,
+        'later'   => scalar @later,
         'earlier' => scalar @earlier,
     };
 }
 
 sub get_pw_salt {
-    my $self = shift;
-    my @salt_chars = ( 'a'..'z', 'A'..'Z', 0..9, '.', '/' );
-    my $salt = sprintf '$6$%s$', join( '', map { $salt_chars[ rand @salt_chars ] } 1..16 );
+    my $self       = shift;
+    my @salt_chars = ( 'a' .. 'z', 'A' .. 'Z', 0 .. 9, '.', '/' );
+    my $salt       = sprintf '$6$%s$', join( '', map { $salt_chars[ rand @salt_chars ] } 1 .. 16 );
     return $salt;
 }
 
@@ -184,9 +185,7 @@ sub user_register {
 
     my $crypted = crypt( $password, $self->get_pw_salt() );
 
-    eval {
-        $self->dbh->do( 'INSERT INTO users (username, password, registered) values (?, ?, now())', undef, $username, $crypted, );
-    };
+    eval { $self->dbh->do( 'INSERT INTO users (username, password, registered) values (?, ?, now())', undef, $username, $crypted, ); };
     return 1 unless $EVAL_ERROR;
     $self->log->error( "user_register( $username ) => " . $EVAL_ERROR );
     return;
@@ -194,13 +193,13 @@ sub user_register {
 
 sub update_plan {
     my $self = shift;
-    my ($id, $changes) = @_;
+    my ( $id, $changes ) = @_;
     my @columns = keys %{ $changes };
     my @values  = values %{ $changes };
 
     eval {
         $self->dbh->do(
-            'UPDATE plans SET ' . join(', ', map { "$_ = ?" } @columns) . ' WHERE id = ?',
+            'UPDATE plans SET ' . join( ', ', map { "$_ = ?" } @columns ) . ' WHERE id = ?',
             undef,
             @values, $id
         );
@@ -235,7 +234,7 @@ sub get_plan_data {
     );
     return unless defined $rows;
     return if 0 == scalar @{ $rows };
-    return $rows->[0];
+    return $rows->[ 0 ];
 }
 
 sub get_plan {
