@@ -393,3 +393,34 @@ div.plea { text-align: center; color: #666; padding-top: 1em; }
 .result-stats table td.scan-type { padding-left: 2em; }
 .result-stats table tr.table-summary td { background: #e5ecf9 }
 
+/**
+ * new
+ */
+.user-history .row                  {display:block;padding:.2em 0;width:100%;background:#f0f0f0}
+.user-history .row .column          {float:left;margin-right:1%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-history div.row               {padding:.4em 0;background-color:rgb(34, 51, 68);color:#f0f0f0}
+.user-history div.row .column       {text-align:center;font-size:1.1em}
+.user-history .row .id              {width:5%;margin-left:1%}
+.user-history .row .id a            {color:#333;text-decoration:none}
+.user-history .row .id a:hover           {text-decoration:underline}
+.user-history .row .title           {width:62%}
+.user-history .row .is-public       {width:4%}
+.user-history .row .is-anonymized   {width:4%}
+.user-history .row .delete          {width:9%}
+.user-history .row .action          {width:9%}
+
+.user-history form.row .id,
+.user-history form.row .is-public,
+.user-history form.row .is-anonymized {padding-top:.4em}
+
+.user-history .row input {width:96%}
+
+.user-history .first-row {padding-top:.5em}
+.user-history .last-row  {padding-bottom:.5em}
+
+.user-history .row .action button             {display:block;margin:0 auto;border:1px solid #d0d8d8;background:#e5ecf9}
+.user-history .row .action button span        {display:block;padding:.4em .4em;color:#123}
+.user-history .row .action button:hover       {background:#234;border-color:123}
+.user-history .row .action button:hover span  {color:#fff;cursor:pointer}
+
+.user-history div.date              {background:#ddd;text-align:center;font-style:italic;color:#333;}

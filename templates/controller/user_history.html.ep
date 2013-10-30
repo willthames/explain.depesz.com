@@ -7,51 +7,49 @@
 
 % if ( scalar @{ $plans->{'list'} } ) {
 % my $date = '';
-<table border="1">
-<thead>
-<tr>
-<th>id</th>
-<th>title</th>
-<th>public</th>
-<th>anonymized</th>
-<th>delete</th>
-<th>action</th>
-</tr>
-</thead>
-<tbody>
+
+
+<div class="user-history">
+
+    <div class="row clearfix">
+        <div class="column id">id</div>
+        <div class="column title">title</div>
+        <div class="column is-public">is public</div>
+        <div class="column is-anonymized">is anonymized</div>
+        <div class="column delete">delete</div>
+        <div class="column action">action</div>
+    </div>
 
 % for my $plan ( @{ $plans->{'list'}} ) {
 
 % if ($plan->{'entered_on'} ne $date) {
-<tr>
-<th colspan="6"><%= $plan->{'entered_on'} %></th>
-</tr>
+    <div class="row clearfix date"><%= $plan->{'entered_on'} %></div>
 % $date = $plan->{'entered_on'};
 % }
 
-<form id="plan-change" method="post" action="<%= url_for 'plan-change', 'id' => $plan->{'id'} %>">
-<input type="hidden" name="return" value="<%= url_for 'current' %>"/>
-<tr>
-<td><a href="<%= url_for( 'show', id => $plan->{ id } ) %>"><%= $plan->{'id'} %></a></td>
-<td><input type="text" name="title" value="<%= $plan->{'title'} %>"/></td>
-<td><input type="checkbox" name="is_public" value="1" <% if ($plan->{'is_public'}) { %>checked="1"<% } %>></td>
-<td>
+    <form id="plan-change-<%= $plan->{'id'} %>" method="post" action="<%= url_for 'plan-change', 'id' => $plan->{'id'} %>" class="row first-row clearfix">
+        <input name="return" value="<%= url_for 'current' %>" type="hidden">
+        <div class="column id"><a href="<%= url_for( 'show', id => $plan->{ id } ) %>"><%= $plan->{'id'} %></a></div>
+        <div class="column title"><input name="title" type="text" value="<%= $plan->{'title'} %>"></div>
+        <div class="column is-public"><input name="is_public" value="1" type="checkbox" <% if ($plan->{'is_public'}) { %>checked="1"<% } %>></div>
+        <div class="column is-anonymized">
 % if ( $plan->{'is_anonymized'} ) {
     YES
 % } else {
     <input type="checkbox" name="is_anonymized" value="1"/>
 % }
-</td>
-<td><input type="text" name="delete" size="5"/></td>
-<td><button name="submit" type="submit" value="change">Change!</button></td>
-</tr>
-</form>
+        </div>
+        <div class="column delete"><input name="delete" size="5" type="text" class="auto-hint" title="type >yes< to delete"></div>
+        <div class="column action"><button name="submit" type="submit" value="change"><span>Change!</span></button></div>
+    </form>
 
 % }
 
-</tbody>
-</table>    
+</div><!-- .user-history -->
+
 % }
+
+
 
 
 <div class="paginator">
