@@ -93,8 +93,8 @@ sub plan_change {
     ) {
         $changes{ 'is_public' } = 0;
     } elsif (
-        ( $plan->{'is_public'} ) &&
-        ( ! $self->req->param('is_public') )
+        ( ! $plan->{'is_public'} ) &&
+        ( $self->req->param('is_public') )
     ) {
         $changes{ 'is_public' } = 1;
     }
@@ -108,6 +108,7 @@ sub plan_change {
         $changes{'plan'} = $explain->as_text();
         $changes{ 'is_anonymized' } = 1;
     }
+
     return $self->redirect_to( $self->req->param('return') ) if 0 == scalar keys %changes;
 
     $self->database->update_plan( $plan->{'id'}, \%changes );
