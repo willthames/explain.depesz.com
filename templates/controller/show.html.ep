@@ -501,7 +501,9 @@
             </tbody>
         </table>
     </div>
-
+    <div class="plea">
+        Did it help? Consider supporting us - Bitcoin address: <a href="https://blockchain.info/address/16abuWEzwM9FD5PYSVspn3TA552Ug7YJsz">16abuWEzwM9FD5PYSVspn3TA552Ug7YJsz</a>
+    </div>
 </div>
 
 <% content_for 'head' => begin %>
