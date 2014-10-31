@@ -20,7 +20,14 @@ sub startup {
     # setup secret passphrase - later versions of
     # mojolicious require secrets to be multiple in an
     # array format
-    $self->secrets( [$config->{ secret } || 'test'] );
+    my $use_secret = $config->{ secret } || 'Xwyfe-_d:yGDr+p][Vs7Kk+e3mmP=c_|s7hvExF=b|4r4^gO|';
+    if ( $self->can( 'secrets' ) ) {
+        # We're on Mojolicious 4.63 or newer
+        $self->secrets( [ $use_secret ] );
+    } else {
+        # We're on old Mojolicious
+        $self->secret( $use_secret );
+    }
 
     # startup database connection
     $self->plugin( 'database', $config->{ database } || {} );
