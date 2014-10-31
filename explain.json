@@ -16,7 +16,7 @@
 
     "mail_sender" : {
         "from"    : "explain.depesz.com <depesz@depesz.com>",
-        "to"      : "metys <depesz@depesz.com>",
+        "to"      : "depesz <depesz@depesz.com>",
         "subject" : "Message from: explain.depesz.com/contact"
     },
 

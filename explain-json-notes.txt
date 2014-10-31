@@ -1,0 +1,37 @@
+$Id$
+$HeadURL$
+
+This file provides comments and documentation to the file "explain.json".
+There are values in explain.json that you need to specify 
+for the operation of your "explain" server.
+
+Why this file?  
+Because JSON does not support comments, the specification for
+JSON format specifically excludes comments, 
+JSON files may only to contain data.  See
+http://stackoverflow.com/questions/244777/can-i-comment-a-json-file
+
+title               => This is not used, as far as I recall.
+secret              => This is used to encrypt cookie with
+                       username/password. So it should be long, random
+                       string.
+database.dsn        => the standard connection information 
+                       A) database name (case sensitive), 
+                       B) server or host 
+                       C) port - standard port for postgresql is 5432
+database.username   => you created this when you set up a role in
+                       postgresql for this explain server
+database.password   => the password for database.username (optional)
+
+mail_sender.from    => From to be used by mails sent by contact form
+mail_sender.to      => Address which should receive mails sent by
+                       contact form
+mail_sender.subject => Subject for mails from contact form
+
+hypnotoad.pid_file  => /var/run is the standard place to store your pid
+                       files; if you do not have access to /var/run,
+                       then create in your home directory a branch
+                       var/run and place it there. Example
+                       ~/var/run/explain.pid. Make sure you create the
+                       directories, ~/var/run, before specifying this
+                       alternate location.
