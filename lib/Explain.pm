@@ -71,6 +71,9 @@ sub startup {
     # route: 'help'
     $routes->route( '/help' )->to( 'controller#help' )->name( 'help' );
 
+    # route: 'info'
+    $routes->route( '/info' )->to( 'controller#info' )->name( 'info' );
+
     return;
 }
 

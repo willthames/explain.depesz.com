@@ -7,10 +7,12 @@ use English -no_match_vars;
 use Pg::Explain;
 use Encode;
 use Email::Valid;
+use Config;
 
 sub logout {
     my $self = shift;
     delete $self->session->{ 'user' };
+    delete $self->session->{ 'admin' };
     $self->redirect_to( 'new-explain' );
 }
 
@@ -149,9 +151,10 @@ sub login {
         return;
     }
 
-    if ( $self->database->user_login( $username, $password ) ) {
+    if ( my $user = $self->database->user_login( $username, $password ) ) {
         $self->flash( 'message' => 'User logged in.' );
         $self->session( 'user' => $username );
+        $self->session( 'admin' => $user->{ 'admin' } );
         $self->redirect_to( 'new-explain' );
     }
     $self->stash->{ 'message' } = 'Bad username or password.';
@@ -355,6 +358,30 @@ sub contact {
 
     # get after post
     $self->redirect_to( 'contact' );
+}
+
+sub info {
+    my $self = shift;
+    $self->redirect_to( 'new-explain' ) unless $self->session->{ 'user' };
+    $self->redirect_to( 'new-explain' ) unless $self->session->{ 'admin' };
+
+    my @versions = ();
+    for my $module ( sort keys %INC ) {
+        next if $module =~ m{^\.?/};
+        $module =~ s/\.pm$//;
+        $module =~ s#/#::#g;
+        push @versions, {
+            'module' => $module,
+            'version' => $module->VERSION,
+        };
+    }
+    $self->stash( 'modules' => \@versions );
+    $self->stash( 'perl' => {
+            'version' => $PERL_VERSION,
+            'binary'  => $Config{'perlpath'} . $Config{'_exe'},
+        }
+    );
+
 }
 
 sub help {
