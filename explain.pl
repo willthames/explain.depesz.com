@@ -13,7 +13,7 @@ use lib File::Spec->catfile( File::Spec->splitdir( dirname( __FILE__ ) ), 'lib' 
 eval 'use Mojolicious::Commands';
 
 die <<EOF if $EVAL_ERROR;
-It looks like you don't have the Mojolicious Framework installed.
+It looks like you do not have the Mojolicious Framework installed.
 Please visit http://mojolicio.us for detailed installation instructions.
 
 EOF
