@@ -125,19 +125,19 @@
     <tr id="l<%= $global_node_id =%>" class="n <%= $row_class %>" data-node_id="<%= $node_id =%>" data-node_parent="<%= $parent =%>" data-level="<%= $level =%>" data-e="<%= $exclusive_point =%>" data-i="<%= $inclusive_point =%>" data-x="<%= $rows_x_point =%>">
         <td class="u <%= $cfg->{ vu } ? '' : ' tight' %>"><a href="#l<%= $global_node_id =%>"><%= $global_node_id =%>.</a></td>
         <td class="e c-<%= $exclusive_point =%><%= $cfg->{ ve } ? '' : ' tight' %>">
-            <span><%= sprintf '%.3f', defined $node->total_exclusive_time ? $node->total_exclusive_time : 0 =%></span>
+            <span><%= commify_numbers( sprintf '%.3f', defined $node->total_exclusive_time ? $node->total_exclusive_time : 0 ) =%></span>
         </td>
         <td class="i c-<%= $inclusive_point =%><%= $cfg->{ vi } ? '' : ' tight' %>">
-            <span><%= sprintf '%.3f', defined $node->total_inclusive_time ? $node->total_inclusive_time : 0 =%></span>
+            <span><%= commify_numbers( sprintf '%.3f', defined $node->total_inclusive_time ? $node->total_inclusive_time : 0 ) =%></span>
         </td>
         <td class="x c-<%= $rows_x_point =%><%= $cfg->{ vx } ? '' : ' tight' %>">
             <span>
                 <%== $rows_x_mark eq 'up' ? '&uarr;' : '&darr;' %>
-                <%= sprintf '%.1f', $rows_x %>
+                <%= commify_numbers( sprintf '%.1f', $rows_x ) %>
             </span>
         </td>
-        <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span><%= $node->actual_rows  =%></span></td>
-        <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span><%= $node->actual_loops =%></span></td>
+        <td class="r<%= $cfg->{ vr } ? '' : ' tight' %>"><span><%= commify_numbers( $node->actual_rows ) =%></span></td>
+        <td class="l<%= $cfg->{ vl } ? '' : ' tight' %>"><span><%= commify_numbers( $node->actual_loops ) =%></span></td>
         <td class="n">
             <div class="n" style="margin-left:<%= $margin =%>px">
 
@@ -191,16 +191,16 @@
                     </span>
 
                     <span class="est">
-                        (cost=<%= $node->estimated_startup_cost =%>..<%= $node->estimated_total_cost %>
-                        rows=<%= $node->estimated_rows %>
-                        width=<%= $node->estimated_row_width =%>)
+                        (cost=<%= commify_numbers( $node->estimated_startup_cost ) =%>..<%= commify_numbers( $node->estimated_total_cost ) %>
+                        rows=<%= commify_numbers( $node->estimated_rows ) %>
+                        width=<%= commify_numbers( $node->estimated_row_width ) =%>)
                     </span>
 
                     <span class="act">
                         (actual
-                        time=<%= $node->actual_time_first =%>..<%= $node->actual_time_last %>
-                        rows=<%= $node->actual_rows %>
-                        loops=<%= $node->actual_loops =%>)
+                        time=<%= commify_numbers( $node->actual_time_first ) =%>..<%= commify_numbers( $node->actual_time_last ) %>
+                        rows=<%= commify_numbers( $node->actual_rows ) %>
+                        loops=<%= commify_numbers( $node->actual_loops ) =%>)
                     </span>
                 </p>
 
@@ -454,7 +454,7 @@
                 <tr class="table-detail">
                 <td class="node-type"><%= $node_type %></td>
                 <td class="count"><%= $stats->{'nodes'}->{$node_type}->{'count'} %></td>
-                <td class="time"><%= sprintf '%.03f ms', $stats->{'nodes'}->{$node_type}->{'time'} || 0 %></td>
+                <td class="time"><%= commify_numbers( sprintf '%.03f ms', $stats->{'nodes'}->{$node_type}->{'time'} || 0 ) %></td>
                 <td class="percent">
                     <% my $total = $explain->top_node->total_inclusive_time || 0; %>
                     <% my $current = $stats->{'nodes'}->{$node_type}->{'time'} || 0; %>
@@ -476,7 +476,7 @@
                 <tr class="table-summary">
                 <td class="table-name"><%= $table_name %></td>
                 <td class="count"><%= $stats->{'tables'}->{$table_name}->{':total'}->{'count'} %></td>
-                <td class="time"><%= sprintf '%.03f ms', $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0 %></td>
+                <td class="time"><%= commify_numbers( sprintf '%.03f ms', $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0 ) %></td>
                 <td class="percent">
                     <% my $total = $explain->top_node->total_inclusive_time || 0; %>
                     <% my $current = $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0; %>
@@ -488,7 +488,7 @@
                 <tr class="table-detail">
                 <td class="scan-type"><%= $scan_type %></td>
                 <td class="count"><%= $stats->{'tables'}->{$table_name}->{$scan_type}->{'count'} %></td>
-                <td class="time"><%= sprintf '%.03f ms', $stats->{'tables'}->{$table_name}->{$scan_type}->{'time'} || 0 %></td>
+                <td class="time"><%= commify_numbers( sprintf '%.03f ms', $stats->{'tables'}->{$table_name}->{$scan_type}->{'time'} || 0 ) %></td>
                 <td class="percent">
                     <% my $total = $stats->{'tables'}->{$table_name}->{':total'}->{'time'} || 0; %>
                     <% my $current = $stats->{'tables'}->{$table_name}->{$scan_type}->{'time'} || 0; %>

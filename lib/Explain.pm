@@ -35,6 +35,9 @@ sub startup {
     # startup mail sender
     $self->plugin( 'mail_sender', $config->{ mail_sender } || {} );
 
+    # load number_format plugin
+    $self->plugin( 'number_format' );
+
     # routes
     my $routes = $self->routes;
 
