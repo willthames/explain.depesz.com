@@ -35,6 +35,9 @@ sub startup {
     # startup mail sender
     $self->plugin( 'mail_sender', $config->{ mail_sender } || {} );
 
+    # load number_format plugin
+    $self->plugin( 'number_format' );
+
     # routes
     my $routes = $self->routes;
 
@@ -70,6 +73,9 @@ sub startup {
 
     # route: 'help'
     $routes->route( '/help' )->to( 'controller#help' )->name( 'help' );
+
+    # route: 'info'
+    $routes->route( '/info' )->to( 'controller#info' )->name( 'info' );
 
     return;
 }

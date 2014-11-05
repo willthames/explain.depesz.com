@@ -75,7 +75,7 @@ sub user_login {
     my ( $username, $password ) = @_;
 
     my @row = $self->dbh->selectrow_array(
-        'SELECT password FROM users where username = ?',
+        'SELECT password, is_admin FROM users where username = ?',
         undef,
         $username,
     );
@@ -83,7 +83,7 @@ sub user_login {
     my $crypted = crypt( $password, $row[ 0 ] );
 
     return if $crypted ne $row[ 0 ];
-    return 1;
+    return { 'admin' => $row[1] };
 }
 
 sub user_change_password {

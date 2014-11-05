@@ -1,0 +1,23 @@
+% layout 'default';
+
+% my $title = 'System information';
+% title $title;
+
+<h1><%= $title =%></h1>
+
+<ul>
+    <li>Perl version: <%= $perl->{'version'} %></li>
+    <li>Perl binary: <%= $perl->{'binary'} %></li>
+    <li>App home: <%= app()->home() %>
+    <li>Loaded modules:
+    <ul>
+% for my $item ( @{ $modules } ) {
+        <li><%= $item->{'module'} %>
+% if ( $item->{'version'} ) {
+        version <%= $item->{'version'} %>
+% }
+        </li>
+% }
+    </ul>
+    </li>
+</ul>
