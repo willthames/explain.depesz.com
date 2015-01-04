@@ -25,7 +25,7 @@ You will need the following packages installed in your version of Perl:
     Email::Valid
 
 
-Install the above packages using "cpan" then "i Date::Simple", "i Maill::Sender" &etc.
+Install the above packages using "cpan" then "i Date::Simple", "i Mail::Sender" &etc.
 
 Note that in case of most current Linux distributions, you can install most of
 these from binary package repositories. For example, in case of Ubuntu and
