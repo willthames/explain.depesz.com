@@ -29,7 +29,6 @@ Exec {
 }
 
 
-# FIXME: only debian-based systems are supported.
 exec { 'update_pkgs_index': command => 'apt-get update' }
 
 exec { 'install_cpanm':             command => 'curl -L http://cpanmin.us | perl - --self-upgrade' }
