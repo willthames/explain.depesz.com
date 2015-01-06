@@ -20,22 +20,6 @@ Exec['createuser']->
     Exec['run_daemon']
 
 
-package { 'curl': # required by cpanminus installation
-    ensure => installed
-}
-
-package { 'postgresql-9.3':
-    ensure => installed
-}
-
-package { 'libexpat1-dev': # required by XML::Parser
-    ensure => installed
-}
-
-package { 'libpq-dev': # required by DBD::Pg
-    ensure => installed
-}
-
 Exec {
     path => [
        '/usr/local/bin',
@@ -43,6 +27,7 @@ Exec {
        '/bin'],
     logoutput => true,
 }
+
 
 # FIXME: only debian-based systems are supported.
 exec { 'update_pkgs_index': command => 'apt-get update' }
@@ -73,10 +58,26 @@ exec { 'psql_grant':
 exec { 'run_daemon':   command => 'hypnotoad /vagrant/explain.pl > /dev/null 2> /dev/null &' }
 
 
+package { 'curl': # required by cpanminus installation
+    ensure => installed
+}
+
+package { 'postgresql-9.3':
+    ensure => installed
+}
+
+package { 'libexpat1-dev': # required by XML::Parser
+    ensure => installed
+}
+
+package { 'libpq-dev': # required by DBD::Pg
+    ensure => installed
+}
 
 package { 'nginx':
     ensure => installed
 }
+
 
 file { '/etc/nginx/conf.d/explaind.conf':
     owner   => 'root',
@@ -94,6 +95,7 @@ server {
     notify  => Service['nginx'],
     require => Package['nginx'],
 }
+
 
 service { 'nginx':
     ensure => running,
