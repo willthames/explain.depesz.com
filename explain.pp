@@ -48,17 +48,17 @@ exec { 'install_cpanm_email_valid': command => 'cpanm --notest Email::Valid' }
 exec { 'install_cpanm_pg_explain':  command => 'cpanm --notest Pg::Explain', timeout => 600 } # Takes about 450-500 secs.
 exec { 'install_cpanm_mojolicious': command => 'cpanm --notest Mojolicious' }
 
-exec { 'createuser': command => 'sudo -u postgres psql -c "create role explaind with login password \'explaind\'"' }
-exec { 'createdb':   command => 'sudo -u postgres createdb -E utf8 -O explaind explaind' }
+exec { 'createuser': command => 'sudo -u postgres psql -c "create role explain with login password \'explain\'"' }
+exec { 'createdb':   command => 'sudo -u postgres createdb -E utf8 -O explain explain' }
 
 exec { 'psql_create':
-    command => sprintf("sudo -u postgres psql -d explaind < %s/sql/create.sql", $PROJECT_DIR)
+    command => sprintf("sudo -u postgres psql -d explain < %s/sql/create.sql", $PROJECT_DIR)
 }
 exec { 'psql_apply_patches':
-    command => sprintf("ls -1 %s/sql/patch-???.sql | sort | xargs -n1 sudo -u postgres psql -d explaind -q -f", $PROJECT_DIR)
+    command => sprintf("ls -1 %s/sql/patch-???.sql | sort | xargs -n1 sudo -u postgres psql -d explain -q -f", $PROJECT_DIR)
 }
 exec { 'psql_grant':
-    command => 'sudo -u postgres psql -d explaind -c "grant all on plans, users to explaind;"'
+    command => 'sudo -u postgres psql -d explain -c "grant all on plans, users to explain;"'
 }
 
 exec { 'run_daemon': command => sprintf("hypnotoad %s/explain.pl > /dev/null 2> /dev/null &", $PROJECT_DIR) }
@@ -85,7 +85,7 @@ package { 'nginx':
 }
 
 
-file { '/etc/nginx/conf.d/explaind.conf':
+file { '/etc/nginx/conf.d/explain.conf':
     owner   => 'root',
     group   => 'root',
     content => '
