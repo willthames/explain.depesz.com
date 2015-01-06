@@ -78,4 +78,34 @@ exec { 'psql_patch_2': command => 'sudo -u postgres psql -d explaind < /vagrant/
 exec { 'psql_patch_3': command => 'sudo -u postgres psql -d explaind < /vagrant/sql/patch-003.sql' }
 exec { 'psql_grant':   command => 'sudo -u postgres psql -d explaind -c "grant all on plans, users to explaind;"' }
 
-exec { 'run_daemon':   command => 'nohup /vagrant/explain.pl daemon &' }
+exec { 'run_daemon':   command => 'hypnotoad /vagrant/explain.pl > /dev/null 2> /dev/null &' }
+
+
+
+package { 'nginx':
+    ensure => installed
+}
+
+file { '/etc/nginx/conf.d/explaind.conf':
+    owner   => 'root',
+    group   => 'root',
+    content => '
+server {
+    listen 80;
+    server_name explain.depesz.loc;
+
+    location / {
+        proxy_pass http://127.0.0.1:12004;
+    }
+}
+',
+    notify  => Service['nginx'],
+    require => Package['nginx'],
+}
+
+service { 'nginx':
+    ensure => running,
+    enable => true,
+    hasstatus => true,
+    hasrestart => true,
+}
