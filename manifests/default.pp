@@ -15,9 +15,7 @@ Exec['install_cpanm']->
 Exec['createuser']->
     Exec['createdb']->
     Exec['psql_create']->
-    Exec['psql_patch_1']->
-    Exec['psql_patch_2']->
-    Exec['psql_patch_3']->
+    Exec['psql_apply_patches']->
     Exec['psql_grant']->
     Exec['run_daemon']
 
@@ -62,13 +60,15 @@ exec { 'createuser': command => 'sudo -u postgres psql -c "create role explaind 
 exec { 'createdb':   command => 'sudo -u postgres createdb -E utf8 -O explaind explaind' }
 
 # FIXME: path to sql-files should be relative or parameter-based.
-exec { 'psql_create':  command => 'sudo -u postgres psql -d explaind < /vagrant/sql/create.sql' }
-
-# FIXME: load through sort | xargs
-exec { 'psql_patch_1': command => 'sudo -u postgres psql -d explaind < /vagrant/sql/patch-001.sql' }
-exec { 'psql_patch_2': command => 'sudo -u postgres psql -d explaind < /vagrant/sql/patch-002.sql' }
-exec { 'psql_patch_3': command => 'sudo -u postgres psql -d explaind < /vagrant/sql/patch-003.sql' }
-exec { 'psql_grant':   command => 'sudo -u postgres psql -d explaind -c "grant all on plans, users to explaind;"' }
+exec { 'psql_create':
+    command => 'sudo -u postgres psql -d explaind < /vagrant/sql/create.sql'
+}
+exec { 'psql_apply_patches':
+    command => 'ls -1 /vagrant/sql/patch-???.sql | sort | xargs -n1 sudo -u postgres psql -d explaind -q -f'
+}
+exec { 'psql_grant':
+    command => 'sudo -u postgres psql -d explaind -c "grant all on plans, users to explaind;"'
+}
 
 exec { 'run_daemon':   command => 'hypnotoad /vagrant/explain.pl > /dev/null 2> /dev/null &' }
 
