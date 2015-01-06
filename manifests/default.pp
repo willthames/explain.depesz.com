@@ -53,7 +53,7 @@ exec { 'install_cpanm_dbd_pg':      command => 'cpanm --notest DBD::Pg' }
 exec { 'install_cpanm_date_simple': command => 'cpanm --notest Date::Simple' }
 exec { 'install_cpanm_mail_sender': command => 'cpanm --notest Mail::Sender' }
 exec { 'install_cpanm_email_valid': command => 'cpanm --notest Email::Valid' }
-exec { 'install_cpanm_pg_explain':  command => 'cpanm --notest Pg::Explain', timeout => 600 }
+exec { 'install_cpanm_pg_explain':  command => 'cpanm --notest Pg::Explain', timeout => 600 } # Takes about 450-500 secs.
 exec { 'install_cpanm_mojolicious': command => 'cpanm --notest Mojolicious' }
 
 exec { 'createuser': command => 'sudo -u postgres psql -c "create role explaind with login password \'explaind\'"' }
