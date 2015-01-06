@@ -4,7 +4,6 @@ Package['curl'] ->
     Package['postgresql-9.3'] ->
     Package['libexpat1-dev'] ->
     Package['libpq-dev'] ->
-User['explaind'] ->
 Exec['install_cpanm']->
     Exec['install_cpanm_dbi']->
     Exec['install_cpanm_dbd_pg']->
@@ -37,13 +36,6 @@ package { 'libexpat1-dev': # required by XML::Parser
 
 package { 'libpq-dev': # required by DBD::Pg
     ensure => installed
-}
-
-user { 'explaind':
-    ensure     => present,
-    shell      => '/bin/bash',
-    home       => '/home/explaind',
-    managehome => true,
 }
 
 Exec {
