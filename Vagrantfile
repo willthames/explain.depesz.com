@@ -14,6 +14,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "puppet" do |puppet|
     puppet.options = "--verbose --debug"
+    puppet.manifests_path = "."
+    puppet.manifest_file = "explain.pp"
     puppet.facter = {
       "use_vagrant" => true
     }
