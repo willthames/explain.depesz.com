@@ -24,7 +24,8 @@ WARNING: first call `vagrant up` fetches ~400MB of vbox image from the Internet.
 ## Puppet setup
 
 1. Install puppet on your machine, e.g. Debian installation described [here](https://docs.puppetlabs.com/guides/install_puppet/install_debian_ubuntu.html).
-2. Call `sudo puppet apply --logdest console manifests/default.pp` on your working copy directory.
+2. Open explain.pp and fix line 5 with correct project dir value
+3. Call `sudo puppet apply --logdest console manifests/default.pp` on your working copy directory.
 
 ## Manual setup
 
