@@ -55,18 +55,18 @@ Exec {
 }
 
 # FIXME: only debian-based systems are supported.
-exec { 'update_pkgs_index': command => 'sudo apt-get update' }
+exec { 'update_pkgs_index': command => 'apt-get update' }
 
-exec { 'install_cpanm':             command => 'sudo curl -L http://cpanmin.us | perl - --self-upgrade --sudo' }
-exec { 'install_cpanm_dbi':         command => 'sudo cpanm DBI' }
-exec { 'install_cpanm_dbd_pg':      command => 'sudo cpanm DBD::Pg' }
-exec { 'install_cpanm_date_simple': command => 'sudo cpanm Date::Simple' }
-exec { 'install_cpanm_mail_sender': command => 'sudo cpanm Mail::Sender' }
-exec { 'install_cpanm_email_valid': command => 'sudo cpanm Email::Valid' }
-exec { 'install_cpanm_pg_explain':  command => 'sudo cpanm Pg::Explain' }
-exec { 'install_cpanm_mojolicious': command => 'sudo cpanm Mojolicious' }
+exec { 'install_cpanm':             command => 'curl -L http://cpanmin.us | perl - --self-upgrade' }
+exec { 'install_cpanm_dbi':         command => 'cpanm --notest DBI' }
+exec { 'install_cpanm_dbd_pg':      command => 'cpanm --notest DBD::Pg' }
+exec { 'install_cpanm_date_simple': command => 'cpanm --notest Date::Simple' }
+exec { 'install_cpanm_mail_sender': command => 'cpanm --notest Mail::Sender' }
+exec { 'install_cpanm_email_valid': command => 'cpanm --notest Email::Valid' }
+exec { 'install_cpanm_pg_explain':  command => 'cpanm --notest Pg::Explain', timeout => 600 }
+exec { 'install_cpanm_mojolicious': command => 'cpanm --notest Mojolicious' }
 
-exec { 'createuser': command => 'sudo -u postgres psql -c "create role explaind with login password "explaind"' }
+exec { 'createuser': command => 'sudo -u postgres psql -c "create role explaind with login password \'explaind\'"' }
 exec { 'createdb':   command => 'sudo -u postgres createdb -E utf8 -O explaind explaind' }
 
 # FIXME: path to sql-files should be relative or parameter-based.
@@ -78,4 +78,4 @@ exec { 'psql_patch_2': command => 'sudo -u postgres psql -d explaind < /vagrant/
 exec { 'psql_patch_3': command => 'sudo -u postgres psql -d explaind < /vagrant/sql/patch-003.sql' }
 exec { 'psql_grant':   command => 'sudo -u postgres psql -d explaind -c "grant all on plans, users to explaind;"' }
 
-exec { 'run_daemon':   command => 'nohup ./explain.pl daemon &' }
+exec { 'run_daemon':   command => 'nohup /vagrant/explain.pl daemon &' }
