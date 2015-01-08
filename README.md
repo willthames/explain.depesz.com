@@ -12,7 +12,7 @@ There are three ways to install your own copy:
 
 First get the source code:
 
-    git clone https://github.com/pkorobeinikov/explain.depesz.com.git
+    git clone https://github.com/depesz/explain.depesz.com.git
 
 ## Vagrant setup
 
