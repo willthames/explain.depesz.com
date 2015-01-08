@@ -4,6 +4,32 @@ explain.depesz.com
 Setup
 ==================
 
+There are three ways to install your own copy:
+
+* Using Vagrant [ VirtualBox machine, fully automated ]
+* Calling `puppet apply`
+* Manually
+
+First get the source code:
+
+    git clone https://github.com/pkorobeinikov/explain.depesz.com.git
+
+## Vagrant setup
+
+WARNING: first call `vagrant up` fetches ~400MB of vbox image from the Internet.
+
+1. Call `vagrant up`
+
+Point your browser on http://192.168.44.55 (or use `/etc/hosts` entry explain.depesz.loc)
+
+## Puppet setup
+
+1. Install puppet on your machine, e.g. Debian installation described [here](https://docs.puppetlabs.com/guides/install_puppet/install_debian_ubuntu.html).
+2. Open explain.pp and fix line 5 with correct project dir value
+3. Call `sudo puppet apply --logdest console explain.pp` on your working copy directory.
+
+## Manual setup
+
 1) Mojolicious
 
 You have to have Mojolicious installed on your server.  Mojolicious is a web framework for Perl.
