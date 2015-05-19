@@ -45,7 +45,7 @@
                         <a href="<%= url_for 'new-explain' %>" title="link to: new explain" rel="permalink"><strong>explain</strong>.depesz.com</a>
                     % }
                     </h1>
-                    <h2><span>A tool for finding a real cause for slow queries.</span></h2>
+                    <h2><span>PostgreSQL's explain analyze made readable</span></h2>
                 </hgroup>
             </header>
 
