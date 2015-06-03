@@ -197,10 +197,16 @@
                     </span>
 
                     <span class="act">
+% if ( $node->never_executed ) {
+(never executed)
+% } else {
                         (actual
+% if ( defined $node->actual_time_first ) {
                         time=<%= commify_numbers( $node->actual_time_first ) =%>..<%= commify_numbers( $node->actual_time_last ) %>
+% }
                         rows=<%= commify_numbers( $node->actual_rows ) %>
                         loops=<%= commify_numbers( $node->actual_loops ) =%>)
+% }
                     </span>
                 </p>
 
