@@ -102,6 +102,13 @@ server {
     require => Package['nginx'],
 }
 
+file { '/etc/nginx/sites-enabled/default':
+    ensure => "absent",
+    purge => true,
+    notify  => Service['nginx'],
+    require => Package['nginx'],
+}
+
 
 service { 'nginx':
     ensure => running,
