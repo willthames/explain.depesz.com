@@ -1,5 +1,41 @@
 % layout 'default';
 
+% my $node_type_docs = {
+%    'Append'                  => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#append',
+%    'Bitmap Heap Scan'        => 'http://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/#bitmap-heap-scan',
+%    'Bitmap Index Scan'       => 'http://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/#bitmap-index-scan',
+%    'CTE Scan'                => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#cte-scan',
+%    'Function Scan'           => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#function-scan',
+%    'GroupAggregate'          => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#group-aggregate',
+%    'HashAggregate'           => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#hash-aggregate',
+%    'Hash'                    => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#hash',
+%    'Hash Join'               => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#hash-join',
+%    'HashSetOp'               => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#hash-set-op',
+%    'Index Only Scan'         => 'http://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/#index-only-scan',
+%    'Index Scan Backward'     => 'http://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/#index-scan-backward',
+%    'Index Scan'              => 'http://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/#index-scan',
+%    'InitPlan'                => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#init-plan',
+%    'Limit'                   => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#limit',
+%    'Materialize'             => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#materialize',
+%    'Merge Join'              => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#merge-join',
+%    'Nested Loop'             => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#nested-loop',
+%    'Result'                  => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#result',
+%    'Seq Scan'                => 'http://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/#seq-scan',
+%    'Sort'                    => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#sort',
+%    'SubPlan'                 => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#sub-plan',
+%    'Unique'                  => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#unique',
+%    'Values Scan'             => 'http://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/#values-scan',
+%    'Hash Full Join'          => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Hash Left Join'          => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Hash Right Join'         => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Merge Full Join'         => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Merge Left Join'         => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Merge Right Join'        => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Nested Loop Right Join'  => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Nested Loop Full Join'   => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+%    'Nested Loop Left Join'   => 'http://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/#join-modifiers',
+% };
+
 % my $id = stash( 'id' );
 % my $title = stash( 'title' );
 % my $full_title = $title ? "$id : $title" : $id;
@@ -146,7 +182,11 @@
                 <p>
                     <span class="node">
 
-                        <%= $node->type %>
+                        % if ( $node_type_docs->{ $node->type }) {
+                        <a href="<%= $node_type_docs->{ $node->type } %>"><%= $node->type %></a>
+                        % } else {
+                            <%= $node->type %>
+                        % }
 
                         % if ( 'Bitmap Heap Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
