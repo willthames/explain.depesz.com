@@ -227,6 +227,9 @@
                         % elsif ( 'Function Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ function_name } %> <%= $node->scan_on->{ function_alias } || '' %>
                         % }
+                        % elsif ( 'Subquery Scan' eq $node->type ) {
+                            on <%= $node->scan_on->{ subquery_name } %>
+                        % }
 
                     </span>
 
