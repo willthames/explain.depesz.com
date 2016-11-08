@@ -2,7 +2,12 @@ package Explain::Plugin::MailSender;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
-use Mail::Sender;
+# Mail Sender is broken on new perls, and I can't migrate to another mail sending module now (vacation time)
+BEGIN {
+    eval {
+        require Mail::Sender;
+    };
+}
 
 __PACKAGE__->attr( config => sub { {} } );
 

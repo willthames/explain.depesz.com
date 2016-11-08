@@ -2,8 +2,6 @@ package Explain::Plugin::NumberFormat;
 
 use Mojo::Base 'Mojolicious::Plugin';
 
-use Mail::Sender;
-
 sub register {
     my ( $self, $app ) = @_;
 

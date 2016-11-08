@@ -11,9 +11,6 @@ sub startup {
     # register Explain plugins namespace
     $self->plugins->namespaces( [ "Explain::Plugin", @{ $self->plugins->namespaces } ] );
 
-    # setup charset
-    $self->plugin( charset => { charset => 'utf8' } );
-
     # load configuration
     my $config = $self->plugin( 'JSONConfig' );
 
