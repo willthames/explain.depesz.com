@@ -165,7 +165,7 @@ sub index {
     my $self = shift;
 
     # plan
-    my $plan = encode( 'UTF-8', $self->req->param( 'plan' ) );
+    my $plan = $self->req->param( 'plan' );
 
     # nothing to do...
     return $self->render unless $plan;
