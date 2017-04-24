@@ -58,7 +58,7 @@ exec { 'psql_apply_patches':
     command => sprintf("ls -1 %s/sql/patch-???.sql | sort | xargs -n1 sudo -u postgres psql -d explain -q -f", $PROJECT_DIR)
 }
 exec { 'psql_grant':
-    command => 'sudo -u postgres psql -d explain -c "grant all on plans, users to explain;"'
+    command => 'sudo -u postgres psql -d explain -c "GRANT USAGE ON SCHEMA public, plans TO explain; GRANT ALL ON ALL TABLES IN SCHEMA public,plans TO explain;"'
 }
 
 exec { 'run_daemon': command => sprintf("hypnotoad %s/explain.pl > /dev/null 2> /dev/null &", $PROJECT_DIR) }
