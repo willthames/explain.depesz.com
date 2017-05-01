@@ -1,22 +1,35 @@
 #!/usr/bin/env bash
+# make sure that current dir is project top dir
+this_script="${BASH_SOURCE[0]}"
+script_directory="$( dirname "${this_script}" )"
+work_dir="$( readlink -f "${script_directory}" )"
+cd "$work_dir"
+# make sure that current dir is project top dir
+
 project_name=explain
 
-tmux new-session -d -s "$project_name" -n "morbo"
-tmux move-window -s "morbo" -t "99"
-tmux set-buffer "morbo -v -l http://*:25634 explain.pl"$'\n'
-tmux paste-buffer -t "morbo"
-mkdir -p log
-[[ -f "log/development.log" ]] || touch log/development.log
-tmux new-window -n "logs"      "tail -F log/development.log"
-tmux move-window -s logs -t 98
-tmux new-window -n "lib"
-tmux new-window -n "templates"
-tmux set-buffer $'cd lib\n'
-tmux paste-buffer -t lib
-tmux set-buffer $'cd templates\n'
-tmux paste-buffer -t templates
-tmux set-buffer $'vim .\n'
-tmux paste-buffer -t libs
-tmux paste-buffer -t templates
-tmux new-window -n "shell"
+# I use ssh-ident tool (https://github.com/ccontavalli/ssh-ident), so I should
+# set some env variables.
+ssh_ident_agent_env="${HOME}/.ssh/agents/agent-priv-$( hostname -s )"
+[[ -e "${ssh_ident_agent_env}" ]] && . "${ssh_ident_agent_env}" > /dev/null
+
+# Check if the session already exist, and if yes - attach, with no changes
+tmux has-session -t "${project_name}" 2> /dev/null && exec tmux attach-session -t "${project_name}"
+
+tmux new-session -d -s "$project_name" -n "shell"
+
+tmux new-window -d -n morbo -t 99
+tmux split-window -d -t morbo
+tmux select-pane -t morbo.0
+
+tmux new-window -d -n "lib" -t 2 -c "${work_dir}/lib/"
+tmux new-window -d -n "templates" -t 3 -c "${work_dir}/templates/"
+
+tmux send-keys -t morbo.0 "morbo -v -l http://*:25634 ${project_name}.pl" Enter
+
+tmux send-keys -t morbo.1 "tail -F log/development.log" Enter
+
+tmux send-keys -t lib "vim ." Enter
+tmux send-keys -t templates "vim ." Enter
+
 tmux attach-session -t "$project_name"
