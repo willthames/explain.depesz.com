@@ -211,12 +211,12 @@ sub update_plan {
 
 sub save_with_random_name {
     my $self = shift;
-    my ( $title, $content, $is_public, $is_anon, $username ) = @_;
+    my ( $title, $content, $is_public, $is_anon, $username, $optimization_for ) = @_;
 
     my @row = $self->dbh->selectrow_array(
-        'SELECT id, delete_key FROM register_plan(?, ?, ?, ?, ?)',
+        'SELECT id, delete_key FROM register_plan(?, ?, ?, ?, ?, ?)',
         undef,
-        $title, $content, $is_public, $is_anon, $username,
+        $title, $content, $is_public, $is_anon, $username, $optimization_for,
     );
 
     # return id and delete_key
@@ -242,13 +242,67 @@ sub get_plan {
     my ( $plan_id ) = @_;
 
     my @row = $self->dbh->selectrow_array(
-        'SELECT plan, title FROM plans WHERE id = ? AND NOT is_deleted',
+        'SELECT plan, title, optimization_for FROM plans WHERE id = ? AND NOT is_deleted',
         undef,
         $plan_id,
     );
 
     # return plan
     return @row;
+}
+
+sub get_optimization_path {
+    my $self = shift;
+    my ($plan_id) = @_;
+
+    my $rows = $self->dbh->selectall_arrayref(
+        '
+            WITH RECURSIVE path AS (
+                SELECT id, title, optimization_for, 0 as level FROM plans WHERE id = ? and not is_deleted
+                union all
+                SELECT p.id, p.title, p.optimization_for, x.level + 1
+                    FROM path x
+                    join plans p on p.id = x.optimization_for
+                    WHERE NOT p.is_deleted
+                        AND x.optimization_for IS NOT NULL
+            )
+            SELECT
+                id, title
+            FROM
+                path
+            ORDER BY level desc;
+        ',
+        { Slice => {} },
+        $plan_id,
+    );
+    return if 0 == scalar @{ $rows };
+    return if 1 == scalar @{ $rows };
+    return $rows;
+}
+
+sub get_optimizations_for {
+    my $self = shift;
+    my ($plan_id) = @_;
+    my $rows = $self->dbh->selectall_arrayref(
+        'select id, title from plans where optimization_for = ? and not is_deleted',
+        { Slice => {} },
+        $plan_id
+    );
+    return if 0 == scalar @{ $rows };
+    return $rows;
+}
+
+sub plan_exists {
+    my $self = shift;
+    my ( $plan_id ) = @_;
+
+    my @row = $self->dbh->selectrow_array(
+        'SELECT 1 FROM plans WHERE id = ? AND NOT is_deleted',
+        undef,
+        $plan_id,
+    );
+    return if 0 == scalar @row;
+    return 1;
 }
 
 sub delete_plan {

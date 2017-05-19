@@ -161,6 +161,24 @@ sub login {
     return;
 }
 
+sub new_optimization {
+    my $self = shift;
+
+    my $original_plan_id = $self->req->param( 'original' ) // '';
+
+    return $self->redirect_to( 'new-explain' ) unless $original_plan_id =~ m{\A[a-zA-Z0-9]+\z};
+
+    my ( $original_plan, $original_title ) = $self->database->get_plan( $original_plan_id );
+
+    return $self->redirect_to( 'new-explain', status => 404 ) unless $original_plan;
+
+    $self->stash->{ 'optimization' } = 1;
+    $self->stash->{ 'original_plan_id' } = $original_plan_id;
+    $self->stash->{ 'original_title' } = $original_title;
+
+    return $self->render( 'controller/index' );
+}
+
 sub index {
     my $self = shift;
 
@@ -173,6 +191,12 @@ sub index {
     # request entity too large
     return $self->render( message => 'Your plan is too long.', status => 413 )
         if 10_000_000 < length $plan;
+
+    # Get id of parent plan
+    my $parent_id = $self->req->param( 'optimization_for' );
+    if ( defined $parent_id ) {
+        $parent_id = undef unless $self->database->plan_exists( $parent_id );
+    }
 
     # public
     my $is_public = $self->req->param( 'is_public' ) ? 1 : 0;
@@ -214,7 +238,7 @@ sub index {
     }
 
     # save to database
-    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, $self->session->{ 'user' } );
+    my ( $id, $delete_key ) = $self->database->save_with_random_name( $title, $plan, $is_public, $is_anon, $self->session->{ 'user' }, $parent_id, );
 
     # redirect to /show/:id
     $self->flash( delete_key => $delete_key );
@@ -305,6 +329,10 @@ sub show {
     $self->stash->{ explain } = $explain;
     $self->stash->{ title }   = $title;
     $self->stash->{ stats }   = $stats;
+
+    # Fetch path of optimizations
+    $self->stash->{ optimization_path } = $self->database->get_optimization_path( $id );
+    $self->stash->{ suboptimizations } = $self->database->get_optimizations_for( $id );
 
     # render will be called automatically
     return;

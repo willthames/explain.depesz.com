@@ -420,12 +420,33 @@
 
 </div>
 
+% if ( stash('optimization_path') ) {
+<h3>Optimization path:</h3>
+<ul>
+    % for my $opt ( @{ stash('optimization_path') }) {
+    <li><a href="<%= url_for( 'show', id => $opt->{'id'} ) =%>">#<%= $opt->{'id'} %> : <%= $opt->{'title'} %></a></li>
+    % }
+</ul>
+</h3>
+% }
+
+% if ( stash('suboptimizations') ) {
+<h3>Optimization(s) for this plan:</h3>
+<ul>
+    % for my $opt ( @{ stash('suboptimizations') }) {
+    <li><a href="<%= url_for( 'show', id => $opt->{'id'} ) =%>">#<%= $opt->{'id'} %> : <%= $opt->{'title'} %></a></li>
+    % }
+</ul>
+% }
+
 <div class="result">
 
     <div class="plea">
-        Did it help? <a href="http://www.depesz.com/how-about-donating/">Consider supporting us</a>.
+        <form id="new-optimization" method="post" action="<%= url_for 'new-optimization' %>">
+            <input type="hidden" name="original" value="<%= $id %>"/>
+            <button type="submit" name="add-optimization" id="add-optimization"><span>Add optimization</span></button>
+        </form>
     </div>
-
 
     <div class="tabs">
         <ul class="clearfix">

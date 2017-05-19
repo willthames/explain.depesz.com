@@ -41,6 +41,9 @@ sub startup {
     # route: 'index'
     $routes->route( '/' )->to( 'controller#index' )->name( 'new-explain' );
 
+    # route: 'new-optimization'
+    $routes->route( '/new_optimization' )->to( 'controller#new_optimization' )->name( 'new-optimization' );
+
     # route: 'user-history'
     $routes->route( '/user-history/:direction/:key' )->to( 'controller#user_history', direction => undef, key => undef )->name( 'user-history' );
 

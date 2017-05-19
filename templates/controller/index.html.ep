@@ -1,6 +1,7 @@
 % layout 'default';
 
 % my $title = 'New explain';
+% $title = 'New optimization for plan #' . stash('original_plan_id') if stash('optimization');
 % title $title;
 
 <h1><%= $title =%></h1>
@@ -18,11 +19,20 @@
     </div>
 % }
 
-<form id="new-explain" method="post" action="<%= url_for 'current' %>">
+<form id="new-explain" method="post" action="<%= url_for 'new-explain' %>">
 
     <div class="fe fe-first fe_plan">
         <label for="title">Optional title for plan:</label>
+% if ( stash('optimization') ) {
+%   my $new_title = "Optimization for: ";
+%   $new_title .= stash('original_title') . ";" if stash('original_title');
+%   $new_title .= " plan #" . stash('original_plan_id');
+        <input id="title" name="title" value="<%= $new_title %>"/>
+        <input id="optimization_for" name="optimization_for" type="hidden" value="<%= stash('original_plan_id') %>"/>
+% } else {
         <input id="title" name="title" class="auto-hint" title="Optional title"/>
+% }
+
         <label for="plan">Paste your explain/explain analyze here:</label>
         <textarea id="plan" name="plan" class="auto-hint" title="For example:
                                                         QUERY PLAN
