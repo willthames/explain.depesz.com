@@ -43,7 +43,7 @@
 
     % } else {
         <p class="msg msg-no-results">
-            Sorry, but no results was found in database for this page.
+            Sorry, but no results were found in the database for this page.
         </p>
     % }
 

@@ -27,7 +27,7 @@
     <div class="fe">
         <label for="new-pw">New password:</label>
         <input id="new-pw" type="password" name="new-pw" title="Enter your new password"/>
-        <label for="new-pw2">Repeat new password:</label>
+        <label for="new-pw2">Repeat your new password:</label>
         <input id="new-pw2" type="password" name="new-pw2" title="Repeat your new password"/>
     </div>
     <div class="fe fe-last fe-buttons">

@@ -32,7 +32,7 @@
 
     </div>
     <div class="fe fe_register">
-        <label for="is_registration">I want to register new account</label>
+        <label for="is_registration">I want to register a new account</label>
         <input type="checkbox" class="checkbox" id="is_registration" name="is_registration" value="1" <% if ( param('is_registration') ) { %>checked="1"<% } %>/>
     </div>
 

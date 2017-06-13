@@ -5,11 +5,11 @@
 
 <h1><%= $title =%></h1>
 
-<p class="slogan"><strong>explain.depesz.com</strong> is tool for finding real cause for slow queries.</p>
+<p class="slogan"><strong>explain.depesz.com</strong> is a tool for finding real causes for slow queries.</p>
 
-<p>Generally, one would use <code>EXPLAIN ANALYZE</code> query; and read the output. The problem is
+<p>Generally, one would use the <code>EXPLAIN ANALYZE</code> query; and read the output. The problem is
 that not all parts of the output are easily understandable by anybody, and it's not always obvious
-whether node that executes in 17.3ms is faster or slower than the one that runs in 100ms - given the
+whether a node that executes in 17.3ms is faster or slower than the one that runs in 100ms - given the
 fact that the first one is executed 7 times.</p>
 
 <p>To use the site, simply go to <a href="<%= url_for 'new-explain' %>" title="link to: new explain">first page</a>
@@ -19,7 +19,7 @@ and paste there explain analyze output from your psql.</p>
 nice for me :) colorized to put emphasis on important parts.</p>
 
 <p>The url for colorized output is persistent, so you can simply use it to show it to
-others - for example - for those nice guys on irc channel <em>#postgresql</em> on freenode.</p>
+others - for example - for those nice guys on the irc channel <em>#postgresql</em> on freenode.</p>
 
 <p>This graph uses 4 colors to mark important things:</p>
 
@@ -35,9 +35,9 @@ others - for example - for those nice guys on irc channel <em>#postgresql</em> o
 
 <h2>Exclusive</h2>
 
-<p>This is total amount of time <a href="http://www.postgresql.org" title="link to PostgreSQL site">PostgreSQL</a> spent
+<p>This is the total amount of time <a href="http://www.postgresql.org" title="link to PostgreSQL site">PostgreSQL</a> spent
 evaluating this node, without time spent in its subnodes. If the node has been executed many times (for example because
-of <code>Nested Loop</code> plan), this time will be correctly multiplied.</p>
+of a <code>Nested Loop</code> plan), this time will be correctly multiplied.</p>
 
 <h3>Colors:</h3>
 
@@ -50,8 +50,8 @@ of <code>Nested Loop</code> plan), this time will be correctly multiplied.</p>
 
 <h2>Inclusive</h2>
 
-<p>This is just like <strong>Exclusive</strong>, but it doesn't exclude time of subnodes. So, by definition - top node will
-have <strong>Inclusive</strong> time equal to total time of query.</p>
+<p>This is just like <strong>Exclusive</strong>, but it doesn't exclude time of subnodes. So, by definition the top node will
+have <strong>Inclusive</strong> time equal to the total time of the query.</p>
 
 <h3>Colors:</h3>
 
@@ -66,7 +66,7 @@ have <strong>Inclusive</strong> time equal to total time of query.</p>
 
 <p>This value stores information about how big the planner's mistake was when it estimated the return row count.</p>
 
-<p>For example - if planner estimated that given node will return 230 rows, but it returned 14118 rows, the
+<p>For example, if planner estimated that a given node will return 230 rows, but it returned 14118 rows, the
 error is 14118/230 == 61.4.</p>
 
 <p>It has to be noted that if the numbers were the other way around (estimated 14118, but really only 230), the
