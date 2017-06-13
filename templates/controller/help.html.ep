@@ -15,11 +15,11 @@ fact that the first one is executed 7 times.</p>
 <p>To use the site, simply go to <a href="<%= url_for 'new-explain' %>" title="link to: new explain">first page</a>
 and paste there explain analyze output from your psql.</p>
 
-<p>After uploading you will be directed to page which shows parsed, and nicely (well, at least
-nice for me :) colorized to put emphasis on important parts.</p>
+<p>After uploading, you will be directed to a page which shows parsed, and nicely (well, at least
+nice for me :) colorized output, to emphasize important parts.</p>
 
-<p>The url for colorized output is persistent, so you can simply use it to show it to
-others - for example - for those nice guys on the irc channel <em>#postgresql</em> on freenode.</p>
+<p>The url for colorized output is persistent, so you can easily show it to
+others. For example to those nice guys on the irc channel <em>#postgresql</em> on freenode.</p>
 
 <p>This graph uses 4 colors to mark important things:</p>
 
@@ -30,7 +30,7 @@ others - for example - for those nice guys on the irc channel <em>#postgresql</e
     <li class="c-4">red background - given node is very worrying</li>
 </ul>
 
-<p>Which color is used, is choosen based on which mode you will use: "<strong>Exclusive</strong>",
+<p>The color is chosen based on which mode you use: "<strong>Exclusive</strong>",
 "<strong>Inclusive</strong>" or "<strong>Rows X</strong>".</p>
 
 <h2>Exclusive</h2>
