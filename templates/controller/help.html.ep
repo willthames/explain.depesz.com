@@ -21,7 +21,7 @@ nice for me :) colorized to put emphasis on important parts.</p>
 <p>The url for colorized output is persistent, so you can simply use it to show it to
 others - for example - for those nice guys on irc channel <em>#postgresql</em> on freenode.</p>
 
-<p>This graph uses 4 colours to mark important things:</p>
+<p>This graph uses 4 colors to mark important things:</p>
 
 <ul class="colors">
     <li class="c-1">white background - everything is fine</li>
@@ -42,10 +42,10 @@ of <code>Nested Loop</code> plan), this time will be correctly multiplied.</p>
 <h3>Colors:</h3>
 
 <ul class="colors">
-    <li class="c-1">white background - is choosen if exclusive time &lt;= 10% of total query time</li>
-    <li class="c-2">yellow background - is choosen if exclusive time &isin; (10%, 50%&gt; of total query time</li>
-    <li class="c-3">brown background - is choosen if exclusive time &isin; (50%, 90%&gt; of total query time</li>
-    <li class="c-4">red background - is choosen if exclusive time &gt; 90% of total query time</li>
+    <li class="c-1">white background - is chosen if exclusive time &lt;= 10% of total query time</li>
+    <li class="c-2">yellow background - is chosen if exclusive time &isin; (10%, 50%&gt; of total query time</li>
+    <li class="c-3">brown background - is chosen if exclusive time &isin; (50%, 90%&gt; of total query time</li>
+    <li class="c-4">red background - is chosen if exclusive time &gt; 90% of total query time</li>
 </ul>
 
 <h2>Inclusive</h2>
@@ -56,15 +56,15 @@ have <strong>Inclusive</strong> time equal to total time of query.</p>
 <h3>Colors:</h3>
 
 <ul class="colors">
-    <li class="c-1">white background - is choosen if inclusive time &lt;= 10% of total query time</li>
-    <li class="c-2">yellow background - is choosen if inclusive time &isin; (10%, 50%&gt; of total query time</li>
-    <li class="c-3">brown background - is choosen if inclusive time &isin; (50%, 90%&gt; of total query time</li>
-    <li class="c-4">red background - is choosen if inclusive time &gt; 90% of total query time</li>
+    <li class="c-1">white background - is chosen if inclusive time &lt;= 10% of total query time</li>
+    <li class="c-2">yellow background - is chosen if inclusive time &isin; (10%, 50%&gt; of total query time</li>
+    <li class="c-3">brown background - is chosen if inclusive time &isin; (50%, 90%&gt; of total query time</li>
+    <li class="c-4">red background - is chosen if inclusive time &gt; 90% of total query time</li>
 </ul>
 
 <h2>Rows X</h2>
 
-<p>This value stores information about how big was planner mistake when it estimated return row count.</p>
+<p>This value stores information about how big the planner's mistake was when it estimated the return row count.</p>
 
 <p>For example - if planner estimated that given node will return 230 rows, but it returned 14118 rows, the
 error is 14118/230 == 61.4.</p>
@@ -76,8 +76,8 @@ an arrow showing either &darr; - if planner underestimated rowcount, or &uarr; i
 <h3>Colors:</h3>
 
 <ul class="colors">
-    <li class="c-1">white background - is choosen if rows-x &lt;= 10</li>
-    <li class="c-2">yellow background - is choosen if rows-x &isin; (10, 100&gt;</li>
-    <li class="c-3">brown background - is choosen if rows-x &isin; (100, 1000&gt;</li>
-    <li class="c-4">red background - is choosen if rows-x &gt; 1000</li>
+    <li class="c-1">white background - is chosen if rows-x &lt;= 10</li>
+    <li class="c-2">yellow background - is chosen if rows-x &isin; (10, 100&gt;</li>
+    <li class="c-3">brown background - is chosen if rows-x &isin; (100, 1000&gt;</li>
+    <li class="c-4">red background - is chosen if rows-x &gt; 1000</li>
 </ul>
