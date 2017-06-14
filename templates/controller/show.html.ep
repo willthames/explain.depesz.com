@@ -362,7 +362,7 @@
 
     <form id="explain-form" class="hidden" method="get" action="<%= url_for 'current' %>" autocomplete="off">
 
-        <h3>Colorize:</h3>
+        <h3>Color mode:</h3>
         <ul>
             <li>
                 <input type="radio" name="c" id="ce" value="e"<%= $cfg->{ c } eq 'e' ? ' checked="checked"' : '' %> />
@@ -382,7 +382,7 @@
             </li>
         </ul>
 
-        <h3>Columns visibility:</h3>
+        <h3>Visible columns:</h3>
         <ul>
             <li>
                 <input type="checkbox" name="vu" id="vu" value="1"<%= $cfg->{ vu } ? ' checked="checked"' : '' %> />
@@ -416,7 +416,7 @@
 
     </form>
 
-    <a href="#" onclick="$.fn.explain( 'toggleCfgForm', this ); return false;" onkeypress="return this.onclick( );"><span>options</span></a>
+    <a href="#" onclick="$.fn.explain( 'toggleCfgForm', this ); return false;" onkeypress="return this.onclick( );"><span>Settings</span></a>
 
 </div>
 
