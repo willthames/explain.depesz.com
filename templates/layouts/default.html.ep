@@ -32,7 +32,8 @@
         <%= content_for 'head' %>
     </head>
     <body class="<%= $self->match->endpoint->name %>">
-
+% my $full_hostname = $self->req->url->to_abs->host;
+% my @hostname_parts = split( /\./, $full_hostname, 2 );
         <!-- wrapper -->
         <div id="wrapper">
 
@@ -40,9 +41,9 @@
                 <hgroup>
                     <h1>
                     % if ( $self->match->endpoint->name eq 'new-explain' ) {
-                        <span><strong>explain</strong>.depesz.com</span>
+                        <span><strong><%= $hostname_parts[0] %></strong>.<%= $hostname_parts[1] %></span>
                     % } else {
-                        <a href="<%= url_for 'new-explain' %>" title="link to: new explain" rel="permalink"><strong>explain</strong>.depesz.com</a>
+                        <a href="<%= url_for 'new-explain' %>" title="link to: new explain" rel="permalink"><strong><%= $hostname_parts[0] %></strong>.<%= $hostname_parts[1] %></a>
                     % }
                     </h1>
                     <h2><span>PostgreSQL's explain analyze made readable</span></h2>
