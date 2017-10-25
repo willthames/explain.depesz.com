@@ -15,7 +15,7 @@
         <div class="column id">id</div>
         <div class="column title">title</div>
         <div class="column is-public">is public</div>
-        <div class="column is-anonymized">is anonymized</div>
+        <div class="column is-anonymized">is obfuscated</div>
         <div class="column delete">delete</div>
         <div class="column action">action</div>
     </div>
