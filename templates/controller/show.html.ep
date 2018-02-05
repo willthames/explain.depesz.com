@@ -188,25 +188,16 @@
                             <%= $node->type %>
                         % }
 
-                        % if ( 'Bitmap Heap Scan' eq $node->type ) {
+                        % if ( $node->type =~ m{^(Parallel )?Bitmap Heap Scan$} ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
                         % elsif ( 'Bitmap Index Scan' eq $node->type ) {
                             on <%= $node->scan_on->{ index_name } %>
                         % }
-                        % elsif ( 'Index Scan' eq $node->type ) {
+                        % elsif ( $node->type =~ m{^(Parallel )?Index (Only )?Scan( Backward)?$} ) {
                             using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
-                        % elsif ( 'Index Scan Backward' eq $node->type ) {
-                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
-                        % }
-                        % elsif ( 'Index Only Scan' eq $node->type ) {
-                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
-                        % }
-                        % elsif ( 'Index Only Scan Backward' eq $node->type ) {
-                            using <%= $node->scan_on->{ index_name } %> on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
-                        % }
-                        % elsif ( 'Seq Scan' eq $node->type ) {
+                        % elsif ( $node->type =~ m{^(Parallel )?Seq Scan$} ) {
                             on <%= $node->scan_on->{ table_name } %> <%= $node->scan_on->{ table_alias } || '' %>
                         % }
                         % elsif ( ( 'Insert' eq $node->type ) && ( $node->scan_on ) ) {
