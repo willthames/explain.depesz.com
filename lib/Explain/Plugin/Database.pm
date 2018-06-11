@@ -9,7 +9,7 @@ use DBI;
 use Date::Simple;
 use English qw( -no_match_vars );
 
-has dbh             => undef;
+has real_dbh        => undef;
 has connection_args => sub { [] };
 has log             => undef;
 
@@ -52,22 +52,26 @@ sub register {
     # register helper
     $app->helper(
         database => sub {
-
-            # not conected yet
-            unless ( $self->dbh ) {
-
-                # connect
-                $self->dbh( DBI->connect( @{ $self->connection_args } ) );
-
-                # raise error (for case, when "RaiseError" option is not set)
-                confess qq|Can't connect database| unless $self->dbh;
-            }
-
             return $self;
         }
     );
 
     return;
+}
+
+sub dbh {
+    my $self = shift;
+
+    if (   ( $self->real_dbh )
+        && ( $self->real_dbh->state =~ m{^(08|S8|57)} ) )
+    {
+        $self->log->warn( 'DBH looks errored out, state ' . $self->real_dbh->state . ', reconnecting.' );
+        $self->real_dbh( undef );
+    }
+
+    $self->real_dbh( DBI->connect( @{ $self->connection_args } ) ) unless $self->real_dbh;
+
+    return $self->real_dbh;
 }
 
 sub user_login {
