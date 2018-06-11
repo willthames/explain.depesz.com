@@ -41,6 +41,9 @@ sub startup {
     # route: 'index'
     $routes->route( '/' )->to( 'controller#index' )->name( 'new-explain' );
 
+    # route: 'status'
+    $routes->route( '/status' )->to( 'controller#status' )->name( 'status' );
+
     # route: 'new-optimization'
     $routes->route( '/new_optimization' )->to( 'controller#new_optimization' )->name( 'new-optimization' );
 

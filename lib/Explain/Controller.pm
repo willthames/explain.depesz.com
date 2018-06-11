@@ -412,6 +412,15 @@ sub info {
 
 }
 
+sub status {
+    my $self = shift;
+    if ($self->database->ping()) {
+        $self->render('text' => 'OK', status => 200);
+    } else {
+        $self->render('text' => 'DB FAILED', status => 500);
+    }
+}
+
 sub help {
 
     # direct to template

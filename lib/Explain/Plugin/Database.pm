@@ -223,6 +223,11 @@ sub save_with_random_name {
     return @row;
 }
 
+sub ping {
+    my $self = shift;
+    return $self->dbh->ping();
+}
+
 sub get_plan_data {
     my $self = shift;
     my ( $plan_id ) = @_;
