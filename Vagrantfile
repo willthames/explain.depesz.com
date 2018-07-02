@@ -12,12 +12,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
-  config.vm.provision "puppet" do |puppet|
-    puppet.options = "--verbose --debug"
-    puppet.manifests_path = "."
-    puppet.manifest_file = "explain.pp"
-    puppet.facter = {
-      "use_vagrant" => true
-    }
+  if Vagrant.has_plugin?("vagrant-puppet-install")
+    config.vm.provision "puppet" do |puppet|
+      puppet.options = "--verbose --debug"
+      puppet.manifests_path = "."
+      puppet.manifest_file = "explain.pp"
+      puppet.facter = {
+        "use_vagrant" => true
+      }
+    end
+  else
+    config.vm.provision "shell", path: "vagrant_bootstrap.sh"
   end
 end
