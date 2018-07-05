@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export PGDATA="/etc/postgresql/10/main"
-export APP_USER="explaind"
-export APP_PASS="explainpass"
+export APP_USER="explain"
+export APP_PASS="explain"
 
 # Set username in explain.json
 sed -i "s/\"username\" : \"explain\"/\"username\" : \"${APP_USER}\"/" /vagrant/explain.json
