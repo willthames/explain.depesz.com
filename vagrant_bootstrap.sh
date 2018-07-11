@@ -11,6 +11,13 @@ sed -i "s/\"password\" : \"explain\"/\"password\" : \"${APP_PASS}\"/" /vagrant/e
 # Install dependencies
 curl -s -L cpanmin.us | perl - -n Mojolicious
 apt-get -y -qq install wget ca-certificates cpanminus libmojolicious-perl libmail-sender-perl libdate-simple-perl libemail-valid-perl libxml-simple-perl libdbd-pg-perl libxml-simple-perl
+
+### This script *can* be run on a Docker Ubuntu VM if desired.
+### To do so, additional commands need to be run:
+# apt-get install make curl libclone-perl
+# sed -i "s/exit.*/exit 0/" /usr/sbin/policy-rc.d
+
+# Install Pg::Explain
 cpanm -q Pg::Explain
 
 # Install Postgres
