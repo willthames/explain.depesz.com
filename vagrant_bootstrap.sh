@@ -3,19 +3,22 @@
 export PGDATA="/etc/postgresql/10/main"
 export APP_USER="explain"
 export APP_PASS="explain"
-
-# Set username in explain.json
-sed -i "s/\"username\" : \"explain\"/\"username\" : \"${APP_USER}\"/" /vagrant/explain.json
-sed -i "s/\"password\" : \"explain\"/\"password\" : \"${APP_PASS}\"/" /vagrant/explain.json
-
-# Install dependencies
-curl -s -L cpanmin.us | perl - -n Mojolicious
-apt-get -y -qq install wget ca-certificates cpanminus libmojolicious-perl libmail-sender-perl libdate-simple-perl libemail-valid-perl libxml-simple-perl libdbd-pg-perl libxml-simple-perl
+export BASEDIR="/vagrant"
 
 ### This script *can* be run on a Docker Ubuntu VM if desired.
 ### To do so, additional commands need to be run:
-# apt-get install make curl libclone-perl
+# apt-get update
+# apt-get -y -qq install make curl libclone-perl lsb-release sudo
 # sed -i "s/exit.*/exit 0/" /usr/sbin/policy-rc.d
+# export BASEDIR="/explain"
+
+# Set username in explain.json
+sed -i "s/\"username\" : \"explain\"/\"username\" : \"${APP_USER}\"/" ${BASEDIR}/explain.json
+sed -i "s/\"password\" : \"explain\"/\"password\" : \"${APP_PASS}\"/" ${BASEDIR}/explain.json
+
+# Install dependencies
+curl -s -L cpanmin.us | perl - -n Mojolicious
+apt-get -y -qq install wget ca-certificates cpanminus libmojolicious-perl libmail-sender-perl libdate-simple-perl libemail-valid-perl libxml-simple-perl libdbd-pg-perl
 
 # Install Pg::Explain
 cpanm -q Pg::Explain
@@ -36,10 +39,10 @@ createdb -U postgres explain
 psql -qU postgres explain -c "CREATE USER ${APP_USER} WITH PASSWORD '${APP_PASS}'"
 
 # Apply patches
-psql -q -f /vagrant/sql/create.sql -U postgres explain
+psql -q -f ${BASEDIR}/sql/create.sql -U postgres explain
 for i in `seq -f "%03g" 1 10`
 do
-  psql -q -f /vagrant/sql/patch-${i}.sql -U postgres explain
+  psql -q -f ${BASEDIR}/sql/patch-${i}.sql -U postgres explain
 done
 
 # Apply grants
