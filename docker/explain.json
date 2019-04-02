@@ -1,0 +1,17 @@
+{
+    "title" : "explain.localhost",
+
+    "secret" : "probablynotimportantforephemeral",
+
+    "database" : {
+        "dsn"      : "dbi:Pg:database=explain;host=db;port=5432",
+        "username" : "explaind",
+        "password" : "explain",
+        "options"  : {
+            "auto_commit" : 1,
+            "pg_server_prepare" : 0,
+            "RaiseError" : 1,
+            "PrintError" : 1
+        }
+    }
+}

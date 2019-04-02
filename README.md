@@ -29,6 +29,16 @@ Point your browser on http://192.168.44.55 (or use `/etc/hosts` entry explain.de
 1. Open `explain.pp` and fix line 5 with correct project dir value
 1. Call `sudo puppet apply --logdest console explain.pp` on your working copy directory.
 
+## Docker Compose setup
+
+*NOTE* This setup should be considered for quick analysis purposes only - while docker-compose
+does keep DBs around from run to run, don't rely on it to store your history long term.
+
+```
+cd docker
+docker-compose up --build
+```
+
 ## Manual setup
 
 ### 1) Mojolicious
